@@ -6,18 +6,50 @@ from django.http import HttpResponse
 def homepage(request):
 
     context = {
-        "title": "Code Adventure",
+        
         "body": "HELLO WORLD!!!"
-    }
-    
+    }   
 
-    return render(request, 'base.html', context)
+    return render(request, 'main/home.html', context)
 
 def aboutpage(request):
-    return HttpResponse("<strong>Hello World</strong> !!! This is <strong>Daves's</strong> About Page")
+    context = {
+        "title": "About",
+        "body": "About ME!!!"
+    }    
+    return render(request, 'main/about.html', context)
 
 def contactpage(request):
-    return HttpResponse("<strong>Hello World</strong> !!! This is <strong>Daves's</strong> Contact Page")
+    context = {
+        "title": "Contact",
+        "body": "How to Contact ME"
+    }
+    return render(request, 'main/contact.html', context)
 
 def resumepage(request):
-    return HttpResponse("<strong>Hello World</strong> !!! This is <strong>Daves's</strong> Resume Page")
+    context = {
+        "title": "Resume",
+        "body": "My resume"
+    }
+    return render(request, 'main/resume.html', context)
+
+def register(request):
+    context = {
+        "title": "Register",
+        "body": "Registrationg Form"
+    }
+    return render(request, 'main/register.html', context)
+
+def login(request):
+    context = {
+        "title": "Login",
+        "body": "Login Form"
+    }
+    return render(request, 'main/login.html', context)
+
+def logout(request):
+    context = {
+        "title": "Logout",
+        "body": "Logout and Redirect to Home Page"
+    }
+    return render(request, 'main/logout.html', context)
