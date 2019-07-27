@@ -18,6 +18,7 @@ Project is created with:
 * CSS
 * Python: version 3.7
 * Django: 2.2
+* Postgresql
 * 
 
 ## Setup and Launch
