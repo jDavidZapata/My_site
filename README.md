@@ -10,7 +10,7 @@ My Personal Site
 * [Sources](#sources)
 
 ## General info
-This project is will be my personal site, with a portfolio and possibly a blog.
+This project is will be my personal site, with my portfolio projects and possibly a blog.
 	
 ## Technologies
 Project is created with:
@@ -19,10 +19,11 @@ Project is created with:
 * Python: version 3.7
 * Django: 2.2
 * Postgresql
-* 
+* Bootstrap 4
+* Heroku
 
 ## Setup and Launch
-* Project Live at: 
+* Project Live at: not online yeat.
 
 ## Project Status
 * This project under development. 
