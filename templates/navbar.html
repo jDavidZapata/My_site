@@ -20,6 +20,12 @@
       <li class="nav-item {% if request.path == '/resume/' %}active{% endif %}">
         <a class="nav-link" href="{% url 'main:resumepage' %}">Resume</a>
       </li>
+      <li class="nav-item {% if request.path == '/projects/' %}active{% endif %}">
+        <a class="nav-link" href="">Projects</a>
+      </li>
+      <li class="nav-item {% if request.path == '/blog/' %}active{% endif %}">
+        <a class="nav-link" href="">Blog</a>
+      </li>
     </ul>
   </div>
 </nav>
