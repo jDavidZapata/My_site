@@ -54,3 +54,10 @@ def logout(request):
         "body": "Body: Logout and Redirect to Home Page"
     }
     return render(request, 'main/logout.html', context)
+
+def temppage(request):
+    context = {
+        "title": "Temporary",
+        "body": "Body: Temp Page"
+    }
+    return render(request, 'main/temp.html', context)

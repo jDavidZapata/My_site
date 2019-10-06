@@ -21,10 +21,10 @@
         <a class="nav-link" href="{% url 'main:resumepage' %}">Resume</a>
       </li>
       <li class="nav-item {% if request.path == '/projects/' %}active{% endif %}">
-        <a class="nav-link" href="">Projects</a>
+        <a class="nav-link" href="{% url 'main:temppage' %}">Projects</a>
       </li>
       <li class="nav-item {% if request.path == '/blog/' %}active{% endif %}">
-        <a class="nav-link" href="">Blog</a>
+        <a class="nav-link" href="{% url 'main:temppage' %}">Blog</a>
       </li>
     </ul>
   </div>
