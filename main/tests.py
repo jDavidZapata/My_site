@@ -31,3 +31,22 @@ class AboutPageTest(TestCase):
         self.assertEqual(response.context["body"], "Body: About ME!!!")
         
 
+class ResumePageTest(TestCase):
+
+    def test_about_page(self):
+        c = Client()
+        response = c.get("/resume/")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context["title"], "Resume")
+        self.assertEqual(response.context["body"], "Body: My resume")
+        
+
+class ProjectsPageTest(TestCase):
+
+    def test_about_page(self):
+        c = Client()
+        response = c.get("/projects/")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context["title"], "Temporary")
+        self.assertEqual(response.context["body"], "Body: Temp Page")
+        
