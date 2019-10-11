@@ -50,3 +50,13 @@ class ProjectsPageTest(TestCase):
         self.assertEqual(response.context["title"], "Temporary")
         self.assertEqual(response.context["body"], "Body: Temp Page")
         
+
+class BlogPageTest(TestCase):
+
+    def test_about_page(self):
+        c = Client()
+        response = c.get("/blog/")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context["title"], "Temporary")
+        self.assertEqual(response.context["body"], "Body: Temp Page")
+        
