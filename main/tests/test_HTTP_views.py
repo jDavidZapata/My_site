@@ -33,7 +33,7 @@ class AboutPageTest(TestCase):
 
 class ResumePageTest(TestCase):
 
-    def test_about_page(self):
+    def test_resume_page(self):
         c = Client()
         response = c.get("/resume/")
         self.assertEqual(response.status_code, 200)
@@ -43,7 +43,7 @@ class ResumePageTest(TestCase):
 
 class ProjectsPageTest(TestCase):
 
-    def test_about_page(self):
+    def test_projects_page(self):
         c = Client()
         response = c.get("/projects/")
         self.assertEqual(response.status_code, 200)
@@ -53,7 +53,7 @@ class ProjectsPageTest(TestCase):
 
 class BlogPageTest(TestCase):
 
-    def test_about_page(self):
+    def test_blog_page(self):
         c = Client()
         response = c.get("/blog/")
         self.assertEqual(response.status_code, 200)
