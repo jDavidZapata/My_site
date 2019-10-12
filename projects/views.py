@@ -4,12 +4,12 @@ from projects.models import Project
 # Create your views here.
 
 
-def projects_index(request):
+def projects_list(request):
     projects = Project.objects.all()
     context = {
         'projects': projects
     }
-    return render(request, 'projects_index.html', context)
+    return render(request, 'projects_list.html', context)
 
 
 def project_detail(request, pk):
