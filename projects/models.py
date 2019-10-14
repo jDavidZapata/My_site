@@ -8,3 +8,7 @@ class Project(models.Model):
     technology = models.CharField(max_length=20)
     goal = models.TextField()
     image = models.FilePathField(path="/img")
+
+    def __str__(self):
+        return f"{self.title} -- Build with {self.technology}"
+    
