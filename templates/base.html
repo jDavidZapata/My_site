@@ -10,21 +10,32 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>{% block head_title %} {{title}} {% endblock %} Code Adventure</title>
-    <link rel="stylesheet" href="{% static 'css/main.css' %}" >
+    {% if title %}
+      <title>{{title}} - Code Adventure</title>
+    {% else %}
+      <title>Code Adventure</title>
+    {% endif %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" >
     <link rel="shortcut icon" type="image/png" href="{% static "my_site/zLogo1.png" %}">
     
   </head>
   <body>
     {% include 'navbar.html' %}
-    
-        
+    <div class="container">
+      {% if messages %}   
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">
+            {{ mesage }}
+          </div>
+        {% endfor %}
+      {% endif %}
                 
       {% block content %}          
         <h1>{{body}}</h1>          
       {% endblock %}          
       
-    
+    </div>
     
 
     <!-- Optional JavaScript -->

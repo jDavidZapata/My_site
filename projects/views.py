@@ -8,6 +8,7 @@ from django.http import Http404
 def projects_list(request):
     projects = Project.objects.all()
     context = {
+        'title': 'Projects',
         'projects': projects
     }
     return render(request, 'projects/projects_list.html', context)
@@ -18,6 +19,7 @@ def project_detail(request, project_id):
     try:
         project = Project.objects.get(pk=project_id)
         context = {
+            'title': f'Project # {project_id}',
             'project': project
         }
     except Project.DoesNotExist:

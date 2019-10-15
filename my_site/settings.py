@@ -31,15 +31,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'main.apps.MainConfig',
+    'projects.apps.ProjectsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'main.apps.MainConfig',
-    'projects.apps.ProjectsConfig',
-    
+    'django.contrib.staticfiles',      
 ]
 
 AUTH_USER_MODEL = 'main.User'
@@ -125,5 +124,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = ''
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = ( os.path.join('static'), )
