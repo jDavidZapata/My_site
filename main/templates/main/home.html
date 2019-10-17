@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 
-<div id="container1" class="container-fluid d-flex align-items-center flex-column" style="height:690px;color:red;">
+<div id="container1" class="container-fluid d-flex align-items-center flex-column" style="min-height:690px;color:red;">
       
     <div class="row align-items-center" style="height:200px;">
         <h1 style="font-size:74px;font-weight:bold;color:black;">Hello World, </h1>      
@@ -21,13 +21,13 @@
     </div>
 
     <div class="row justify-content-center">
-        <div class='col-md-4 col-12-align-self-center'>
+        <div class='col-md-6 col-lg-4 text-center'>
             <h1 style="font-size:74px;color:blue;"><strong>Python</strong></h1>                 
         </div>
-        <div class='col-12 col-md-4'>
+        <div class='col-12 col-md-6 col-lg-4 text-center'>
             <h1 style="font-size:74px;color:blue;"><strong>/ Web</strong></h1>                 
         </div>
-        <div class='col-12 col-md-4'>
+        <div class='col-12 col-md-6 col-lg-4 text-center'>
             <h1 style="font-size:74px;color:blue;"><strong>Developer</strong></h1>                 
         </div>
     </div>
@@ -38,41 +38,52 @@
     
 </div>
 
-<div id="container2" class="row d-flex justify-content-around align-items-center border border-danger" style="height:790px;">
+<div id="container2" class="row d-flex justify-content-center align-items-center border border-danger" style="min-height:790px;padding:50px;">
             
-    <div class="col" style="height:65%;width:auto;z-index:1;margin-left:10px;">
+    <div class="col-xl-4" style="z-index:1;">
     <h1>Occupational Designation: </h1>    
     <h1 style="font-size:74px;font-weight:bold;color:red;">Developer</h1>
     </div>
-    <div class="col align-items-end" style="height:0%;width:auto;z-index:1;">
+    <div class="col-xl-4" style="z-index:1;">
     <h1>Base of Operations: </h1>
     <h1 style="font-size:74px;font-weight:bold;color:red;">Jersey Shore, USA</h1>
     </div>
-    <div class="col" style="height:60%;width:auto;z-index:1;margin-right:10px;">
+    <div class="col-xl-4" style="z-index:1;">
     <h1>Occupational Status: </h1>
-    <h1 style="font-size:74px;font-weight:bold;color:red;">Freelance</h1>
+    <h1 style="font-size:74px;font-weight:bold;color:red;">Freelance / Available</h1>
     </div>
     
 </div>
 
-<div id="container3" class="container-fluid" style="height:790px;width:auto;">
-    <h1>My Skills: </h1>
-    
-    <h1 style="font-size:74px;font-weight:bold;color:red;">Yes, I have them Front-end and Back-end</h1>
-    <h1 style="font-size:74px;font-weight:bold;color:black;">The basics + Python</h1>   
+<div id="container3" class="row d-flex justify-content-center align-items-center border border-danger" style="min-height:850px;padding:50px;">
+    <div class="col-12" style="width:auto;z-index:1;">
+        <h1>My Skills: </h1>
+    </div>
+    <div class="col-12" style="width:auto;z-index:1;">
+        <h1 style="font-size:74px;font-weight:bold;color:red;">Front-end: </h1>
+    </div>
+    <h1 style="font-size:70px;font-weight:bold;color:black;">HTML, CSS, Javascript</h1>
+    <div class="col-12" style="width:auto;z-index:1;">
+        <h1 style="font-size:74px;font-weight:bold;color:red;">Back-end: </h1>
+    </div>
+    <h1 style="font-size:70px;font-weight:bold;color:black;">PostgreSQL, Python</h1>
+    <div class="col-12" style="width:auto;z-index:1;">
+        <h1 style="font-size:74px;font-weight:bold;color:red;">FrameWorks: </h1>
+    </div>
+    <h1 style="font-size:70px;font-weight:bold;color:black;">Flask, Django</h1>   
 
 </div>
 
-<div id="container4" class="row border border-danger d-flex justify-content-around align-items-center" style="height:790px;width:auto;">    
-    <div class="col" style="height:500px;width:auto;">
+<div id="container4" class="row border border-danger d-flex justify-content-around align-items-center" style="min-height:790px;padding:50px;">    
+    <div class="col-12">
         <h1>My Work: </h1>
-
         <h1 style="font-size:74px;font-weight:bold;color:red;">Applications and Projects are on github.</h1>
+        <a class="btn btn-primary" role="button" href="https://github.com/jDavidZapata">Go To My GitHub</a>
+        <a class="btn btn-success" role="button" href="{% url 'projects:projects_list' %}">Or Check out My Projects</a>
     </div>    
-    <div class="col" style="height:500px;width:auto;">
-        
-        <h1>My Experiments: </h1>
-        <h1 style="font-size:74px;font-weight:bold;color:red;">Applications and Projects are on github.</h1>
+    <div class="col-12">        
+        <h1>My Personal Space: </h1>
+        <h1 style="font-size:74px;font-weight:bold;color:red;">See My Personal Stuff</h1>
         
     </div>
 </div>
