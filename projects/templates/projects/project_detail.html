@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<h1 class="text-center mb-3">{{ project.title }}</h1>
+<h1 class="text-center my-3">{{ project.title }}</h1>
 <div class="row">
     <div class="col-md-8">
         <img src="{{ project.image.url }}" alt="{{project.image.url}}" width="100%">
@@ -15,10 +15,14 @@
         <p>{{ project.technology }}</p>
         <h5>Goal of Project:</h5>
         <p>{{ project.goal }}</p>
+        
+    </div>
+    <div class="card-footer bg-transparent">
         <a href="{% url 'projects:projects_list' %}"
                    class="btn btn-primary">
                     Back To Projects
                 </a>
     </div>
+
 </div>
 {% endblock %}
