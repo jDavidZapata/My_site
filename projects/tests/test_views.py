@@ -19,6 +19,12 @@ class ProjectModelTest(TestCase):
         self.assertEqual(
             project_one.description, "First Project")
         self.assertEqual(
+            project_one.technology, "Flask")
+        self.assertEqual(
+            project_one.goal, "Learn")
+        self.assertEqual(
+            project_one.image, "default.png")
+        self.assertEqual(
             project_two.goal, "Learn")
         self.assertEqual(
             project_one.goal, project_two.goal)
@@ -55,8 +61,12 @@ class ProjectPageTest(TestCase):
 
 
     def test_project_page(self):
+    
+        project = Project.objects.get(pk=1)
         c = Client()
         response = c.get("/projects/1/")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context["title"], "Project # 1")
-
+        self.assertEqual(response.context['project'], project)
+        
+    
