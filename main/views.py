@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .forms import ContactForm
 
 # Create your views here.
 
@@ -20,10 +21,16 @@ def aboutpage(request):
     return render(request, 'main/about.html', context)
 
 def contactpage(request):
+    print(request.POST)
+    form = ContactForm(request.POST or None)
+    if form.is_valid():
+        print(form.cleaned_data)
+        form = ContactForm()
     context = {
         "title": "Contact",
         "body": "Body: How to Contact ME",
-        "content": "732 or 201"
+        "content": "732 or 201",
+        "form": form
     }
     return render(request, 'main/contact.html', context)
 
