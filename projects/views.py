@@ -6,6 +6,8 @@ from django.http import Http404
 
 
 def projects_list(request):
+
+    template_name = 'projects/projects_list.html'
     try:
         projects = Project.objects.all()
         context = {
@@ -15,10 +17,12 @@ def projects_list(request):
     except Project.DoesNotExist:
         raise Http404("This Project does not Exist.")
 
-    return render(request, 'projects/projects_list.html', context)
+    return render(request, template_name, context)
 
 
 def project_detail(request, project_id):
+
+    template_name = 'projects/project_detail.html'
     project = get_object_or_404(Project, pk=project_id)
     '''
     try:
@@ -34,4 +38,4 @@ def project_detail(request, project_id):
             'project': project
         }
         
-    return render(request, 'projects/project_detail.html', context)
+    return render(request, template_name, context)
