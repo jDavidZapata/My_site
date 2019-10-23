@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from projects.models import Project
+from .models import Project
 from django.http import Http404
 
 # Create your views here.
@@ -35,6 +35,7 @@ def project_detail(request, project_id):
         raise Http404("This Project does not Exist.")
     '''
     context = {
+            'title': f'Project # {project_id}',
             'project': project
         }
         

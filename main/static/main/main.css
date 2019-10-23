@@ -1,0 +1,20 @@
+#name {
+    font-weight:bold;
+    color:red;
+}
+
+@keyframes grow {
+    from {
+        font-size: 1px;
+    }
+    to {
+        font-size: 74px;
+    }
+}
+
+#name {
+    animation-name: grow;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    
+}
