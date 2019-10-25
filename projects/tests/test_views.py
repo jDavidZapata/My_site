@@ -34,8 +34,9 @@ class ProjectsListPageTest(TestCase):
         response = c.get("/projects/")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context["title"], "Projects")
+        
 
-
+        
 class ProjectPageTest(TestCase):
     """ Test module for Projecst Page. """
 

@@ -1,6 +1,8 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
-from .models import Project
 from django.http import Http404
+from .models import Project
+from .forms import ProjectForm
 
 # Create your views here.
 
@@ -15,6 +17,8 @@ def projects_list(request):
             'projects': projects
         }
     except Project.DoesNotExist:
+        raise Http404("This Project does not Exist.")
+    except ValueError:
         raise Http404("This Project does not Exist.")
 
     return render(request, template_name, context)
@@ -39,4 +43,36 @@ def project_detail(request, project_id):
             'project': project
         }
         
+    return render(request, template_name, context)
+
+
+def project_create(request):
+    
+    template_name = 'form.html'
+    print(request.POST)
+    form = ProjectForm(request.POST or None)
+    if form.is_valid():
+        print(form.cleaned_data)
+        
+        form = ProjectForm()
+    
+    context = {
+        'form': form 
+    }
+    return render(request, template_name, context)
+
+
+
+def project_update(request):
+    
+    template_name = 'form.html'
+    form = ProjectForm(request.POST or None)
+    if form.is_valid():
+        print(form.cleaned_data)
+        
+        form = ProjectForm()
+    
+    context = {
+        'form': form 
+    }
     return render(request, template_name, context)
