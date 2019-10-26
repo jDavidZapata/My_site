@@ -15,7 +15,12 @@
         <p>{{ project.technology }}</p>
         <h5>Goal of Project:</h5>
         <p>{{ project.goal }}</p>
-        
+        <h5>Visit Project at:</h5>
+        <p><a href="{{ project.url }}"
+                   class="btn btn-primary">
+                    Live Project
+        </a>
+        </p>
     </div>
     <div class="card-footer bg-transparent">
         <a href="{% url 'projects:projects_list' %}"
