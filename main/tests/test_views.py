@@ -47,9 +47,8 @@ class ProjectsPageTest(TestCase):
         c = Client()
         response = c.get("/projects/")
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context["title"], "Temporary")
-        self.assertEqual(response.context["body"], "Body: Temp Page")
-        
+        self.assertEqual(response.context["title"], "Projects")
+
 
 class BlogPageTest(TestCase):
 
