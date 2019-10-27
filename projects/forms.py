@@ -7,7 +7,7 @@ class ProjectForm(forms.Form):
     description = forms.CharField()
     technology = forms.CharField(max_length=20)
     goal = forms.CharField()
-    liveProject_url = forms.CharField(max_length=200)
+    liveProject_url = forms.URLField(max_length=200)
     image = forms.ImageField()
 
 

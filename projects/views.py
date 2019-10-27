@@ -50,10 +50,10 @@ def project_create(request):
     
     template_name = 'form.html'
     print(request.POST)
-    form = ProjectForm(request.POST or None)
+    form = ProjectForm(request.POST, request.FILES or None)
     if form.is_valid():
-        print(form.cleaned_data)
-        
+        print(form.cleaned_data['title'])
+        obj = Project.objects.create(**form.cleaned_data)
         form = ProjectForm()
     
     context = {
@@ -66,7 +66,7 @@ def project_create(request):
 def project_update(request):
     
     template_name = 'form.html'
-    form = ProjectForm(request.POST or None)
+    form = ProjectForm(request.POST, request.FILES or None)
     if form.is_valid():
         print(form.cleaned_data)
         
