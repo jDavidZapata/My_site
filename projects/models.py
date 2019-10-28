@@ -1,8 +1,12 @@
 from django.db import models
+from django.conf import settings
 
 # Create your models here.
 
+User = settings.AUTH_USER_MODEL
+
 class Project(models.Model):
+    user = models.ForeignKey(User, default=1, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     description = models.TextField()
     technology = models.CharField(max_length=20)

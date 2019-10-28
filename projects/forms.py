@@ -16,3 +16,13 @@ class ProjectModelForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ['title', 'description', 'technology', 'goal', 'liveProject_url', 'image']
+
+    '''
+    def clean_title(self, *args, **kwargs):
+        title = self.cleaned_data.get('title')
+        qs = Project.objects.filter(title=title)
+        if qs.exists():
+            raise forms.ValidationError("This title already exists.")
+        return title
+
+    '''
