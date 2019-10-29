@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import Http404
 from .models import Project
 from .forms import ProjectForm, ProjectModelForm
@@ -54,37 +54,58 @@ def project_create(request):
     
     template_name = 'form.html'
     print(request.POST)
-    form = ProjectModelForm(request.POST, request.FILES or None)
+    form = ProjectModelForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         print(form.cleaned_data)
         #obj = Project.objects.create(**form.cleaned_data)
         obj = form.save(commit=False)
         obj.user = request.user
         obj.save()
-        #form = ProjectForm()
-        form = ProjectModelForm()
+        return redirect("/projects")
     
     context = {
+        'title': 'Create A Project',
         'form': form 
     }
     return render(request, template_name, context)
 
 
-@login_required(login_url='/login')
+#@login_required(login_url='/login')
+@staff_member_required
 def project_update(request, project_id):
-    project = get_object_or_404(Project, pk=project_id)
+    obj = get_object_or_404(Project, pk=project_id)
     template_name = 'form.html'
-    form = ProjectModelForm(request.POST, request.FILES or None, instance=project)
-    if form.is_valid():
+    form = ProjectModelForm(request.POST or None, request.FILES or None, instance=obj)
+    if form.is_valid() and obj.user == request.user:
         print(form.cleaned_data)
+        #form.save()
         #obj = Project.objects.create(**form.cleaned_data)
-        obj = form.save(commit=False)
-        obj.user = request.user
-        obj.save()
-        form = ProjectModelForm()
+        form.save() 
+        return redirect("/projects")           
+
     
     context = {
-        'title': f'Update Project # {project_id}',
+        'title': f'Update Project {obj.title}',
+        'form': form 
+    }
+    return render(request, template_name, context)
+
+
+
+@staff_member_required
+def project_delete(request, project_id):
+    obj = get_object_or_404(Project, pk=project_id)
+    template_name = 'form.html'
+    print(request.POST)
+    form = ProjectModelForm(request.POST or None, request.FILES or None, instance=obj)
+    if form.is_valid() and obj.user == request.user:
+        print(form.cleaned_data)
+             
+        obj.delete()
+        return redirect("/projects")      
+    
+    context = {
+        'title': f'Delete Project {obj.title}',
         'form': form 
     }
     return render(request, template_name, context)
