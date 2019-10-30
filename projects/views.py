@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
 from django.http import Http404
 from .models import Project
 from .forms import ProjectForm, ProjectModelForm
@@ -11,6 +11,13 @@ from .forms import ProjectForm, ProjectModelForm
 def projects_list(request):
 
     template_name = 'projects/projects_list.html'
+    projects = get_list_or_404(Project)
+    context = {
+            'title': '* Projects *',
+            'projects': projects
+        }
+
+    '''
     try:
         projects = Project.objects.all()
         context = {
@@ -21,6 +28,7 @@ def projects_list(request):
         raise Http404("This Project does not Exist.")
     except ValueError:
         raise Http404("This Project does not Exist.")
+    '''
 
     return render(request, template_name, context)
 
