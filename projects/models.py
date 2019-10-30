@@ -15,7 +15,7 @@ class Project(models.Model):
     liveProject_url =  models.URLField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
 
 
     def __str__(self):
@@ -28,3 +28,11 @@ class Project(models.Model):
     
     def get_absolute_url(self):
         return f"/projects/{self.id}"
+
+    
+    def get_update_url(self):
+        return f"/projects/{self.id}/update"
+
+
+    def get_delete_url(self):
+        return f"/projects/{self.id}/delete"

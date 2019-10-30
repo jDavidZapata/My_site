@@ -26,8 +26,13 @@
         <a href="{% url 'projects:projects_list' %}"
                    class="btn btn-primary">
                     Back To Projects
-        </a>
+        </a>    
+        {% if request.user.is_authenticated %}
+            {% if request.user.is_staff %}
+                <a href="{{ project.get_update_url }}" class="btn btn-danger">Update</a>
+                <a href="{{ project.get_delete_url }}" class="btn btn-danger">Delete</a>
+            {% endif %}
+        {% endif %}
     </div>
-
 </div>
 {% endblock %}
