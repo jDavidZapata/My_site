@@ -41,20 +41,11 @@ class ResumePageTest(TestCase):
         self.assertEqual(response.context["body"], "Body: My resume")
         
 
-class ProjectsPageTest(TestCase):
+class PersonalPageTest(TestCase):
 
-    def test_projects_page(self):
+    def test_personal_page(self):
         c = Client()
-        response = c.get("/projects/")
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context["title"], "Projects")
-
-
-class BlogPageTest(TestCase):
-
-    def test_blog_page(self):
-        c = Client()
-        response = c.get("/blog/")
+        response = c.get("/personal/")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context["title"], "Temporary")
         self.assertEqual(response.context["body"], "Body: Temp Page")

@@ -31,7 +31,7 @@ class ProjectsListPageTest(TestCase):
         c = Client()
         response = c.get("/projects/")
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context["title"], "Projects")
+        self.assertEqual(response.context["title"], "* Projects *")
         
 
         
