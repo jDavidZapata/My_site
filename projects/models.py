@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.shortcuts import reverse
 
 # Create your models here.
 
@@ -27,12 +28,16 @@ class Project(models.Model):
 
     
     def get_absolute_url(self):
-        return f"/projects/{self.id}"
+        return reverse('projects:project_detail', kwargs={'project_id': self.id})
+        #return f"/projects/{self.id}"
 
     
     def get_update_url(self):
-        return f"/projects/{self.id}/update"
+        return reverse('projects:project_update', kwargs={'project_id': self.id})
+        #return f"/projects/{self.id}/update"
+        #return f"{self.get_absolute_url}/update"
 
 
     def get_delete_url(self):
-        return f"/projects/{self.id}/delete"
+        return reverse('projects:project_delete', kwargs={'project_id': self.id})
+        #return f"/projects/{self.id}/delete"

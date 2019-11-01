@@ -23,11 +23,13 @@
   <body>
     {% include 'navbar.html' %}
     <div class="container-fluid">
+      <br>
       {% if messages %}   
         {% for message in messages %}
           <div class="alert alert-{{ message.tags }}">
             {{ mesage }}
           </div>
+          <br>
         {% endfor %}
       {% endif %}
                 
