@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if title %}
+  <div class='container mt-3'>
+    <h1> {{ title }} </h1>
+  </div>
+{% endif %}
+
+
+
+<div class='row'>
+  <div class='col'>
+            
+    <div class='col-md-6 col-12 mx-auto'>
+      <p>{{ content }}</p>
+              
+      <form enctype="multipart/form-data" class='contact-form' method='POST' action="."> {% csrf_token %}
+        {{ form.as_p }}
+        <button type='submit' class='btn btn-danger'>Submit</button>
+      </form>
+
+      <p>If you already have an account, <a href="/login"><strong>Login</strong></a> instead.</p>
+    </div>
+  </div>
+</div>    
+
+{% endblock %}

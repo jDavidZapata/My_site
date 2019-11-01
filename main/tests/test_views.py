@@ -4,7 +4,7 @@ from django.urls import reverse
 
 # Create your tests here.
 
-PASSWORD = 'pAssw0rd!'
+PASSWORD = 'pAs$w0rd!!'
 
 
 class MainPageTest(TestCase):
@@ -66,17 +66,20 @@ class AuthenticationTest(TestCase):
         self.client = Client()
 
     def test_user_can_sign_up(self):
-        c = Client()
-        response = c.post(reverse('sign_up'), data={
+
+        data={
             'username': 'user@example.com',
-            'first_name': 'Test',
-            'last_name': 'User',
+            'password1': PASSWORD,
+            'password2': PASSWORD,
+        }
+        c = Client()
+        response = c.post(reverse('main:registerpage'), data={
+            'username': 'user@example.com',
             'password1': PASSWORD,
             'password2': PASSWORD,
         })
         user = get_user_model().objects.last()
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.data['id'], user.id)
-        self.assertEqual(response.data['username'], user.username)
-        self.assertEqual(response.data['first_name'], user.first_name)
-        self.assertEqual(response.data['last_name'], user.last_name)
+        self.assertEqual(data['username'], user.username)
+        #self.assertEqual(data['first_name'], user.first_name)
+        #self.assertEqual(data['last_name'], user.last_name)

@@ -59,6 +59,7 @@ def register(request):
         print(f"user ===== >{user}")
         login(request, user)
         return redirect('main:homepage')
+
     context = {
         "title": "Register",
         "body": "Body: Registrationg Form",
