@@ -19,10 +19,8 @@ class ProjectsListPageTest(TestCase):
         """
         c = Client()
         response = c.get("/projects/")
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "No Project's.")
-        self.assertQuerysetEqual(response.context['projects'], [])
-
+        self.assertEqual(response.status_code, 404)
+        
 
 
     def test_projects_page_with_projects(self):

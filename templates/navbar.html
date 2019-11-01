@@ -14,17 +14,17 @@
       <li class="nav-item {% if request.path == '/about/' %}active{% endif %}">
         <a class="nav-link" href="{% url 'main:aboutpage' %}">About</a>
       </li>
-      <li class="nav-item {% if request.path == '/contact/' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'main:contactpage' %}">Contact</a>
-      </li>      
-      <li class="nav-item {% if request.path == '/resume/' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'main:resumepage' %}">Resume</a>
-      </li>
       <li class="nav-item {% if request.path == '/projects/' %}active{% endif %}">
         <a class="nav-link" href="{% url 'projects:projects_list' %}">Projects</a>
       </li>
-      <li class="nav-item {% if request.path == '/blog/' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'main:temppage' %}">Blog</a>
+      <li class="nav-item {% if request.path == '/contact/' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'main:contactpage' %}">Contact</a>
+      </li>   
+      <li class="nav-item {% if request.path == '/resume/' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'main:resumepage' %}">Resume</a>
+      </li>
+      <li class="nav-item {% if request.path == '/personal/' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'main:temppage' %}">Personal</a>
       </li>
     </ul>
   </div>
