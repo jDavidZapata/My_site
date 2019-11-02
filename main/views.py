@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate
+from django.contrib import messages
 from .forms import ContactForm, CreateUserForm
 
 
@@ -55,10 +56,14 @@ def register(request):
     if form.is_valid():
         print(form.cleaned_data)
         user = form.save()
-        print(f"request ===== >{request}")
-        print(f"user ===== >{user}")
+        username = form.cleaned_data.get('username')
+        messages.success(request, f"New Account Created: Welcome {username}.")
         login(request, user)
+        messages.info(request, f"You are now logged in as {username}.")
         return redirect('main:homepage')
+    else:
+        for msg in form.error_messages:
+            messages.error(request, f"{msg}: {form.error_messages[msg]}")
 
     context = {
         "title": "Register",
@@ -67,25 +72,33 @@ def register(request):
     }
     return render(request, template_name, context)
 
-'''
-def login(request):
+
+def loginpage(request):
 
     template_name = 'main/login.html'
+    form = AuthenticationForm(request.POST or None)
+    if form.is_valid():
+        user = form.get_user()
+        username = form.cleaned_data.get('username')
+        login(request, user=user)
+        messages.info(request, f"You are now logged in as {username}.")
+        return redirect('main:homepage')
+    else:
+        for msg in form.error_messages:
+            print(form.error_messages[msg])
+
     context = {
         "title": "Login",
         "body": "Body: Login Form"
     }
     return render(request, template_name, context)
 
-def logout(request):
+def logoutpage(request):
 
-    template_name = 'main/logout.html'
-    context = {
-        "title": "Logout",
-        "body": "Body: Logout and Redirect to Home Page"
-    }
-    return render(request, template_name, context)
-'''
+    logout(request)
+    messages.info(request, f"You are now logged out.")
+    return redirect('main:homepage')
+
 
 def temppage(request):
 

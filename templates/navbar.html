@@ -26,6 +26,14 @@
       <li class="nav-item {% if request.path == '/personal/' %}active{% endif %}">
         <a class="nav-link" href="{% url 'main:temppage' %}">Personal</a>
       </li>
+      {% if user.is_authenticated %}
+        <li class="nav-item {% if request.path == '/profile/' %}active{% endif %}">
+          <a class="nav-link" href="{% url 'main:temppage' %}">{{user.username}} Profile</a>
+        </li>
+        <li class="nav-item {% if request.path == '/logout/' %}active{% endif %}">
+          <a class="nav-link" href="{% url 'main:logoutpage' %}">Logout</a>
+        </li>
+      {% endif %}
     </ul>
   </div>
 </nav>

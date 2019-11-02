@@ -7,6 +7,12 @@ from django.urls import reverse
 PASSWORD = 'pAs$w0rd!!'
 
 
+def create_user(username='user@example.com', password=PASSWORD): # new
+    return get_user_model().objects.create_user(
+        username=username, password=password)
+
+
+
 class MainPageTest(TestCase):
     """ Test module for Main Page. """
     def test_index_page(self):
@@ -57,9 +63,6 @@ class PersonalPageTest(TestCase):
         self.assertEqual(response.context["body"], "Body: Temp Page")
         
 
-
-
-
 class AuthenticationTest(TestCase):
 
     def setUp(self):
@@ -83,3 +86,25 @@ class AuthenticationTest(TestCase):
         self.assertEqual(data['username'], user.username)
         #self.assertEqual(data['first_name'], user.first_name)
         #self.assertEqual(data['last_name'], user.last_name)
+
+
+    def test_user_can_log_in(self): 
+        data={
+            'username': 'user@example.com',
+            'password1': PASSWORD,
+            'password2': PASSWORD,
+        }
+        user = create_user()
+        response = self.client.post(reverse('main:loginpage'), data={
+            'username': user.username,
+            'password': PASSWORD,
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['username'], user.username)
+
+
+    def test_user_can_log_out(self): 
+        user = create_user()
+        self.client.login(username=user.username, password=PASSWORD)
+        response = self.client.post(reverse('main:logoutpage'))
+        self.assertEqual(response.status_code, 302)
