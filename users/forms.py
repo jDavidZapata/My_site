@@ -10,3 +10,4 @@ class CreateUserForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
         fields = UserCreationForm.Meta.fields #+ ('custom_field',)
+        

@@ -45,7 +45,7 @@ class AuthenticationTest(TestCase):
             'username': user.username,
             'password': PASSWORD,
         })
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(data['username'], user.username)
 
 
