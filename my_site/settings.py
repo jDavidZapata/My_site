@@ -33,6 +33,7 @@ LOGIN_URL = '/login'
 
 INSTALLED_APPS = [
     'main.apps.MainConfig',
+    'users.apps.UsersConfig',
     'projects.apps.ProjectsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
