@@ -28,10 +28,10 @@
       </li>
       {% if user.is_authenticated %}
         <li class="nav-item {% if request.path == '/profile/' %}active{% endif %}">
-          <a class="nav-link" href="{% url 'profile' %}">{{user.username|capfirst}} Profile</a>
+          <a class="nav-link" href="{% url 'users:profile' %}">{{user.username|capfirst}} Profile</a>
         </li>
         <li class="nav-item {% if request.path == '/logout/' %}active{% endif %}">
-          <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+          <a class="nav-link" href="{% url 'users:logout' %}">Logout</a>
         </li>
       {% endif %}
     </ul>

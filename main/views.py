@@ -1,12 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
-from .forms import ContactForm, CreateUserForm
+from .forms import ContactForm
 
 
 # Create your views here.
+
 
 def homepage(request):
 
@@ -15,6 +14,7 @@ def homepage(request):
         "body": "Body: HELLO WORLD!!!"
     }   
     return render(request, template_name, context)
+
 
 def aboutpage(request):
 
@@ -25,20 +25,32 @@ def aboutpage(request):
     }    
     return render(request, template_name, context)
 
+
 def contactpage(request):
 
     template_name = 'main/contact.html'
-    form = ContactForm(request.POST or None)
-    if form.is_valid():
-        print(form.cleaned_data)
+    if request.method == 'POST':
+
+        form = ContactForm(request.POST or None)
+        if form.is_valid():
+            print(form.cleaned_data)
+            messages.info(request, f"Your message has been sended.")
+            return redirect('main:homepage')
+        else:
+            messages.error(request, "Invalid Form.")
+            for msg in form.error_messages:
+                messages.error(request, f"{msg}: {form.error_messages[msg]}")
+    else:
+        
         form = ContactForm()
-    context = {
-        "title": "Contact",
-        "body": "Body: How to Contact ME",
-        "content": "732 or 201",
-        "form": form
-    }
+        context = {
+            "title": "Contact",
+            "body": "Body: How to Contact ME",
+            "content": "732 or 201",
+            "form": form
+        }
     return render(request, template_name, context)
+
 
 def resumepage(request):
 
@@ -48,57 +60,7 @@ def resumepage(request):
         "body": "Body: My resume"
     }
     return render(request, template_name, context)
-'''
-def register(request):
 
-    template_name = 'main/signup.html'
-    form = CreateUserForm(request.POST or None)
-    if form.is_valid():
-        print(form.cleaned_data)
-        user = form.save()
-        username = form.cleaned_data.get('username')
-        messages.success(request, f"New Account Created: Welcome {username}.")
-        login(request, user)
-        messages.info(request, f"You are now logged in as {username}.")
-        return redirect('main:homepage')
-    else:
-        for msg in form.error_messages:
-            messages.error(request, f"{msg}: {form.error_messages[msg]}")
-
-    context = {
-        "title": "Register",
-        "body": "Body: Registrationg Form",
-        "form": form
-    }
-    return render(request, template_name, context)
-
-
-def loginpage(request):
-
-    template_name = 'main/login.html'
-    form = AuthenticationForm(request.POST or None)
-    if form.is_valid():
-        user = form.get_user()
-        username = form.cleaned_data.get('username')
-        login(request, user=user)
-        messages.info(request, f"You are now logged in as {username}.")
-        return redirect('main:homepage')
-    else:
-        for msg in form.error_messages:
-            print(form.error_messages[msg])
-
-    context = {
-        "title": "Login",
-        "body": "Body: Login Form"
-    }
-    return render(request, template_name, context)
-
-def logoutpage(request):
-
-    logout(request)
-    messages.info(request, f"You are now logged out.")
-    return redirect('main:homepage')
-'''
 
 def temppage(request):
 

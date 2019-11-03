@@ -136,6 +136,6 @@ STATIC_ROOT = os.path.join(LOCAL_STATIC_CDN_PATH, 'static')
 
 MEDIA_ROOT = os.path.join(LOCAL_STATIC_CDN_PATH, 'media')
 
-LOGIN_URL = 'login'
+LOGIN_URL = 'users:login'
 
 LOGIN_REDIRECT_URL = 'main:temppage'

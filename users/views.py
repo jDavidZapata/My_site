@@ -36,7 +36,11 @@ def register(request):
 
 @login_required
 def profile(request):
-    return render(request, "users/profile.html")
+    template_name = 'users/profile.html'
+    context = {
+        "title": "Profile"
+    }
+    return render(request, template_name, context)
 
 
 def login_(request):
