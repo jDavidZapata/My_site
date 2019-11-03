@@ -50,13 +50,12 @@ def project_detail(request, project_id):
     context = {
             'title': f'Project # {project_id}',
             'project': project
-        }
-        
+        }        
     return render(request, template_name, context)
 
 
 
-#@login_required
+
 @staff_member_required
 def project_create(request):
     
@@ -65,7 +64,6 @@ def project_create(request):
     form = ProjectModelForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         print(form.cleaned_data)
-        #project = Project.objects.create(**form.cleaned_data)
         project = form.save(commit=False)
         project.user = request.user
         project.save()
@@ -78,7 +76,7 @@ def project_create(request):
     return render(request, template_name, context)
 
 
-#@login_required(login_url='/login')
+
 @staff_member_required
 def project_update(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
@@ -86,11 +84,8 @@ def project_update(request, project_id):
     form = ProjectModelForm(request.POST or None, request.FILES or None, instance=project)
     if form.is_valid() and project.user == request.user:
         print(form.cleaned_data)
-        #form.save()
-        #project = Project.objects.create(**form.cleaned_data)
-        form.save() 
+        project = Project.objects.create(**form.cleaned_data)
         return redirect(project)
-
     
     context = {
         'title': f'Update Project {project.title}',
@@ -107,8 +102,7 @@ def project_delete(request, project_id):
     print(request.POST)
     form = ProjectModelForm(request.POST or None, request.FILES or None, instance=project)
     if form.is_valid() and project.user == request.user:
-        print(form.cleaned_data)
-             
+        print(form.cleaned_data)             
         project.delete()
         return redirect('projects:projects_list')      
     

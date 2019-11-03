@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['192.168.1.155','localhost','127.0.0.1']
 
-LOGIN_URL = '/login'
+
 
 # Application definition
 
@@ -136,4 +136,6 @@ STATIC_ROOT = os.path.join(LOCAL_STATIC_CDN_PATH, 'static')
 
 MEDIA_ROOT = os.path.join(LOCAL_STATIC_CDN_PATH, 'media')
 
+LOGIN_URL = 'login'
 
+LOGIN_REDIRECT_URL = 'main:temppage'

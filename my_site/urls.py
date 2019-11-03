@@ -21,9 +21,10 @@ from users import views as user_views
 
 urlpatterns = [
     path('', include('main.urls')),
-    path('signup/', user_views.register, name='register_'),
-    path('login/', user_views.login_, name='login_'),
-    path('logout/', user_views.logout_, name='logout_'),
+    path('signup/', user_views.register, name='register'),
+    path('login/', user_views.login_, name='login'),
+    path('profile/', user_views.profile, name='profile'),
+    path('logout/', user_views.logout_, name='logout'),
     path('projects/', include('projects.urls', namespace='projects')),
     path('admin/', admin.site.urls),
 

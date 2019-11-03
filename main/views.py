@@ -48,7 +48,7 @@ def resumepage(request):
         "body": "Body: My resume"
     }
     return render(request, template_name, context)
-
+'''
 def register(request):
 
     template_name = 'main/signup.html'
@@ -98,7 +98,7 @@ def logoutpage(request):
     logout(request)
     messages.info(request, f"You are now logged out.")
     return redirect('main:homepage')
-
+'''
 
 def temppage(request):
 

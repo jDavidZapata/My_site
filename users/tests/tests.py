@@ -7,7 +7,7 @@ from django.urls import reverse
 PASSWORD = 'pAs$w0rd!!'
 
 
-def create_user(username='user@example.com', password=PASSWORD): # new
+def create_user(username='user@example.com', password=PASSWORD, email='user@example.com'): # new
     return get_user_model().objects.create_user(
         username=username, password=password)
 
@@ -21,11 +21,13 @@ class AuthenticationTest(TestCase):
 
         data={
             'username': 'user@example.com',
+            'email': 'user@example.com',
             'password1': PASSWORD,
             'password2': PASSWORD,
         }
-        response = self.client.post(reverse('register_'), data={
+        response = self.client.post(reverse('register'), data={
             'username': 'user@example.com',
+            'email': 'user@example.com',
             'password1': PASSWORD,
             'password2': PASSWORD,
         })
@@ -37,13 +39,15 @@ class AuthenticationTest(TestCase):
     def test_user_can_log_in(self): 
         data={
             'username': 'user@example.com',
+            'email': 'user@example.com',
             'password1': PASSWORD,
             'password2': PASSWORD,
         }
         user = create_user()
-        response = self.client.post(reverse('login_'), data={
+        response = self.client.post(reverse('login'), data={
             'username': user.username,
             'password': PASSWORD,
+            'email': 'user@example.com',
         })
         self.assertEqual(response.status_code, 302)
         self.assertEqual(data['username'], user.username)
@@ -52,5 +56,5 @@ class AuthenticationTest(TestCase):
     def test_user_can_log_out(self): 
         user = create_user()
         self.client.login(username=user.username, password=PASSWORD)
-        response = self.client.post(reverse('logout_'))
+        response = self.client.post(reverse('logout'))
         self.assertEqual(response.status_code, 302)

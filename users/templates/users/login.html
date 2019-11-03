@@ -15,12 +15,15 @@
                 {{ form.as_p }}
             </fieldset>
             <div class="form-group">
+                {% if next %}
+                    <input type="hidden" name="next" value="{{ next }}" />
+                {% endif %}
                 <button type='submit' value="login" class='btn btn-danger'>Log In</button>
             </div>
         </form>
         <div class="border-top pt-3">
             <small class="text-muted">
-            If you don't already have an account, <a href="/signup"><strong>Sig Up</strong></a> instead.
+            If you don't already have an account, <a href="{% url 'register' %}"><strong>Sig Up</strong></a> instead.
             </small>
         </div>
     </div>
