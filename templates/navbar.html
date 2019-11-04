@@ -26,14 +26,26 @@
       <li class="nav-item {% if request.path == '/personal/' %}active{% endif %}">
         <a class="nav-link" href="{% url 'main:temppage' %}">Personal</a>
       </li>
-      {% if user.is_authenticated %}
-        <li class="nav-item {% if request.path == '/profile/' %}active{% endif %}">
-          <a class="nav-link" href="{% url 'users:profile' %}">{{user.username|capfirst}} Profile</a>
-        </li>
-        <li class="nav-item {% if request.path == '/logout/' %}active{% endif %}">
-          <a class="nav-link" href="{% url 'users:logout' %}">Logout</a>
-        </li>
-      {% endif %}
+    </ul> 
+    {% if user.is_authenticated %}
+    <ul class="navbar-nav mx-auto ">       
+      <li class="nav-item {% if request.path == '/profile/' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'users:profile' %}">{{user.username|capfirst}} Profile</a>
+      </li>
+      <li class="nav-item {% if request.path == '/logout/' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'users:logout' %}">Logout</a>
+      </li>
     </ul>
+    {% endif %}
+    {% if personal0 and not user.is_authenticated %}
+    <ul class="navbar-nav mx-auto ">       
+      <li class="nav-item {% if request.path == '/register/' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'users:register' %}">Register</a>
+      </li>
+      <li class="nav-item {% if request.path == '/login/' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'users:login' %}">Login</a>
+      </li>
+    </ul>
+    {% endif %}
   </div>
 </nav>

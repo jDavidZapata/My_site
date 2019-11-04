@@ -61,18 +61,23 @@ def project_create(request):
     
     template_name = 'form.html'
     print(request.POST)
-    form = ProjectModelForm(request.POST or None, request.FILES or None)
-    if form.is_valid():
-        print(form.cleaned_data)
-        project = form.save(commit=False)
-        project.user = request.user
-        project.save()
-        return redirect(project)
-    
-    context = {
-        'title': 'Create A Project',
-        'form': form 
-    }
+    if request.method == 'POST':
+        form = ProjectModelForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            print(form.cleaned_data)
+            project = form.save(commit=False)
+            project.user = request.user
+            project.save()
+            messages.success(request, f"New Project Created: {project.title}.")
+            return redirect(project)
+        else:
+            for msg in form.error_messages:
+                messages.error(request, f"{msg}: {form.error_messages[msg]}")
+    else:
+        context = {
+            'title': 'Create A Project',
+            'form': form 
+        }
     return render(request, template_name, context)
 
 
@@ -81,16 +86,21 @@ def project_create(request):
 def project_update(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     template_name = 'form.html'
-    form = ProjectModelForm(request.POST or None, request.FILES or None, instance=project)
-    if form.is_valid() and project.user == request.user:
-        print(form.cleaned_data)
-        project = Project.objects.create(**form.cleaned_data)
-        return redirect(project)
-    
-    context = {
-        'title': f'Update Project {project.title}',
-        'form': form 
-    }
+    if request.method == 'POST':
+        form = ProjectModelForm(request.POST or None, request.FILES or None, instance=project)
+        if form.is_valid() and project.user == request.user:
+            print(form.cleaned_data)
+            project = Project.objects.create(**form.cleaned_data)
+            messages.success(request, f"{project.title}: Project Updated.")
+            return redirect(project)
+        else:
+            for msg in form.error_messages:
+                messages.error(request, f"{msg}: {form.error_messages[msg]}")
+    else:
+        context = {
+            'title': f'Update Project {project.title}',
+            'form': form 
+        }
     return render(request, template_name, context)
 
 
@@ -100,14 +110,20 @@ def project_delete(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     template_name = 'form.html'
     print(request.POST)
-    form = ProjectModelForm(request.POST or None, request.FILES or None, instance=project)
-    if form.is_valid() and project.user == request.user:
-        print(form.cleaned_data)             
-        project.delete()
-        return redirect('projects:projects_list')      
-    
-    context = {
-        'title': f'Delete Project {project.title}',
-        'form': form 
-    }
+    if request.method == 'POST':
+        form = ProjectModelForm(request.POST or None, request.FILES or None, instance=project)
+        if form.is_valid() and project.user == request.user:
+            print(form.cleaned_data)             
+            project.delete()
+            messages.success(request, f"Project Deleted.")
+            return redirect('projects:projects_list')      
+
+        else:
+            for msg in form.error_messages:
+                messages.error(request, f"{msg}: {form.error_messages[msg]}")
+    else:    
+        context = {
+            'title': f'Delete Project {project.title}',
+            'form': form 
+        }
     return render(request, template_name, context)

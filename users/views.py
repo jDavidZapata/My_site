@@ -4,7 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
-from .forms import CreateUserForm
+from .forms import CreateUserForm, UpdateUserForm, UpdateProfileForm
 from django.utils import http
 
 # Create your views here.
@@ -36,9 +36,25 @@ def register(request):
 
 @login_required
 def profile(request):
+
     template_name = 'users/profile.html'
+    if request.method == 'POST':
+        user_form = UpdateUserForm(request.POST or None, instance=request.user)
+        profile_form = UpdateProfileForm(request.POST or None, request.FILES, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, f"Your Account has been updated!")
+            return redirect('users:profile')
+
+    else:
+        user_form = UpdateUserForm(instance=request.user)
+        profile_form = UpdateProfileForm(instance=request.user.profile)
+    
     context = {
-        "title": "Profile"
+        "title": "Profile",
+        "user_form": user_form,
+        "profile_form": profile_form
     }
     return render(request, template_name, context)
 

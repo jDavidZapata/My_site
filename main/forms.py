@@ -11,9 +11,3 @@ class ContactForm(forms.Form):
     subject = forms.CharField(max_length=100)
     message_content = forms.CharField(label='Your Message', widget=forms.Textarea)
 
-
-class CreateUserForm(UserCreationForm):
-
-    class Meta(UserCreationForm.Meta):
-        model = User
-        fields = UserCreationForm.Meta.fields #+ ('custom_field',)
