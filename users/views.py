@@ -20,17 +20,16 @@ def register(request):
             messages.success(request, f"New Account Created: Welcome {username}.")
             login(request, user)
             messages.info(request, f"You are now logged in as {username}.")
-            return redirect('main:homepage')
+            return redirect('main:temppage')
         else:
-            for msg in form.error_messages:
-                messages.error(request, f"{msg}: {form.error_messages[msg]}")
-    else:
-        form = CreateUserForm()
-        context = {
-            "title": "Register",
-            "body": "Body: Registrationg Form",
-            "form": form
-        }
+            messages.error(request, "Invalid Registration")
+    form = CreateUserForm()
+    context = {
+        "title": "Register",
+        "body": "Body: Registrationg Form",
+        "form": form,
+        "personal0": True,
+    }
     return render(request, template_name, context)
 
 
@@ -46,16 +45,16 @@ def profile(request):
             profile_form.save()
             messages.success(request, f"Your Account has been updated!")
             return redirect('users:profile')
-
+        else:
+            messages.error(request, "Invalid Update")
     else:
         user_form = UpdateUserForm(instance=request.user)
         profile_form = UpdateProfileForm(instance=request.user.profile)
-    
-    context = {
-        "title": "Profile",
-        "user_form": user_form,
-        "profile_form": profile_form
-    }
+        context = {
+            "title": "Profile",
+            "user_form": user_form,
+            "profile_form": profile_form
+        }
     return render(request, template_name, context)
 
 
@@ -81,25 +80,30 @@ def login_(request):
                 login(request, user)
                 messages.info(request, f"You are now logged in as {username}.")
                 return redirect(redirect_to)
-            else:
-                messages.error(request, "Invalid Username or Password")
         else:
-            for msg in form.error_messages:
-                messages.error(request, f"{msg}: {form.error_messages[msg]}")
-    else:
-        form = AuthenticationForm()
-        context = {
-            "title": "Login",
-            "body": "Body: Login Form",
-            "form": form,
-            "next": redirect_to,
-        }
+            messages.error(request, "Invalid Username or Password")
+        
+    form = AuthenticationForm()
+    context = {
+        "title": "Login",
+        "body": "Body: Login Form",
+        "form": form,
+        "next": redirect_to,
+        "personal0": True
+    }
     return render(request, template_name, context)
 
 
 @login_required
 def logout_(request):
 
+    redirect_to = request.POST.get('next', request.GET.get('next', '/'))
+    redirect_to = (redirect_to
+                   if http.is_safe_url(redirect_to, request.get_host())
+                   else '/')
     logout(request)
     messages.info(request, f"You are now logged out.")
-    return redirect('main:homepage')
+    if redirect_to != '':
+        return redirect(redirect_to)
+    else:    
+        return redirect('main:temppage')

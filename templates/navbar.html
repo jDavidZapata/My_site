@@ -33,7 +33,7 @@
         <a class="nav-link" href="{% url 'users:profile' %}">{{user.username|capfirst}} Profile</a>
       </li>
       <li class="nav-item {% if request.path == '/logout/' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'users:logout' %}">Logout</a>
+        <a class="nav-link" href="{% url 'users:logout' %}?next={{request.path}}">Logout</a>
       </li>
     </ul>
     {% endif %}
@@ -43,7 +43,7 @@
         <a class="nav-link" href="{% url 'users:register' %}">Register</a>
       </li>
       <li class="nav-item {% if request.path == '/login/' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'users:login' %}">Login</a>
+        <a class="nav-link" href="{% url 'users:login' %}?next={{request.path}}">Login</a>
       </li>
     </ul>
     {% endif %}
