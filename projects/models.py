@@ -12,7 +12,7 @@ class Project(models.Model):
     description = models.TextField()
     technology = models.CharField(max_length=20)
     goal = models.TextField()
-    image = models.ImageField(upload_to='img/', blank=True, null=True)
+    image = models.ImageField(upload_to='project_img/', blank=True, null=True)
     liveProject_url =  models.URLField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
