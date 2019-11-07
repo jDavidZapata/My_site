@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from main import views as main_views
 
 
 urlpatterns = [
@@ -25,6 +26,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
 ] 
+
+
+handler404 = main_views.handler404
+handler500 = main_views.handler500
+
 
 if settings.DEBUG:
     #test mode
