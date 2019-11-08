@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<h1 class="text-center my-3">{{ title }}</h1>
+<h1 class="text-center my-3">{{ title | title }}</h1>
 <div class="row">
 {% for project in projects reversed %}
     <div class="col-md-4">
         <div class="card mb-3">
             <img class="card-img-top" src="{{ project.image.url }}">
             <div class="card-body">
-                <h5 class="card-title">{{ project.title }}</h5>
-                <p class="card-text">{{ project.description }}</p>
-                <small class="text-muted">Last updated 3 mins ago</small>
+                <h5 class="card-title">{{ project.title | title }}</h5>
+                <p class="card-text">{{ project.description | truncatechars:50 }}</p>
+                <small class="text-muted">Last updated {{ project.updated_at }}</small>
             </div>
             <div class="card-footer">
                 <a href="{% url 'projects:project_detail' project.id %}"
