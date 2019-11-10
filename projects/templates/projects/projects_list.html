@@ -4,7 +4,7 @@
 <h1 class="text-center my-3">{{ title | title }}</h1>
 
 {% for project in projects reversed %}
-    <div class="card-group ">
+    
         <div class="card text-white bg-dark mb-3">
             <img class="card-img-top" src="{{ project.image.url }}">
             <div class="card-body">
@@ -20,7 +20,7 @@
                 
             </div>
         </div>
-    </div>
+   
 {% empty %}
     <div class="col-md-4">
         <div class="card mb-3">
