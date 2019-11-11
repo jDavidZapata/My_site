@@ -4,7 +4,9 @@
 <h1 class="text-center my-3">{{ title | title }}</h1>
 
 {% for project in projects reversed %}
-    
+    {% if forloop.counter0 == forloop.counter0|divisibleby:"3"%}
+    <div class="card-group ">
+    {% endif %}
         <div class="card text-white bg-dark mb-3">
             <img class="card-img-top" src="{{ project.image.url }}">
             <div class="card-body">
@@ -20,7 +22,9 @@
                 
             </div>
         </div>
-   
+    {% if forloop.counter0 == forloop.counter0|divisibleby:"3"%}
+    </div>
+    {% endif %}
 {% empty %}
     <div class="col-md-4">
         <div class="card mb-3">
