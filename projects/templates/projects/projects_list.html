@@ -4,13 +4,15 @@
 <h1 class="text-center my-3">{{ title | title }}</h1>
 
 {% for project in projects reversed %}
-    {% if forloop.counter0 == forloop.counter0|divisibleby:"3"%}
+    {% if forloop.counter0 == 0 or forloop.counter0|divisibleby:"3"%}
     <div class="card-group ">
     {% endif %}
-        <div class="card text-white bg-dark mb-3">
+        <div class="card text-white bg-dark mb-3 text-center">
             <img class="card-img-top" src="{{ project.image.url }}">
-            <div class="card-body">
+            <div class="card-header">
                 <h5 class="card-title">{{ project.title | title }}</h5>
+            </div>
+            <div class="card-body">
                 <p class="card-text">{{ project.description | linebreaks| truncatewords:30 }}</p>
                 <small class="text-muted">Last updated {{ project.updated_at }}</small>
             </div>
@@ -18,8 +20,7 @@
                 <a href="{% url 'projects:project_detail' project.id %}"
                    class="btn btn-primary">
                     Read More
-                </a>
-                
+                </a>                
             </div>
         </div>
     {% if forloop.counter0 == forloop.counter0|divisibleby:"3"%}
@@ -32,7 +33,10 @@
                 <h5 class="card-title">No Project's.</h5>
             </div>
             <div class="card-footer">
-                                
+                <a href="{% url 'main:homepage' %}"
+                    class="btn btn-primary">
+                    Back Home
+                </a>                                
             </div>
         </div>
     </div>
