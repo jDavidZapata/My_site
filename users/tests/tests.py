@@ -4,20 +4,24 @@ from django.urls import reverse
 
 # Create your tests here.
 
+USER = 'user@example.com'
 PASSWORD = 'pAs$w0rd!!'
+EMAIL = 'user@example.com'
 
 
-def create_user(username='user@example.com', password=PASSWORD, email='user@example.com'): 
+def create_user(username=USER, password=PASSWORD, email=EMAIL): 
     return get_user_model().objects.create_user(
-        username=username, password=password)
+        username=username, password=password, email=email)
 
 
 class AuthenticationTest(TestCase):
+    """ Test module for Users Authentication. """
 
     def setUp(self):
         self.client = Client()
 
     def test_user_can_sign_up(self):
+        """ Test users are able to signup. """
 
         data={
             'username': 'user@example.com',
@@ -37,6 +41,8 @@ class AuthenticationTest(TestCase):
 
 
     def test_user_can_log_in(self): 
+        """ Test users are able to login. """
+
         data={
             'username': 'user@example.com',
             'email': 'user@example.com',
@@ -54,7 +60,37 @@ class AuthenticationTest(TestCase):
 
 
     def test_user_can_log_out(self): 
+        """ Test users are able to logout. """
+
         user = create_user()
         self.client.login(username=user.username, password=PASSWORD)
         response = self.client.post(reverse('users:logout'))
         self.assertEqual(response.status_code, 302)
+
+
+class ProfileTest(TestCase):
+    """ Test module for Users Profile. """
+
+    def setUp(self):
+        self.client = Client()
+
+    def test_user_profile(self):
+        """ Test users can see profile. """
+        
+        user = create_user()
+        data={
+            'username': 'user@example.com',
+            'email': 'user@example.com',
+            'password1': PASSWORD,
+            'password2': PASSWORD,
+        }
+        response = self.client.post(reverse('users:profile'), data={
+            'username': 'user@example.com',
+            'email': 'user@example.com',
+            'password1': PASSWORD,
+            'password2': PASSWORD,
+        })
+        
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(data['username'], user.username)
+        #self.assertEqual(response.instance.user.username, user.username)

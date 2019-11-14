@@ -4,14 +4,6 @@ from django.urls import reverse
 
 # Create your tests here.
 
-PASSWORD = 'pAs$w0rd!!'
-
-
-def create_user(username='user@example.com', password=PASSWORD): # new
-    return get_user_model().objects.create_user(
-        username=username, password=password)
-
-
 
 class MainPageTest(TestCase):
     """ Test module for Main Page. """
