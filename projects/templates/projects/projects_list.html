@@ -10,7 +10,7 @@
         <div class="card text-white bg-dark mb-3 text-center">
             <img class="card-img-top" src="{{ project.image.url }}">
             <div class="card-header">
-                <h5 class="card-title">{{ project.title | title }}</h5>
+                <h5 class="card-title" style="font-size:20px;color:red;">{{ project.title | title }}</h5>
             </div>
             <div class="card-body">
                 <p class="card-text">{{ project.description | linebreaks| truncatewords:30 }}</p>

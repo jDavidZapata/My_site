@@ -1,13 +1,23 @@
 from django.test import TestCase, Client
 from ..models import Project
+from django.contrib.auth import get_user_model
 
 # Create your tests here.
 
+PASSWORD = 'pAs$w0rd!!'
+
+def create_user(username='user@example.com', password=PASSWORD, email='user@example.com'): 
+    return get_user_model().objects.create_user(
+        username=username, password=password)
+
+
 def setUp(self):
+
+        user = create_user()
         Project.objects.create(
-            title='One', description='First Project', technology='Flask', goal='Learn', image='default.png')
+            user=user, title='One', description='First Project', technology='Flask', goal='Learn', image='default.png')
         Project.objects.create(
-            title='Two', description='Second Project', technology='Django', goal='Learn', image='default.png')
+            user=user, title='Two', description='Second Project', technology='Django', goal='Learn', image='default.png')
 
 
 class ProjectsListPageTest(TestCase):

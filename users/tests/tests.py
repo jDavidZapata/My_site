@@ -7,7 +7,7 @@ from django.urls import reverse
 PASSWORD = 'pAs$w0rd!!'
 
 
-def create_user(username='user@example.com', password=PASSWORD, email='user@example.com'): # new
+def create_user(username='user@example.com', password=PASSWORD, email='user@example.com'): 
     return get_user_model().objects.create_user(
         username=username, password=password)
 
@@ -25,7 +25,7 @@ class AuthenticationTest(TestCase):
             'password1': PASSWORD,
             'password2': PASSWORD,
         }
-        response = self.client.post(reverse('register'), data={
+        response = self.client.post(reverse('users:register'), data={
             'username': 'user@example.com',
             'email': 'user@example.com',
             'password1': PASSWORD,
@@ -44,7 +44,7 @@ class AuthenticationTest(TestCase):
             'password2': PASSWORD,
         }
         user = create_user()
-        response = self.client.post(reverse('login'), data={
+        response = self.client.post(reverse('users:login'), data={
             'username': user.username,
             'password': PASSWORD,
             'email': 'user@example.com',
@@ -56,5 +56,5 @@ class AuthenticationTest(TestCase):
     def test_user_can_log_out(self): 
         user = create_user()
         self.client.login(username=user.username, password=PASSWORD)
-        response = self.client.post(reverse('logout'))
+        response = self.client.post(reverse('users:logout'))
         self.assertEqual(response.status_code, 302)

@@ -1,37 +1,37 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
+<nav class="navbar navbar-expand-md navbar-dark bg-dark" >
   
-  <img src="{% static "my_site/zLogo1.png" %}" class="rounded float-left" alt="Logo">
+  <img src="{% static 'my_site/zLogo1.png' %}" class="rounded float-left" alt="Logo">
   <a class="navbar-brand" href="/">My Code Adventure</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon">#</span>
+    <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse " id="navbarSupportedContent">
     <ul class="navbar-nav mx-auto ">
       <li class="nav-item {% if request.path == '/' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'main:homepage' %}"><i class="glyphicon glyphicon-home" style="font-size:20px;color:red;"></i> Home </a>        
+        <a class="nav-link" href="{% url 'main:homepage' %}"><span class="glyphicon glyphicon-home" style="font-size:20px;color:red;"></span> Home </a>        
       </li>
       <li class="nav-item {% if request.path == '/about/' %}active{% endif %}">
         <a class="nav-link" href="{% url 'main:aboutpage' %}"><span class="glyphicon glyphicon-info-sign" style="font-size:20px;color:red;"></span> About </a>
       </li>
       <li class="nav-item {% if request.path == '/projects/' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'projects:projects_list' %}"><i class="glyphicon glyphicon-briefcase" style="font-size:20px;color:red;"></i>  Projects</a>
+        <a class="nav-link" href="{% url 'projects:projects_list' %}"><span class="glyphicon glyphicon-briefcase" style="font-size:20px;color:red;"></span>  Projects</a>
       </li>
       <li class="nav-item {% if request.path == '/contact/' %}active{% endif %}">
         <a class="nav-link" href="{% url 'main:contactpage' %}"> <span class="glyphicon glyphicon-envelope" style="font-size:20px;color:red;"></span> Contact</a>
       </li>   
       <li class="nav-item {% if request.path == '/resume/' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'main:resumepage' %}"><i class="glyphicon glyphicon-file" style="font-size:20px;color:red;"></i> Resume</a>
+        <a class="nav-link" href="{% url 'main:resumepage' %}"><span class="glyphicon glyphicon-file" style="font-size:20px;color:red;"></span> Resume</a>
       </li>
       <li class="nav-item {% if request.path == '/personal/' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'main:temppage' %}">Personal <i class="glyphicon glyphicon-fire" style="font-size:20px;color:red;"></i></a>
+        <a class="nav-link" href="{% url 'main:temppage' %}">Personal <span class="glyphicon glyphicon-fire" style="font-size:20px;color:red;"></span></a>
       </li>
     </ul> 
     {% if user.is_authenticated %}
     <ul class="navbar-nav mx-auto float-right">       
       <li class="nav-item {% if request.path == '/profile/' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'users:profile' %}"><i class="glyphicon glyphicon-user" style="font-size:20px;color:red;"></i> {{user.username|capfirst}} Profile</a>
+        <a class="nav-link" href="{% url 'users:profile' %}"><span class="glyphicon glyphicon-user" style="font-size:20px;color:red;"></span> {{user.username|capfirst}} Profile</a>
       </li>
       <li class="nav-item {% if request.path == '/logout/' %}active{% endif %}">
         <a class="nav-link" href="{% url 'users:logout' %}?next={{request.path}}"><span class="glyphicon glyphicon-log-out" style="font-size:20px;color:red;"></span> Logout</a>
