@@ -1,10 +1,12 @@
 from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
+from ..models import Profile
 from django.urls import reverse
 
 # Create your tests here.
 
 USER = 'user@example.com'
+USER2 = 'oteruser@example.com'
 PASSWORD = 'pAs$w0rd!!'
 EMAIL = 'user@example.com'
 
@@ -13,6 +15,9 @@ def create_user(username=USER, password=PASSWORD, email=EMAIL):
     return get_user_model().objects.create_user(
         username=username, password=password, email=email)
 
+def create_user2(username=USER2, password=PASSWORD, email=EMAIL): 
+    return get_user_model().objects.create_user(
+        username=username, password=password, email=email)
 
 class AuthenticationTest(TestCase):
     """ Test module for Users Authentication. """
@@ -73,24 +78,56 @@ class ProfileTest(TestCase):
 
     def setUp(self):
         self.client = Client()
+        
 
     def test_user_profile(self):
-        """ Test users can see profile. """
+        """ Test users has profile. """
         
         user = create_user()
+
+        profile_one = Profile.objects.get(user=user)
+            
         data={
             'username': 'user@example.com',
             'email': 'user@example.com',
-            'password1': PASSWORD,
-            'password2': PASSWORD,
+            'password': PASSWORD,
+            'image': 'default.jpg'
+        }
+        response = self.client.get(reverse('users:profile'), data={
+            'username': 'user@example.com',
+            'password': PASSWORD,
+        })
+
+        print(response)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(data['username'], profile_one.user.username)
+        self.assertEqual(data['image'], profile_one.user.profile.image)
+        #self.assertEqual(response.username, user.username)
+
+
+    def test_no_user_profile(self):
+        """ Test users different profile. """
+        
+        user = create_user()
+        user2 =create_user2()
+
+        profile_one = Profile.objects.get(user=user)
+        profile_two = Profile.objects.get(user=user2)
+            
+        data={
+            'username': 'user@example.com',
+            'email': 'user@example.com',
+            'password': PASSWORD,
         }
         response = self.client.post(reverse('users:profile'), data={
             'username': 'user@example.com',
-            'email': 'user@example.com',
-            'password1': PASSWORD,
-            'password2': PASSWORD,
+            'password': PASSWORD,
+            'image': 'defaul2.jpg'
         })
-        
+
+        print(response)
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(data['username'], user.username)
-        #self.assertEqual(response.instance.user.username, user.username)
+        self.assertEqual(data['username'], profile_one.user.username)
+        self.assertNotEqual(profile_one.user.username, profile_two.user.username)
+        #self.assertNotEqual(profile_one.user.profile.image, profile_two.user.profile.image)
+
