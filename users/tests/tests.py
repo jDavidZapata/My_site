@@ -105,7 +105,7 @@ class ProfileTest(TestCase):
         #self.assertEqual(response.username, user.username)
 
 
-    def test_no_user_profile(self):
+    def test_different_user_profiles(self):
         """ Test users different profile. """
         
         user = create_user()
@@ -125,7 +125,6 @@ class ProfileTest(TestCase):
             'image': 'defaul2.jpg'
         })
 
-        print(response)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(data['username'], profile_one.user.username)
         self.assertNotEqual(profile_one.user.username, profile_two.user.username)
