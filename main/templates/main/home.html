@@ -4,16 +4,13 @@
 
 <div id="container1" class="container-fluid d-flex align-items-center flex-column" style="min-height:690px;color:red;">
       
-    <div class="row align-items-center" style="height:200px;">
-        <h1 style="font-size:74px;font-weight:bold;color:black;">Hello World, </h1>      
-        
+    <div class="row align-items-center">
+        <h1 style="font-size:74px;font-weight:bold;color:black;">Hello World, </h1>         
     </div>
 
     <div class="row align-items-center">
-        <h1 style="font-size:74px;font-weight:bold;color:blue;">I'm &nbsp;</h1>
-        
-        <h1 id="name">Juan</h1>
-        
+        <h1 style="font-size:74px;font-weight:bold;color:blue;">I'm &nbsp;</h1>        
+        <h1 id="name">Juan</h1>        
     </div>
     
     <div class="row align-items-center">
@@ -38,8 +35,7 @@
     
 </div>
 
-<div id="container2" class="row d-flex justify-content-center align-items-center border border-danger" style="min-height:790px;padding:50px;">
-            
+<div id="container2" class="row d-flex justify-content-center align-items-center border border-danger" style="min-height:790px;padding:50px;">            
     <div class="col-xl-4" style="z-index:1;">
     <h1>Occupational Designation: </h1>    
     <h1 style="font-size:74px;font-weight:bold;color:red;">Developer</h1>
@@ -51,8 +47,7 @@
     <div class="col-xl-4" style="z-index:1;">
     <h1>Occupational Status: </h1>
     <h1 style="font-size:74px;font-weight:bold;color:red;">Freelance / Available</h1>
-    </div>
-    
+    </div>    
 </div>
 
 <div id="container3" class="row d-flex justify-content-center align-items-center border border-danger" style="min-height:850px;padding:50px;">
@@ -70,21 +65,23 @@
     <div class="col-12" style="width:auto;z-index:1;">
         <h1 style="font-size:74px;font-weight:bold;color:red;">FrameWorks: </h1>
     </div>
-    <h1 style="font-size:70px;font-weight:bold;color:black;">Flask, Django</h1>   
-
+    <h1 style="font-size:70px;font-weight:bold;color:black;">Flask, Django</h1> 
 </div>
 
 <div id="container4" class="row border border-danger d-flex justify-content-around align-items-center" style="min-height:790px;padding:50px;">    
     <div class="col-12">
         <h1>My Work: </h1>
-        <h1 style="font-size:74px;font-weight:bold;color:red;">Applications and Projects are on github.</h1>
+        <h1 style="font-size:74px;font-weight:bold;color:red;">Applications and Projects Live list.</h1>
+        <a class="btn btn-success" role="button" href="{% url 'projects:projects_list' %}">Check out My Projects</a>
+        <h1>OR</h1>
+        <h1 style="font-size:74px;font-weight:bold;color:red;">Applications and Projects Code on github.</h1>
         <a class="btn btn-primary" role="button" href="https://github.com/jDavidZapata">Go To My GitHub</a>
-        <a class="btn btn-success" role="button" href="{% url 'projects:projects_list' %}">Or Check out My Projects</a>
+        
     </div>    
     <div class="col-12">        
         <h1>My Personal Space: </h1>
         <h1 style="font-size:74px;font-weight:bold;color:red;">See My Personal Stuff</h1>
-        
+        <a class="btn btn-danger" role="button" href="{% url 'main:temppage' %}">Personal Space</a>
     </div>
 </div>
 
