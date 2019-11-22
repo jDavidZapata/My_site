@@ -24,5 +24,4 @@ urlpatterns = [
     path('about/', views.aboutpage, name='aboutpage'),
     path('contact/', views.contactpage, name='contactpage'),
     path('resume/', views.resumepage, name='resumepage'),
-    path('personal/', views.temppage, name='temppage'),
 ]

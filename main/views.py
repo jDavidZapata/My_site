@@ -62,6 +62,7 @@ def resumepage(request):
     return render(request, template_name, context)
 
 
+'''
 def temppage(request):
 
     personal = True
@@ -72,5 +73,4 @@ def temppage(request):
         "personal0": "True"
     }
     return render(request, template_name, context)
-
-
+'''
