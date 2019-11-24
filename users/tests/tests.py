@@ -84,6 +84,7 @@ class ProfileTest(TestCase):
         """ Test users has profile. """
         
         user = create_user()
+        self.client.login(username=user.username, password=PASSWORD)
 
         profile_one = Profile.objects.get(user=user)
             
@@ -93,23 +94,20 @@ class ProfileTest(TestCase):
             'password': PASSWORD,
             'image': 'default.jpg'
         }
-        response = self.client.get(reverse('users:profile'), data={
-            'username': 'user@example.com',
-            'password': PASSWORD,
-        })
+        response = self.client.get(reverse('users:profile'), instance=profile_one)
 
         print(response)
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
         self.assertEqual(data['username'], profile_one.user.username)
         self.assertEqual(data['image'], profile_one.user.profile.image)
-        #self.assertEqual(response.username, user.username)
-
+    
 
     def test_different_user_profiles(self):
         """ Test users different profile. """
         
         user = create_user()
         user2 =create_user2()
+        self.client.login(username=user2.username, password=PASSWORD)
 
         profile_one = Profile.objects.get(user=user)
         profile_two = Profile.objects.get(user=user2)
@@ -125,8 +123,28 @@ class ProfileTest(TestCase):
             'image': 'defaul2.jpg'
         })
 
-        self.assertEqual(response.status_code, 302)
+        print(response.request)
+        self.assertEqual(response.status_code, 200)
         self.assertEqual(data['username'], profile_one.user.username)
         self.assertNotEqual(profile_one.user.username, profile_two.user.username)
         #self.assertNotEqual(profile_one.user.profile.image, profile_two.user.profile.image)
+        #self.assertEqual(response.request.username, profile_two.user.username)
 
+
+def test_not_login_user_profile(self):
+        """ Test user not log in to view profile. """
+        
+        user = create_user()
+        
+        profile_one = Profile.objects.get(user=user)
+        
+        data={
+            'username': 'user@example.com',
+            'email': 'user@example.com',
+            'password': PASSWORD,
+        }
+        response = self.client.get(reverse('users:profile'))
+
+        print(response)
+        self.assertEqual(response.status_code, 302)
+        

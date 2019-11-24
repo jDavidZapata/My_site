@@ -10,6 +10,6 @@ def temppage(request):
     context = {
         "title": "Temporary",
         "body": "Body: Temp Page",
-        "personal0": "True"
+        "personal": personal
     }
     return render(request, template_name, context)

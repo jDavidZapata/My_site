@@ -20,7 +20,7 @@ def register(request):
             messages.success(request, f"New Account Created: Welcome {username}.")
             login(request, user)
             messages.info(request, f"You are now logged in as {username}.")
-            return redirect('main:temppage')
+            return redirect('personal:temppage')
         else:
             messages.error(request, "Invalid Registration")
     form = CreateUserForm()
@@ -50,16 +50,17 @@ def profile(request):
     else:
         user_form = UpdateUserForm(instance=request.user)
         profile_form = UpdateProfileForm(instance=request.user.profile)
-        context = {
-            "title": "Profile",
-            "user_form": user_form,
-            "profile_form": profile_form
-        }
+    context = {
+        "title": "Profile",
+        "user_form": user_form,
+        "profile_form": profile_form
+    }    
     return render(request, template_name, context)
 
 
 def login_(request):
 
+    personal = True
     redirect_to = request.POST.get('next', request.GET.get('next', '/'))
     redirect_to = (redirect_to
                    if http.is_safe_url(redirect_to, request.get_host())
@@ -89,7 +90,7 @@ def login_(request):
         "body": "Body: Login Form",
         "form": form,
         "next": redirect_to,
-        "personal0": True
+        "personal": personal
     }
     return render(request, template_name, context)
 
@@ -106,4 +107,4 @@ def logout_(request):
     if redirect_to != '':
         return redirect(redirect_to)
     else:    
-        return redirect('main:temppage')
+        return redirect('personal:temppage')

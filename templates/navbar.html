@@ -38,7 +38,7 @@
       </li>
     </ul>
     {% endif %}
-    {% if personal0 and not user.is_authenticated %}
+    {% if personal and not user.is_authenticated %}
     <ul class="navbar-nav mx-auto float-right">       
       <li class="nav-item {% if request.path == '/register/' %}active{% endif %}">
         <a class="nav-link" href="{% url 'users:register' %}"><span class="glyphicon glyphicon-pencil" style="font-size:20px;color:red;"></span> Register</a>
