@@ -36,4 +36,4 @@ class MySeleniumTests(StaticLiveServerTestCase):
         password_input = self.selenium.find_element_by_name("password")
         password_input.send_keys(PASSWORD)
         #self.selenium.find_element_by_xpath('//input[@value="login"]').click()
-        self.selenium.find_element_by_name("submit").click()
+        self.selenium.find_element_by_id("login").click()
