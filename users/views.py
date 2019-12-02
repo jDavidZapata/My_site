@@ -28,7 +28,7 @@ def register(request):
         "title": "Register",
         "body": "Body: Registrationg Form",
         "form": form,
-        "personal0": True,
+        "personal": True,
     }
     return render(request, template_name, context)
 
