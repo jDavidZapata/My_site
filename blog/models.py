@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.shortcuts import reverse
+from django.template.defaultfilters import slugify
 
 # Create your models here.
 
@@ -10,11 +11,10 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     content = models.TextField()
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(null=False, unique=True)
     #image = models.ImageField(upload_to='post_img/', blank=True, null=True)
     date_posted = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
-
 
 
     def __str__(self):
@@ -27,7 +27,15 @@ class Post(models.Model):
     
     def get_absolute_url(self):
         return reverse('blog:post_detail', kwargs={'post_id': self.id})
+        #return reverse('blog:post_detail', kwargs={'slug': self.slug})
         #return f"/blog/{self.id}"
+
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
+
 
     '''
     def get_update_url(self):

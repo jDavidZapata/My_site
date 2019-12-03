@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from blog.views import post_create
 
 
 urlpatterns = [
@@ -23,6 +24,8 @@ urlpatterns = [
     path('', include('users.urls')),
     path('projects/', include('projects.urls')),
     path('personal/', include('personal.urls')),
+    path('personal/blog-post/', post_create, name='post_create'),
+    path('personal/blog/', include('blog.urls')),
     path('admin/', admin.site.urls),
 
 ] 

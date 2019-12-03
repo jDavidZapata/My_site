@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'projects.apps.ProjectsConfig',
     'personal.apps.PersonalConfig',
+    'blog.apps.BlogConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

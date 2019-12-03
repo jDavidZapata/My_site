@@ -29,7 +29,15 @@
       </li>
     </ul> 
     {% if user.is_authenticated %}
-    <ul class="navbar-nav mx-auto float-right">       
+    <ul class="navbar-nav mx-auto float-left">    
+      <li class="nav-item {% if request.path == '/personal/blog/' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'blog:posts_list' %}"><span class="glyphicon glyphicon-fire" style="font-size:20px;color:red;"></span> Blog</a>
+      </li>
+      <li class="nav-item {% if request.path == '/personal/blog-post/' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'post_create' %}"><span class="glyphicon glyphicon-fire" style="font-size:20px;color:red;"></span>Create Post</a>
+      </li>   
+    </ul>
+    <ul class="navbar-nav mx-auto float-right">             
       <li class="nav-item {% if request.path == '/profile/' %}active{% endif %}">
         <a class="nav-link" href="{% url 'users:profile' %}"><span class="glyphicon glyphicon-user" style="font-size:20px;color:red;"></span> {{user.username|capfirst}} Profile</a>
       </li>
@@ -39,7 +47,10 @@
     </ul>
     {% endif %}
     {% if personal and not user.is_authenticated %}
-    <ul class="navbar-nav mx-auto float-right">       
+    <ul class="navbar-nav mx-auto float-right"> 
+      <li class="nav-item {% if request.path == '/personal/blog/' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'blog:posts_list' %}"><span class="glyphicon glyphicon-fire" style="font-size:20px;color:red;"></span> Blog</a>
+      </li>      
       <li class="nav-item {% if request.path == '/register/' %}active{% endif %}">
         <a class="nav-link" href="{% url 'users:register' %}"><span class="glyphicon glyphicon-pencil" style="font-size:20px;color:red;"></span> Register</a>
       </li>

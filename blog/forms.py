@@ -5,7 +5,6 @@ class PostForm(forms.Form):
     
     title = forms.CharField(max_length=100)
     content = forms.CharField(widget=forms.Textarea)
-    slug = forms.SlugField()
     #image = forms.ImageField()
 
 
@@ -13,9 +12,9 @@ class PostModelForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ['title', 'content', 'slug',]
+        fields = ['title', 'content']
 
-    '''
+    
     def clean_title(self, *args, **kwargs):
         instance = self.instance
         title = self.cleaned_data.get('title')
@@ -26,4 +25,4 @@ class PostModelForm(forms.ModelForm):
             raise forms.ValidationError("This title already exists.")
         return title
 
-    '''
+    
