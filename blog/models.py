@@ -9,8 +9,8 @@ User = settings.AUTH_USER_MODEL
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
-    text = models.TextField()
-    slug = models.CharField(max_length=20)
+    content = models.TextField()
+    slug = models.SlugField(unique=True)
     #image = models.ImageField(upload_to='post_img/', blank=True, null=True)
     date_posted = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
