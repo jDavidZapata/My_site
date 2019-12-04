@@ -31,15 +31,15 @@
     {% if user.is_authenticated %}
     <ul class="navbar-nav mx-auto float-left">    
       <li class="nav-item {% if request.path == '/personal/blog/' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'blog:posts_list' %}"><span class="glyphicon glyphicon-fire" style="font-size:20px;color:red;"></span> Blog</a>
+        <a class="nav-link" href="{% url 'blog:posts_list' %}">Blog <span class="material-icons" style="font-size:20px;color:red;">library_books</span> </a>
       </li>
       <li class="nav-item {% if request.path == '/personal/blog-post/' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'post_create' %}"><span class="glyphicon glyphicon-fire" style="font-size:20px;color:red;"></span>Create Post</a>
+        <a class="nav-link" href="{% url 'post_create' %}">Create Post <i class="material-icons" style="font-size:20px;color:red;">library_add</i></a>
       </li>   
     </ul>
     <ul class="navbar-nav mx-auto float-right">             
       <li class="nav-item {% if request.path == '/profile/' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'users:profile' %}"><span class="glyphicon glyphicon-user" style="font-size:20px;color:red;"></span> {{user.username|capfirst}} Profile</a>
+        <a class="nav-link" href="{% url 'users:profile' %}"><span class="glyphicon glyphicon-user" style="font-size:20px;color:red;"></span> {{user.username}} Profile</a>
       </li>
       <li class="nav-item {% if request.path == '/logout/' %}active{% endif %}">
         <a class="nav-link" href="{% url 'users:logout' %}?next={{request.path}}"><span class="glyphicon glyphicon-log-out" style="font-size:20px;color:red;"></span> Logout</a>
