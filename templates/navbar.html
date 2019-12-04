@@ -25,7 +25,7 @@
         <a class="nav-link" href="{% url 'main:resumepage' %}"><span class="glyphicon glyphicon-file" style="font-size:20px;color:red;"></span> Resume</a>
       </li>
       <li class="nav-item {% if request.path == '/personal/' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'personal:temppage' %}">Personal <span class="glyphicon glyphicon-fire" style="font-size:20px;color:red;"></span></a>
+        <a class="nav-link" href="{% url 'personal:personal' %}">Personal <span class="glyphicon glyphicon-fire" style="font-size:20px;color:red;"></span></a>
       </li>
     </ul> 
     {% if user.is_authenticated %}

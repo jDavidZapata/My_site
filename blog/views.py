@@ -70,7 +70,6 @@ def post_create(request):
         }
     return render(request, template_name, context)
 
-'''
 
 @login_required
 def post_update(request, post_id):
@@ -99,21 +98,16 @@ def post_update(request, post_id):
 @login_required
 def post_delete(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    template_name = 'form.html'
+    template_name = 'blog/delete.html'
     print(request.POST)
-    if request.method == 'POST':
-        form = PostModelForm(request.POST or None, request.FILES or None, instance=post)
-        if form.is_valid() and post.author == request.user:
-            print(form.cleaned_data)             
-            post.delete()
-            messages.success(request, f"Post Deleted.")
-            return redirect('blog:posts_list') 
-        else:
-            messages.error(request, "Invalid Delete")
-    form = PostModelForm(request.POST or None, request.FILES or None, instance=post)
+    if request.method == 'POST' and post.author == request.user:
+        post.delete()
+        messages.success(request, f"Post Deleted.")
+        return redirect('blog:posts_list') 
+    else:
+        messages.error(request, "Invalid Delete")
     context = {
         'title': f'Delete Post {post.title}',
-        'form': form 
+        'post': post 
     }
     return render(request, template_name, context)
-'''

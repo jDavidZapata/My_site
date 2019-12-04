@@ -6,13 +6,13 @@
 {% for post in posts %}
     {% include 'blog/inline-list.html' with post=post %}
 {% empty %}
-    <div class="col-md-4">
+    <div class="col">
         <div class="card mb-3">
             <div class="card-body">
                 <h5 class="card-title">No Post's.</h5>
             </div>
             <div class="card-footer">
-                <a href="{% url 'personal:temppage' %}"
+                <a href="{% url 'personal:personal' %}"
                    class="btn btn-danger">
                     Back To Personal
                 </a>                    

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<h1 class="text-center my-3">{{ title }}</h1>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <img class="rounded-circle" src="{{ post.author.profile.image.url }}">
+            <div class="card-body">
+                <h4><a href="{% url 'blog:post_detail' post.id %}" >{{ post.author.username }} </a> are You sure you want to <strong style="font-size:25px;font-weight:bold;color:red;">delete</strong> the following post:</h4>
+                <h5 class="card-title"><a href="{% url 'blog:post_detail' post.id %}" >{{ post.title|title }} </a></h5>
+                <br>
+            </div>
+            <div class="card-footer">
+                <form method='POST' >{% csrf_token %}
+                    <button class='btn btn-danger'>Yes, Delete</button>             
+                </form>    
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

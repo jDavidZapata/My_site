@@ -37,7 +37,7 @@ class Post(models.Model):
         return super().save(*args, **kwargs)
 
 
-    '''
+   
     def get_update_url(self):
         return reverse('blog:post_update', kwargs={'post_id': self.id})
         #return f"/blog/{self.id}/update"
@@ -48,4 +48,4 @@ class Post(models.Model):
         return reverse('blog:post_delete', kwargs={'post_id': self.id})
         #return f"/blog/{self.id}/delete"
         #return f"{self.get_absolute_url}/delete"
-    '''
+   

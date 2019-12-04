@@ -20,7 +20,7 @@ def register(request):
             messages.success(request, f"New Account Created: Welcome {username}.")
             login(request, user)
             messages.info(request, f"You are now logged in as {username}.")
-            return redirect('personal:temppage')
+            return redirect('personal:personal')
         else:
             messages.error(request, "Invalid Registration")
     form = CreateUserForm()
@@ -107,4 +107,4 @@ def logout_(request):
     if redirect_to != '':
         return redirect(redirect_to)
     else:    
-        return redirect('personal:temppage')
+        return redirect('personal:personal')
