@@ -49,3 +49,22 @@ class Post(models.Model):
         #return f"/blog/{self.id}/delete"
         #return f"{self.get_absolute_url}/delete"
    
+
+
+
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    content = models.TextField()
+    date_commented = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
+
+
+    def __str__(self):
+        return self.content
+    
+
+    def __repr__(self):
+        return self.content
+
+    
