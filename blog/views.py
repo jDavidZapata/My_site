@@ -101,8 +101,7 @@ def post_delete(request, post_id):
     template_name = 'blog/delete.html'
     print(request.POST)
     if request.method == 'POST':
-        if post.author == request.user:
-            print(form.cleaned_data)             
+        if post.author == request.user:            
             post.delete()
             messages.success(request, f"Post Deleted.")
             return redirect('blog:posts_list') 

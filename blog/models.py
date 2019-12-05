@@ -16,6 +16,8 @@ class Post(models.Model):
     date_posted = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ['-date_posted']
 
     def __str__(self):
         return self.title
@@ -39,17 +41,16 @@ class Post(models.Model):
 
    
     def get_update_url(self):
-        return reverse('blog:post_update', kwargs={'post_id': self.id})
-        #return f"/blog/{self.id}/update"
-        #return f"{self.get_absolute_url}/update"
+        #return reverse('blog:post_update', kwargs={'post_id': self.id})
+        #return f"/personal/blog/{self.id}/update"
+        return f"{self.get_absolute_url()}update"
 
 
     def get_delete_url(self):
-        return reverse('blog:post_delete', kwargs={'post_id': self.id})
-        #return f"/blog/{self.id}/delete"
-        #return f"{self.get_absolute_url}/delete"
+        #return reverse('blog:post_delete', kwargs={'post_id': self.id})
+        #return f"/personal/blog/{self.id}/delete"
+        return f"{self.get_absolute_url()}delete"
    
-
 
 
 class Comment(models.Model):
@@ -66,5 +67,26 @@ class Comment(models.Model):
 
     def __repr__(self):
         return self.content
+
+    
+
+class Category(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+    summary = models.CharField(max_length=200)
+    slug = models.SlugField(null=False, unique=True)
+    date_added = models.DateTimeField(auto_now_add=True)
+
+
+    class Meta:
+        verbose_name_plural = "Categoties"
+
+
+    def __str__(self):
+        return self.name
+    
+
+    def __repr__(self):
+        return self.name
 
     
