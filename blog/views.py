@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
 from django.contrib import messages
+from django.views.generic import ListView, DetailView, CreateView
 from .models import Post, Category, Comment
 from .forms import PostForm, PostModelForm
 
@@ -26,6 +27,17 @@ def category_list(request):
 
 
 
+class CategoryListView(ListView):
+
+    personal = True
+    model = Category
+    template_name = 'blog/category_list.html'
+    context_object_name = 'categories'
+    ordering = ['-date_added']
+
+
+
+
 def category_detail_list(request, cat_id):
 
     personal = True
@@ -46,6 +58,18 @@ def category_detail_list(request, cat_id):
 
 
 
+'''
+class CategoryDetailListView(ListView):
+
+    personal = True
+    model = Post
+    template_name = 'blog/category_detail.html'
+    context_object_name = 'posts'
+    ordering = ['-date_added']
+'''
+
+
+
 def posts_list(request):
 
     personal = True
@@ -63,6 +87,18 @@ def posts_list(request):
     return render(request, template_name, context)
 
 
+
+class PostListView(ListView):
+
+    personal = True
+    model = Post
+    template_name = 'blog/posts_list.html'
+    context_object_name = 'posts'
+    ordering = ['-date_posted']
+
+
+
+
 def post_detail(request, post_id):
 
     personal = True
@@ -74,6 +110,14 @@ def post_detail(request, post_id):
             'personal': personal
         }        
     return render(request, template_name, context)
+
+
+
+class PostDetailView(DetailView):
+
+    personal = True
+    model = Post
+    template_name = 'blog/post_detail.html'
 
 
 
@@ -101,6 +145,15 @@ def post_create(request):
         }
     return render(request, template_name, context)
 
+
+
+class PostCreateView(CreateView):
+    model = Post
+    fields = ['title', 'content', 'category']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 @login_required
 def post_update(request, post_id):
