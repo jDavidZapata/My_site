@@ -1,21 +1,63 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
 from django.contrib import messages
-from .models import Post
+from .models import Post, Category, Comment
 from .forms import PostForm, PostModelForm
 
 # Create your views here.
+
+
+
+def category_list(request):
+
+    personal = True
+    template_name = 'blog/category_list.html'
+    categories = get_list_or_404(Category)
+    ordering = ['-date_added']
+    #categories = Category.objects.all() #--> Query set
+    context = {
+            'title': '* Categories *',
+            'categories': categories,
+            'personal': personal,
+            'ordering': ordering
+        }
+
+    return render(request, template_name, context)
+
+
+
+def category_detail_list(request, cat_id):
+
+    personal = True
+    template_name = 'blog/category_detail.html'
+    category = get_object_or_404(Category, pk=cat_id)
+    posts = get_list_or_404(Post, category=category)
+    ordering = ['-date_posted']
+    #posts = Post.objects.all() #--> Query set
+    context = {
+            'title': '*Category Posts *',
+            'category': category,
+            'posts': posts,
+            'personal': personal,
+            'ordering': ordering
+        }
+
+    return render(request, template_name, context)
+
+
 
 def posts_list(request):
 
     personal = True
     template_name = 'blog/posts_list.html'
     posts = get_list_or_404(Post)
+    ordering = ['-date_posted']
     #posts = Post.objects.all() #--> Query set
     context = {
             'title': '* Posts *',
             'posts': posts,
-            'personal': personal
+            'personal': personal,
+            'ordering': ordering
         }
 
     return render(request, template_name, context)
@@ -33,18 +75,7 @@ def post_detail(request, post_id):
         }        
     return render(request, template_name, context)
 
-'''
-def post_detail(request, slug):
 
-    template_name = 'blog/post_detail.html'
-    post = get_object_or_404(Post, slug=slug)   
-    context = {
-            'title': f'Post # {post.id}',
-            'post': post
-        }        
-    return render(request, template_name, context)
-
-'''
 
 @login_required
 def post_create(request):
@@ -55,7 +86,7 @@ def post_create(request):
         form = PostModelForm(request.POST or None, request.FILES or None)
         if form.is_valid():
             print(form.cleaned_data)
-            #post = Post.objects.create(**form.cleaned_data)
+            ##post = Post.objects.create(**form.cleaned_data)
             post = form.save(commit=False)
             post.author = request.user
             post.save()
@@ -112,3 +143,17 @@ def post_delete(request, post_id):
         'post': post 
     }
     return render(request, template_name, context)
+
+
+'''
+def post_detail(request, slug):
+
+    template_name = 'blog/post_detail.html'
+    post = get_object_or_404(Post, slug=slug)   
+    context = {
+            'title': f'Post # {post.id}',
+            'post': post
+        }        
+    return render(request, template_name, context)
+
+'''

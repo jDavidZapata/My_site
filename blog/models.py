@@ -7,6 +7,28 @@ from django.template.defaultfilters import slugify
 
 User = settings.AUTH_USER_MODEL
 
+
+class Category(models.Model):
+    author = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
+    name = models.CharField(max_length=200)
+    summary = models.CharField(max_length=200)
+    slug = models.SlugField(null=False, unique=True)
+    date_added = models.DateTimeField(auto_now_add=True)
+
+
+    class Meta:
+        verbose_name_plural = "Categories"
+
+
+    def __str__(self):
+        return self.name
+    
+
+    def __repr__(self):
+        return self.name
+
+
+
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
@@ -15,9 +37,9 @@ class Post(models.Model):
     #image = models.ImageField(upload_to='post_img/', blank=True, null=True)
     date_posted = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
+    category = models.ForeignKey(Category, default=1, verbose_name="Category", on_delete=models.SET_DEFAULT)
 
-    class Meta:
-        ordering = ['-date_posted']
+    
 
     def __str__(self):
         return self.title
@@ -67,26 +89,5 @@ class Comment(models.Model):
 
     def __repr__(self):
         return self.content
-
-    
-
-class Category(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=200)
-    summary = models.CharField(max_length=200)
-    slug = models.SlugField(null=False, unique=True)
-    date_added = models.DateTimeField(auto_now_add=True)
-
-
-    class Meta:
-        verbose_name_plural = "Categoties"
-
-
-    def __str__(self):
-        return self.name
-    
-
-    def __repr__(self):
-        return self.name
 
     
