@@ -35,9 +35,10 @@ class Project(models.Model):
     def get_update_url(self):
         return reverse('projects:project_update', kwargs={'project_id': self.id})
         #return f"/projects/{self.id}/update"
-        #return f"{self.get_absolute_url}/update"
+        #return f"{self.get_absolute_url()}update"
 
 
     def get_delete_url(self):
         return reverse('projects:project_delete', kwargs={'project_id': self.id})
         #return f"/projects/{self.id}/delete"
+        #return f"{self.get_absolute_url()}delete"

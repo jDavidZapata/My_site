@@ -34,7 +34,7 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
     slug = models.SlugField(null=False, unique=True)
-    #image = models.ImageField(upload_to='post_img/', blank=True, null=True)
+    image = models.ImageField(upload_to='post_img/', blank=True, null=True)
     date_posted = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(Category, default=1, verbose_name="Category", on_delete=models.SET_DEFAULT)

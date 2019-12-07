@@ -58,7 +58,7 @@ def category_detail_list(request, cat_id):
 
 
 
-'''
+
 class CategoryDetailListView(ListView):
 
     personal = True
@@ -66,7 +66,7 @@ class CategoryDetailListView(ListView):
     template_name = 'blog/category_detail.html'
     context_object_name = 'posts'
     ordering = ['-date_added']
-'''
+
 
 
 
@@ -154,6 +154,8 @@ class PostCreateView(CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+
 
 @login_required
 def post_update(request, post_id):
