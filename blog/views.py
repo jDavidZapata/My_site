@@ -14,7 +14,7 @@ def category_list(request):
     personal = True
     template_name = 'blog/category_list.html'
     categories = get_list_or_404(Category)
-    ordering = ['-date_added']
+    ordering = ['name']
     #categories = Category.objects.all() #--> Query set
     context = {
             'title': '* Categories *',
@@ -203,12 +203,34 @@ def post_delete(request, post_id):
 '''
 def post_detail(request, slug):
 
+    personal = True
     template_name = 'blog/post_detail.html'
     post = get_object_or_404(Post, slug=slug)   
     context = {
             'title': f'Post # {post.id}',
+            'personal': personal,
             'post': post
         }        
+    return render(request, template_name, context)
+
+
+
+def category_detail_list(request, slug):
+
+    personal = True
+    template_name = 'blog/category_detail.html'
+    category = get_object_or_404(Category, slug)
+    posts = get_list_or_404(Post, category=category)
+    ordering = ['date_posted']
+    #posts = Post.objects.all() #--> Query set
+    context = {
+            'title': '*Category Posts *',
+            'category': category,
+            'posts': posts,
+            'personal': personal,
+            'ordering': ordering
+        }
+
     return render(request, template_name, context)
 
 '''

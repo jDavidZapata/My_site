@@ -45,6 +45,8 @@
         <a class="nav-link" href="{% url 'users:logout' %}?next={{request.path}}"><span class="glyphicon glyphicon-log-out" style="font-size:20px;color:red;"></span> Logout</a>
       </li>
     </ul>
+
+
     {% endif %}
     {% if personal and not user.is_authenticated %}
     <ul class="navbar-nav mx-auto float-right"> 
@@ -58,6 +60,20 @@
         <a class="nav-link" href="{% url 'users:login' %}?next={{request.path}}"><span class="glyphicon glyphicon-log-in" style="font-size:20px;color:red;"></span> Login</a>
       </li>
     </ul>
+    
     {% endif %}
+
   </div>
+  
 </nav>
+{% if user.is_authenticated %}
+<nav class="navbar navbar-expand-md navbar-dark bg-dark" >
+    <div class="collapse navbar-collapse " >
+        <ul class="navbar-nav mx-auto ">
+        <li class="nav-item {% if request.path == '/personal/blog/category/' %}active{% endif %}">
+            <a class="nav-link" href="{% url 'blog:category_list' %}"><span class="glyphicon glyphicon-home" style="font-size:20px;color:red;"></span> Category </a>        
+        </li>
+        </ul>
+    </div>
+</nav>
+{% endif %}

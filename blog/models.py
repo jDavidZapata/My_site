@@ -27,6 +27,12 @@ class Category(models.Model):
     def __repr__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        return super().save(*args, **kwargs)
+
+
 
 
 class Post(models.Model):
@@ -46,22 +52,21 @@ class Post(models.Model):
     
 
     def __repr__(self):
-        return self.title
-
+        return self.title 
     
-    def get_absolute_url(self):
-        return reverse('blog:post_detail', kwargs={'post_id': self.id})
-        #return reverse('blog:post_detail', kwargs={'slug': self.slug})
-        #return f"/blog/{self.id}"
 
-    
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
 
 
+    def get_absolute_url(self):
+            return reverse('blog:post_detail', kwargs={'post_id': self.id})
+            #return reverse('blog:post_detail', kwargs={'slug': self.slug})
+            #return f"/blog/{self.id}"
    
+
     def get_update_url(self):
         #return reverse('blog:post_update', kwargs={'post_id': self.id})
         #return f"/personal/blog/{self.id}/update"

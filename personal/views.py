@@ -8,12 +8,12 @@ def personal_page(request):
 
     personal = True
     template_name = 'personal/personal.html'
-    posts = get_list_or_404(Post)
+    #posts = get_list_or_404(Post)
     context = {
         "title": "Temporary",
         "body": "Body: Temp Page",
         "personal": personal,
-        "posts": posts
+        #"posts": posts
     }
     return render(request, template_name, context)
 
