@@ -1,0 +1,10 @@
+{% if personal and not user.is_authenticated %}
+    <ul class="navbar-nav mx-auto float-right">     
+      <li class="nav-item {% if request.path == '/register/' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'users:register' %}"><span class="glyphicon glyphicon-pencil" style="font-size:20px;color:red;"></span> Register</a>
+      </li>
+      <li class="nav-item {% if request.path == '/login/' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'users:login' %}?next={{request.path}}"><span class="glyphicon glyphicon-log-in" style="font-size:20px;color:red;"></span> Login</a>
+      </li>
+    </ul>    
+{% endif %}

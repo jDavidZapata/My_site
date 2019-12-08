@@ -1,0 +1,8 @@
+<ul class="navbar-nav mx-auto float-left">    
+    <li class="nav-item {% if request.path == '/personal/blog/' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'blog:posts_list' %}">Blog <span class="material-icons" style="font-size:20px;color:red;">library_books</span> </a>
+    </li>
+    <li class="nav-item {% if request.path == '/personal/blog-post/' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'post_create' %}">Create Post <i class="material-icons" style="font-size:20px;color:red;">library_add</i></a>
+    </li>   
+</ul>

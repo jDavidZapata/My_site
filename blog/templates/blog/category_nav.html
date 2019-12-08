@@ -1,0 +1,20 @@
+{% if user.is_authenticated %}
+<nav class="navbar navbar-expand-md navbar-dark bg-dark" >
+    <div class="collapse navbar-collapse " >
+        <ul class="navbar-nav mx-auto ">
+        <li class="nav-item {% if request.path == '/personal/blog/category/' %}active{% endif %}">
+            <a class="nav-link" href="{% url 'blog:category_list' %}"><span class="material-icons" style="font-size:20px;color:red;">storage</span> Categories </a>        
+        </li>
+        </ul>
+        {% if categories %}
+        <ul class="navbar-nav mx-auto float-right">
+          {% for category in categories %}        
+          <li class="nav-item {% if request.path == category.get_absolute_url  %}active{% endif %}">
+              <a class="nav-link" href="{% url 'blog:category_detail' category.id %}"><span class="material-icons" style="font-size:20px;color:red;">link</span> {{category.name|capfirst}} </a>        
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</nav>
+{% endif %}

@@ -28,52 +28,18 @@
         <a class="nav-link" href="{% url 'personal:personal' %}">Personal <span class="glyphicon glyphicon-fire" style="font-size:20px;color:red;"></span></a>
       </li>
     </ul> 
+
     {% if user.is_authenticated %}
-    <ul class="navbar-nav mx-auto float-left">    
-      <li class="nav-item {% if request.path == '/personal/blog/' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'blog:posts_list' %}">Blog <span class="material-icons" style="font-size:20px;color:red;">library_books</span> </a>
-      </li>
-      <li class="nav-item {% if request.path == '/personal/blog-post/' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'post_create' %}">Create Post <i class="material-icons" style="font-size:20px;color:red;">library_add</i></a>
-      </li>   
-    </ul>
-    <ul class="navbar-nav mx-auto float-right">             
-      <li class="nav-item {% if request.path == '/profile/' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'users:profile' %}"><span class="glyphicon glyphicon-user" style="font-size:20px;color:red;"></span> {{user.username}} Profile</a>
-      </li>
-      <li class="nav-item {% if request.path == '/logout/' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'users:logout' %}?next={{request.path}}"><span class="glyphicon glyphicon-log-out" style="font-size:20px;color:red;"></span> Logout</a>
-      </li>
-    </ul>
 
+      {% include 'blog/user_nav.html' %}
+
+      {% include 'users/user_nav.html' %}
 
     {% endif %}
-    {% if personal and not user.is_authenticated %}
-    <ul class="navbar-nav mx-auto float-right"> 
-      <li class="nav-item {% if request.path == '/personal/blog/' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'blog:posts_list' %}"><span class="glyphicon glyphicon-fire" style="font-size:20px;color:red;"></span> Blog</a>
-      </li>      
-      <li class="nav-item {% if request.path == '/register/' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'users:register' %}"><span class="glyphicon glyphicon-pencil" style="font-size:20px;color:red;"></span> Register</a>
-      </li>
-      <li class="nav-item {% if request.path == '/login/' %}active{% endif %}">
-        <a class="nav-link" href="{% url 'users:login' %}?next={{request.path}}"><span class="glyphicon glyphicon-log-in" style="font-size:20px;color:red;"></span> Login</a>
-      </li>
-    </ul>
     
-    {% endif %}
+    {% include 'users/nouser_nav.html' %}
 
-  </div>
-  
+  </div>  
 </nav>
-{% if user.is_authenticated %}
-<nav class="navbar navbar-expand-md navbar-dark bg-dark" >
-    <div class="collapse navbar-collapse " >
-        <ul class="navbar-nav mx-auto ">
-        <li class="nav-item {% if request.path == '/personal/blog/category/' %}active{% endif %}">
-            <a class="nav-link" href="{% url 'blog:category_list' %}"><span class="glyphicon glyphicon-home" style="font-size:20px;color:red;"></span> Category </a>        
-        </li>
-        </ul>
-    </div>
-</nav>
-{% endif %}
+
+{% include 'blog/category_nav.html' %}

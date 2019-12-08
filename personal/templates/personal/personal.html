@@ -1,20 +1,6 @@
 {% extends 'base.html' %}
 
-
-
 {% block content %}
-
-{% if user.is_authenticated %}
-<nav class="navbar navbar-expand-md navbar-dark bg-dark" >
-    <div class="collapse navbar-collapse " id="navbarSupportedContent">
-        <ul class="navbar-nav mx-auto ">
-        <li class="nav-item {% if request.path == '/' %}active{% endif %}">
-            <a class="nav-link" href="{% url 'main:homepage' %}"><span class="glyphicon glyphicon-home" style="font-size:20px;color:red;"></span> Home </a>        
-        </li>
-        </ul>
-    </div>
-</nav>
-{% endif %}
 
 <div class='text-center'>
     <h1>{{ title }}</h1>
@@ -25,25 +11,26 @@
     <div class='row'>
                 
         {% for post in posts %}
-            {% include 'blog/inline-list.html' with post=post %}
 
-            {% empty %}
-            <div class="col">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">No Personal stuff.</h5>
-                        <h5 class="card-title">No Categories.</h5>
-                        <h5 class="card-title">No Post's.</h5>
-                    </div>
-                    <div class="card-footer">
-                        <a href="{% url 'main:homepage' %}"
+        {% include 'blog/inline-list.html' with post=post %}
+
+        {% empty %}
+        <div class="col">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">No Personal stuff.</h5>
+                    <h5 class="card-title">No Categories.</h5>
+                    <h5 class="card-title">No Post's.</h5>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'main:homepage' %}"
                         class="btn btn-danger">
                             Back To Home
-                        </a>                    
-                    </div>
+                    </a>                    
                 </div>
             </div>
-            {% endfor %}
+        </div>
+        {% endfor %}
 
     </div>
 </div>

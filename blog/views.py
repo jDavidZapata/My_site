@@ -42,12 +42,14 @@ def category_detail_list(request, cat_id):
 
     personal = True
     template_name = 'blog/category_detail.html'
+    categories = get_list_or_404(Category)
     category = get_object_or_404(Category, pk=cat_id)
     posts = get_list_or_404(Post, category=category)
     ordering = ['-date_posted']
     #posts = Post.objects.all() #--> Query set
     context = {
             'title': '*Category Posts *',
+            'categories': categories,
             'category': category,
             'posts': posts,
             'personal': personal,

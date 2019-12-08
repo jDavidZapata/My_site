@@ -32,6 +32,11 @@ class Category(models.Model):
             self.slug = slugify(self.name)
         return super().save(*args, **kwargs)
 
+    def get_absolute_url(self):
+            return reverse('blog:category_detail', kwargs={'cat_id': self.id})
+            #return reverse('blog:category_detail', kwargs={'slug': self.slug})
+            
+
 
 
 
