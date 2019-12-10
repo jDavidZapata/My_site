@@ -3,7 +3,7 @@ from .models import Post, Comment, Category
 
 class PostForm(forms.Form):
     
-    title = forms.CharField(max_length=100)
+    title = forms.CharField(max_length=200)
     content = forms.CharField(widget=forms.Textarea)
     #image = forms.ImageField()
 
@@ -31,3 +31,9 @@ class CommentModelForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content']
+
+
+class CategoryModelForm(forms.ModelForm):
+    
+    name = forms.CharField(max_length=200)
+    summary = forms.CharField(widget=forms.Textarea)

@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect, get_list_or_40
 from django.contrib import messages
 from django.views.generic import ListView, DetailView, CreateView
 from .models import Post, Category, Comment
-from .forms import PostForm, PostModelForm
+from .forms import PostForm, PostModelForm, CategoryModelForm
 
 # Create your views here.
 
@@ -69,6 +69,61 @@ class CategoryDetailListView(ListView):
     context_object_name = 'posts'
     ordering = ['-date_added']
 
+
+
+@login_required
+def category_create(request):
+    
+    template_name = 'form.html'
+    print(request.POST)
+    if request.method == 'POST':
+        form = CategoryModelForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            print(form.cleaned_data)
+            ##category = Category.objects.create(**form.cleaned_data)
+            category = form.save(commit=False)
+            category.author = request.user
+            category.save()
+            messages.success(request, f"New Category Created: {category.name}.")
+            return redirect(category)
+        else:
+            messages.error(request, "Invalid Create")
+    form = CategoryModelForm()
+    context = {
+            'title': 'Create A Category',
+            'form': form 
+        }
+    return render(request, template_name, context)
+
+
+
+class CategoryCreateView(CreateView):
+    model = Category
+    fields = ['name', 'summary']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+
+@login_required
+def category_delete(request, cat_id):
+    category = get_object_or_404(Post, pk=cat_id)
+    template_name = 'blog/delete.html'
+    print(request.POST)
+    if request.method == 'POST':
+        if category.author == request.user:            
+            category.delete()
+            messages.success(request, f"Category Deleted.")
+            return redirect('blog:posts_list') 
+        else:
+            messages.error(request, "Invalid Delete")
+    context = {
+        'title': f'Delete Category {category.name}',
+        'post': category 
+    }
+    return render(request, template_name, context)
 
 
 

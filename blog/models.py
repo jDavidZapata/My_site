@@ -42,7 +42,7 @@ class Category(models.Model):
 
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=200)
     content = models.TextField()
     slug = models.SlugField(null=False, unique=True)
     image = models.ImageField(upload_to='post_img/', blank=True, null=True)
