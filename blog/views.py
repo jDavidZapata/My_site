@@ -35,7 +35,7 @@ def category_detail_list(request, cat_id):
     ordering = ['-date_posted']
     #posts = Post.objects.all() #--> Query set
     context = {
-            'title': '*Category Posts *',
+            'title': f'* {category.name} Category Posts *',
             'categories': categories,
             'category': category,
             'posts': posts,
