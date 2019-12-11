@@ -8,7 +8,6 @@ from .forms import PostForm, PostModelForm, CategoryModelForm
 # Create your views here.
 
 
-
 def category_list(request):
 
     personal = True
@@ -24,18 +23,6 @@ def category_list(request):
         }
 
     return render(request, template_name, context)
-
-
-
-class CategoryListView(ListView):
-
-    personal = True
-    model = Category
-    template_name = 'blog/category_list.html'
-    context_object_name = 'categories'
-    ordering = ['-date_added']
-
-
 
 
 def category_detail_list(request, cat_id):
@@ -57,18 +44,6 @@ def category_detail_list(request, cat_id):
         }
 
     return render(request, template_name, context)
-
-
-
-
-class CategoryDetailListView(ListView):
-
-    personal = True
-    model = Post
-    template_name = 'blog/category_detail.html'
-    context_object_name = 'posts'
-    ordering = ['-date_added']
-
 
 
 @login_required
@@ -96,21 +71,10 @@ def category_create(request):
     return render(request, template_name, context)
 
 
-
-class CategoryCreateView(CreateView):
-    model = Category
-    fields = ['name', 'summary']
-
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
-
-
-
 @login_required
 def category_delete(request, cat_id):
     category = get_object_or_404(Post, pk=cat_id)
-    template_name = 'blog/delete.html'
+    template_name = 'blog/category_delete.html'
     print(request.POST)
     if request.method == 'POST':
         if category.author == request.user:            
@@ -124,6 +88,38 @@ def category_delete(request, cat_id):
         'post': category 
     }
     return render(request, template_name, context)
+
+
+
+
+
+class CategoryListView(ListView):
+
+    personal = True
+    model = Category
+    template_name = 'blog/category_list.html'
+    context_object_name = 'categories'
+    ordering = ['-date_added']
+
+
+class CategoryDetailListView(ListView):
+
+    personal = True
+    model = Post
+    template_name = 'blog/category_detail.html'
+    context_object_name = 'posts'
+    ordering = ['-date_added']
+
+
+class CategoryCreateView(CreateView):
+    model = Category
+    fields = ['name', 'summary']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
 
 
 
@@ -144,18 +140,6 @@ def posts_list(request):
     return render(request, template_name, context)
 
 
-
-class PostListView(ListView):
-
-    personal = True
-    model = Post
-    template_name = 'blog/posts_list.html'
-    context_object_name = 'posts'
-    ordering = ['-date_posted']
-
-
-
-
 def post_detail(request, post_id):
 
     personal = True
@@ -167,15 +151,6 @@ def post_detail(request, post_id):
             'personal': personal
         }        
     return render(request, template_name, context)
-
-
-
-class PostDetailView(DetailView):
-
-    personal = True
-    model = Post
-    template_name = 'blog/post_detail.html'
-
 
 
 @login_required
@@ -203,17 +178,6 @@ def post_create(request):
     return render(request, template_name, context)
 
 
-
-class PostCreateView(CreateView):
-    model = Post
-    fields = ['title', 'content', 'category']
-
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
-
-
-
 @login_required
 def post_update(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
@@ -237,11 +201,10 @@ def post_update(request, post_id):
     return render(request, template_name, context)
 
 
-
 @login_required
 def post_delete(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    template_name = 'blog/delete.html'
+    template_name = 'blog/post_delete.html'
     print(request.POST)
     if request.method == 'POST':
         if post.author == request.user:            
@@ -255,6 +218,37 @@ def post_delete(request, post_id):
         'post': post 
     }
     return render(request, template_name, context)
+
+
+
+
+
+class PostListView(ListView):
+
+    personal = True
+    model = Post
+    template_name = 'blog/posts_list.html'
+    context_object_name = 'posts'
+    ordering = ['-date_posted']
+
+
+class PostDetailView(DetailView):
+
+    personal = True
+    model = Post
+    template_name = 'blog/post_detail.html'
+
+
+class PostCreateView(CreateView):
+    model = Post
+    fields = ['title', 'content', 'category']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+
 
 
 '''

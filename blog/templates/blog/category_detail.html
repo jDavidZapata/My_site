@@ -20,5 +20,10 @@
         </div>
     </div>
 {% endfor %}
+    
 </div>
+{% if request.user.is_authenticated and request.user == category.author %}
+    <a href="{{ category.get_delete_url }}" class="btn btn-danger">Delete</a>
+            
+{% endif %}
 {% endblock %}

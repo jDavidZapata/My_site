@@ -33,10 +33,12 @@ class Category(models.Model):
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-            return reverse('blog:category_detail', kwargs={'cat_id': self.id})
-            #return reverse('blog:category_detail', kwargs={'slug': self.slug})
+        return reverse('blog:category_detail', kwargs={'cat_id': self.id})
+        #return reverse('blog:category_detail', kwargs={'slug': self.slug})
             
-
+    def get_delete_url(self):
+        #return reverse('blog:category_delete', kwargs={cat_id': self.id})
+        return f"{self.get_absolute_url()}delete"
 
 
 
@@ -49,7 +51,7 @@ class Post(models.Model):
     date_posted = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(Category, default=1, verbose_name="Category", on_delete=models.SET_DEFAULT)
-
+    #comment = models.ForeignKey(Comment, verbose_name="Comment", on_delete=models.CASCADE)
     
 
     def __str__(self):
@@ -67,20 +69,18 @@ class Post(models.Model):
 
 
     def get_absolute_url(self):
-            return reverse('blog:post_detail', kwargs={'post_id': self.id})
-            #return reverse('blog:post_detail', kwargs={'slug': self.slug})
-            #return f"/blog/{self.id}"
+        return reverse('blog:post_detail', kwargs={'post_id': self.id})
+        #return reverse('blog:post_detail', kwargs={'slug': self.slug})
+        #return f"/blog/{self.id}"
    
 
     def get_update_url(self):
         #return reverse('blog:post_update', kwargs={'post_id': self.id})
-        #return f"/personal/blog/{self.id}/update"
         return f"{self.get_absolute_url()}update"
 
 
     def get_delete_url(self):
         #return reverse('blog:post_delete', kwargs={'post_id': self.id})
-        #return f"/personal/blog/{self.id}/delete"
         return f"{self.get_absolute_url()}delete"
    
 
@@ -92,6 +92,9 @@ class Comment(models.Model):
     date_commented = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        verbose_name_plural = "Comments"
+
 
     def __str__(self):
         return self.content
@@ -100,4 +103,19 @@ class Comment(models.Model):
     def __repr__(self):
         return self.content
 
-    
+    '''
+    def get_absolute_url(self):
+        return reverse('blog:commet_detail', kwargs={'comment_id': self.id})
+        #return reverse('blog:comment_detail', kwargs={'slug': self.slug})
+       
+   
+
+    def get_update_url(self):
+        #return reverse('blog:comment_update', kwargs={'comment_id': self.id})
+        return f"{self.get_absolute_url()}update"
+
+
+    def get_delete_url(self):
+        #return reverse('blog:comment_delete', kwargs={'comment_id': self.id})
+        return f"{self.get_absolute_url()}delete"
+    '''
