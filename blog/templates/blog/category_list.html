@@ -4,30 +4,13 @@
 <h1 class="text-center my-3">{{ title | title }}</h1>
 <div class="row">
 {% for category in categories %}
-
+    {% include 'blog/category_inline_list.html' with category=category %}
     
-    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2">
-        <div class="card mb-3">
-            
-            <div class="card-body">            
-                <h5 class="card-title"><a href="{% url 'blog:category_detail' category.id %}" >{{ category.name|title }} </a></h5>
-                <p class="card-text">{{ category.summary|capfirst|linebreaks|truncatewords:30 }}</p>
-                <br>
-                <a href="{% url 'blog:category_detail' category.id %}" >{{ category.author.username }} </a>
-                <small class="text-muted">{{ category.date_added}}</small>
-            </div>
-            <div class="card-footer">
-                <a href="{% url 'blog:category_detail' category.id %}"
-                    class="btn btn-danger">See Category
-                </a>                
-            </div>
-        </div>
-    </div>
 {% empty %}
     <div class="col">
         <div class="card mb-3">
             <div class="card-body">
-                <h5 class="card-title">No Post's.</h5>
+                <h5 class="card-title">No Category's.</h5>
             </div>
             <div class="card-footer">
                 <a href="{% url 'personal:personal' %}"

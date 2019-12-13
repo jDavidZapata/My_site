@@ -10,9 +10,9 @@
 <div class='container-fluid border border-danger'>
     <div class='row'>
                 
-        {% for post in posts %}
+        {% for category in categories %}
 
-        {% include 'blog/inline-list.html' with post=post %}
+        {% include 'blog/category_inline_list.html' with category=category %}
 
         {% empty %}
         <div class="col">
@@ -20,7 +20,7 @@
                 <div class="card-body">
                     <h5 class="card-title">No Personal stuff.</h5>
                     <h5 class="card-title">No Categories.</h5>
-                    <h5 class="card-title">No Post's.</h5>
+                    <h5 class="card-title">No category's.</h5>
                 </div>
                 <div class="card-footer">
                     <a href="{% url 'main:homepage' %}"

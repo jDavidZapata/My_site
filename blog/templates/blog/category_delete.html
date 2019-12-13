@@ -8,7 +8,7 @@
             <img class="rounded-circle" src="{{ category.author.profile.image.url }}">
             <div class="card-body">
                 <h4><a href="{% url 'blog:category_detail' category.id %}" >{{ category.author.username }} </a> are You sure you want to <strong style="font-size:25px;font-weight:bold;color:red;">delete</strong> the following category:</h4>
-                <h5 class="card-title"><a href="{% url 'blog:category_detail' category.id %}" >{{ category.name|title }} </a></h5>
+                <h1 class="card-title"><a href="{% url 'blog:category_detail' category.id %}" >{{ category.name|title }} </a></h1>
                 <br>
             </div>
             <div class="card-footer">

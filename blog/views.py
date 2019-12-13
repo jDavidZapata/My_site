@@ -2,12 +2,36 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
 from django.contrib import messages
 from django.views.generic import ListView, DetailView, CreateView
+from django.http import Http404
 from .models import Post, Category, Comment
 from .forms import PostForm, PostModelForm, CategoryModelForm
 
 # Create your views here.
 
 
+def category_list(request):
+
+    personal = True
+    template_name = 'blog/category_list.html'
+    #categories = get_list_or_404(Category)
+    ordering = ['name']
+    categories = None
+    try:
+        categories = Category.objects.all() #--> Query set
+    except ValueError:
+        raise Http404
+    context = {
+            'title': '* Categories *',
+            'categories': categories,
+            'personal': personal,
+            'ordering': ordering
+        }
+
+    return render(request, template_name, context)
+
+
+
+'''
 def category_list(request):
 
     personal = True
@@ -23,6 +47,7 @@ def category_list(request):
         }
 
     return render(request, template_name, context)
+
 
 
 def category_detail_list(request, cat_id):
@@ -44,6 +69,36 @@ def category_detail_list(request, cat_id):
         }
 
     return render(request, template_name, context)
+'''
+
+
+def category_detail_list(request, cat_id):
+
+    personal = True
+    template_name = 'blog/category_detail.html'
+    categories = get_list_or_404(Category)
+    category = get_object_or_404(Category, pk=cat_id)
+    posts = None
+    try:
+        posts = Post.objects.filter(category=category) #--> Query set
+    except ValueError:
+        raise Http404
+    #posts = get_list_or_404(Post, category=category)
+    ordering = ['-date_posted']
+    #posts = Post.objects.all() #--> Query set
+    context = {
+            'title': f'* {category.name} Category Posts *',
+            'categories': categories,
+            'category': category,
+            'posts': posts,
+            'personal': personal,
+            'ordering': ordering
+        }
+
+    return render(request, template_name, context)
+
+
+
 
 
 @login_required
@@ -73,19 +128,19 @@ def category_create(request):
 
 @login_required
 def category_delete(request, cat_id):
-    category = get_object_or_404(Post, pk=cat_id)
+    category = get_object_or_404(Category, pk=cat_id)
     template_name = 'blog/category_delete.html'
     print(request.POST)
     if request.method == 'POST':
         if category.author == request.user:            
             category.delete()
             messages.success(request, f"Category Deleted.")
-            return redirect('blog:posts_list') 
+            return redirect('blog:category_list') 
         else:
             messages.error(request, "Invalid Delete")
     context = {
         'title': f'Delete Category {category.name}',
-        'post': category 
+        'category': category 
     }
     return render(request, template_name, context)
 

@@ -25,7 +25,7 @@ urlpatterns = [
     path("category-create/", views.category_create, name="category_create"),
     #path("category-create/", CategoryCreateView.as_view(), name="category_create"),
     
-    path("category<int:cat_id>/delete/", views.category_delete, name="category_delete"),
+    path("category/<int:cat_id>/delete/", views.category_delete, name="category_delete"),
 
     path("<int:post_id>/update/", views.post_update, name="post_update"),
     path("<int:post_id>/delete/", views.post_delete, name="post_delete"),
