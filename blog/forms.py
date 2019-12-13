@@ -3,12 +3,22 @@ from .models import Post, Comment, Category
 
 class PostForm(forms.Form):
     
+    CHOICES = [(category.id, category.name) for category in Category.objects.all()]
+
     title = forms.CharField(max_length=200)
     content = forms.CharField(widget=forms.Textarea)
+    #category = forms.ModelChoiceField(choices=[CHOICES], required=False)
     #image = forms.ImageField()
 
 
 class PostModelForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(PostModelForm, self).__init__(*args, **kwargs)
+        self.fields['category'] = forms.ModelChoiceField(
+            queryset=Category.objects.all()
+        )
+
 
     class Meta:
         model = Post

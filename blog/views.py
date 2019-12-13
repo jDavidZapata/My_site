@@ -14,7 +14,7 @@ def category_list(request):
     personal = True
     template_name = 'blog/category_list.html'
     #categories = get_list_or_404(Category)
-    ordering = ['name']
+    ordering = ['-date_added']
     categories = None
     try:
         categories = Category.objects.all() #--> Query set
@@ -154,16 +154,26 @@ class CategoryListView(ListView):
     model = Category
     template_name = 'blog/category_list.html'
     context_object_name = 'categories'
-    ordering = ['-date_added']
+    ordering = ['name']
 
 
 class CategoryDetailListView(ListView):
 
-    personal = True
-    model = Post
     template_name = 'blog/category_detail.html'
     context_object_name = 'posts'
-    ordering = ['-date_added']
+    
+    def get_queryset(self):
+        self.category = get_object_or_404(Category, pk=self.kwargs['cat_id'])
+        return Post.objects.filter(category=self.category).order_by('-date_posted')
+    
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['personal'] = True       
+        context['category'] = self.category
+        context['categories'] = Category.objects.order_by('name')
+        return context
+
 
 
 class CategoryCreateView(CreateView):
@@ -195,13 +205,13 @@ def posts_list(request):
     return render(request, template_name, context)
 
 
-def post_detail(request, post_id):
+def post_detail(request, slug):
 
     personal = True
     template_name = 'blog/post_detail.html'
-    post = get_object_or_404(Post, pk=post_id)   
+    post = get_object_or_404(Post, slug=slug)   
     context = {
-            'title': f'Post # {post_id}',
+            'title': f'Post # {post.id}',
             'post': post,
             'personal': personal
         }        
@@ -220,6 +230,7 @@ def post_create(request):
             ##post = Post.objects.create(**form.cleaned_data)
             post = form.save(commit=False)
             post.author = request.user
+            post.category = Category.objects.get(pk=request.POST['category'])
             post.save()
             messages.success(request, f"New Post Created: {post.title}.")
             return redirect(post)
@@ -234,8 +245,8 @@ def post_create(request):
 
 
 @login_required
-def post_update(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
+def post_update(request, slug):
+    post = get_object_or_404(Post, slug=slug)
     template_name = 'form.html'
     if request.method == 'POST':
         form = PostModelForm(request.POST or None, request.FILES or None, instance=post)
@@ -257,8 +268,8 @@ def post_update(request, post_id):
 
 
 @login_required
-def post_delete(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
+def post_delete(request, slug):
+    post = get_object_or_404(Post, slug=slug)
     template_name = 'blog/post_delete.html'
     print(request.POST)
     if request.method == 'POST':
@@ -292,6 +303,10 @@ class PostDetailView(DetailView):
     personal = True
     model = Post
     template_name = 'blog/post_detail.html'
+    context_object_name = 'post'
+
+    
+    
 
 
 class PostCreateView(CreateView):

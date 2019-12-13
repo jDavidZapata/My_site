@@ -2,14 +2,14 @@
     <div class="card mb-3">
         <img class="rounded-circle" src="{{ post.author.profile.image.url }}">
         <div class="card-body">            
-            <h5 class="card-title"><a href="{% url 'blog:post_detail' post.id %}" >{{ post.title|title }} </a></h5>
+            <h5 class="card-title"><a href="{% url 'blog:post_detail' post.slug %}" >{{ post.title|title }} </a></h5>
             <p class="card-text">{{ post.content|capfirst|linebreaks|truncatewords:30 }}</p>
             <br>
-            <a href="{% url 'blog:post_detail' post.id %}" >{{ post.author.username }} </a>
+            <a href="{% url 'blog:post_detail' post.slug %}" >{{ post.author.username }} </a>
             <small class="text-muted">{{ post.date_posted}}</small>
         </div>
         <div class="card-footer">
-            <a href="{% url 'blog:post_detail' post.id %}"
+            <a href="{% url 'blog:post_detail' post.slug %}"
                 class="btn btn-danger">See Post
             </a>                
         </div>
