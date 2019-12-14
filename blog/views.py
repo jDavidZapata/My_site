@@ -154,6 +154,7 @@ class CategoryListView(ListView):
     model = Category
     template_name = 'blog/category_list.html'
     context_object_name = 'categories'
+    #paginate_by = 3
     ordering = ['name']
 
 
@@ -161,6 +162,7 @@ class CategoryDetailListView(ListView):
 
     template_name = 'blog/category_detail.html'
     context_object_name = 'posts'
+    paginate_by = 2
     
     def get_queryset(self):
         self.category = get_object_or_404(Category, slug=self.kwargs['slug'])
@@ -168,7 +170,7 @@ class CategoryDetailListView(ListView):
     
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super(CategoryDetailListView, self).get_context_data(**kwargs)
         context['personal'] = True       
         context['category'] = self.category
         context['categories'] = Category.objects.order_by('name')
@@ -295,6 +297,7 @@ class PostListView(ListView):
     model = Post
     template_name = 'blog/posts_list.html'
     context_object_name = 'posts'
+    paginate_by = 2
     ordering = ['-date_posted']
 
 
