@@ -33,8 +33,8 @@ class Category(models.Model):
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('blog:category_detail', kwargs={'cat_id': self.id})
-        #return reverse('blog:category_detail', kwargs={'slug': self.slug})
+        #return reverse('blog:category_detail', kwargs={'cat_id': self.id})
+        return reverse('blog:category_detail', kwargs={'slug': self.slug})
             
     def get_delete_url(self):
         #return reverse('blog:category_delete', kwargs={cat_id': self.id})

@@ -72,12 +72,12 @@ def category_detail_list(request, cat_id):
 '''
 
 
-def category_detail_list(request, cat_id):
+def category_detail_list(request, slug):
 
     personal = True
     template_name = 'blog/category_detail.html'
     categories = get_list_or_404(Category)
-    category = get_object_or_404(Category, pk=cat_id)
+    category = get_object_or_404(Category, slug=slug)
     posts = None
     try:
         posts = Post.objects.filter(category=category) #--> Query set
@@ -127,8 +127,8 @@ def category_create(request):
 
 
 @login_required
-def category_delete(request, cat_id):
-    category = get_object_or_404(Category, pk=cat_id)
+def category_delete(request, slug):
+    category = get_object_or_404(Category, slug=slug)
     template_name = 'blog/category_delete.html'
     print(request.POST)
     if request.method == 'POST':
@@ -163,7 +163,7 @@ class CategoryDetailListView(ListView):
     context_object_name = 'posts'
     
     def get_queryset(self):
-        self.category = get_object_or_404(Category, pk=self.kwargs['cat_id'])
+        self.category = get_object_or_404(Category, slug=self.kwargs['slug'])
         return Post.objects.filter(category=self.category).order_by('-date_posted')
     
 

@@ -10,7 +10,7 @@
         <ul class="navbar-nav mx-auto float-right">
           {% for category in categories %}        
           <li class="nav-item {% if request.path == category.get_absolute_url  %}active{% endif %}">
-              <a class="nav-link" href="{% url 'blog:category_detail' category.id %}"><span class="material-icons" style="font-size:20px;color:red;">link</span> {{category.name|capfirst}} </a>        
+              <a class="nav-link" href="{% url 'blog:category_detail' category.slug %}"><span class="material-icons" style="font-size:20px;color:red;">link</span> {{category.name|capfirst}} </a>        
           </li>
           {% endfor %}
         </ul>

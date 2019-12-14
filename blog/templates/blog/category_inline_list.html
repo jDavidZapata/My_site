@@ -2,18 +2,18 @@
         <div class="card mb-3">
             
             <div class="card-body">            
-                <h4 class="card-title"><a href="{% url 'blog:category_detail' category.id %}" >{{ category.name|title }} </a></h4>
+                <h4 class="card-title"><a href="{% url 'blog:category_detail' category.slug %}" >{{ category.name|title }} </a></h4>
                 <h5 class="card-text">Summary:</h5>
                 <p class="card-text">{{ category.summary|capfirst|linebreaks|truncatewords:30 }}</p>
                 
                 <h5 class="card-text">Number Of Posts:</h5>
                 <small class="text-muted">{{ category.post_set.count}}</small>
                 <br>
-                <a href="{% url 'blog:category_detail' category.id %}" >By {{ category.author.username }} </a>
+                <a href="{% url 'blog:category_detail' category.slug %}" >By {{ category.author.username }} </a>
                 <small class="text-muted">On {{ category.date_added}}</small>
             </div>
             <div class="card-footer">
-                <a href="{% url 'blog:category_detail' category.id %}"
+                <a href="{% url 'blog:category_detail' category.slug %}"
                     class="btn btn-danger">See {{ category.name | capfirst }} Category
                 </a>                
             </div>

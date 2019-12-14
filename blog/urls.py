@@ -19,15 +19,15 @@ urlpatterns = [
 
     #path("category/<int:cat_id>/", views.category_detail_list, name="category_detail"),
     #path("category/<slug:slug>/", views.category_detail_list, name="category_detail"),
-    path('category-<int:cat_id>/', views.CategoryDetailListView.as_view(), name='category_detail'),
+    path('category-<slug:slug>/', views.CategoryDetailListView.as_view(), name='category_detail'),
     #path('category/<slug:slug>', CategoryDetailListView.as_view(), name='category_detail'),
 
     path("create-category/", views.category_create, name="category_create"),
     #path("create-category/", CategoryCreateView.as_view(), name="category_create"),
     
-    path("category/<int:cat_id>/delete/", views.category_delete, name="category_delete"),
+    path("category-<slug:slug>/delete/", views.category_delete, name="category_delete"),
 
-    path("<int:post_id>/update/", views.post_update, name="post_update"),
-    path("<int:post_id>/delete/", views.post_delete, name="post_delete"),
+    path("category/<slug:slug>/update/", views.post_update, name="post_update"),
+    path("category/<slug:slug>/delete/", views.post_delete, name="post_delete"),
 
 ]
