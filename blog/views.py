@@ -1,8 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
 from django.contrib import messages
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.http import Http404
+from django.urls import reverse_lazy
 from .models import Post, Category, Comment
 from .forms import PostForm, PostModelForm, CategoryModelForm
 
@@ -187,6 +189,9 @@ class CategoryCreateView(CreateView):
         return super().form_valid(form)
 
 
+class CategoryDelete(DeleteView):
+    model = Category
+    success_url = reverse_lazy('blog:category_list')
 
 
 
@@ -321,6 +326,14 @@ class PostCreateView(CreateView):
         return super().form_valid(form)
 
 
+class PostUpdateView(UpdateView):
+    model = Post
+    fields = ['title', 'content', 'category']
+
+
+class PostDelete(DeleteView):
+    model = Post
+    success_url = reverse_lazy('blog:posts_list')
 
 
 
