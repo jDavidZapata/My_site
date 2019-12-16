@@ -182,6 +182,7 @@ class CategoryDetailListView(ListView):
 
 class CategoryCreateView(CreateView):
     model = Category
+    template_name = 'form.html'
     fields = ['name', 'summary']
 
     def form_valid(self, form):
@@ -191,6 +192,7 @@ class CategoryCreateView(CreateView):
 
 class CategoryDelete(DeleteView):
     model = Category
+    template_name = 'blog/category_delete.html'
     success_url = reverse_lazy('blog:category_list')
 
 
@@ -319,6 +321,7 @@ class PostDetailView(DetailView):
 
 class PostCreateView(CreateView):
     model = Post
+    template_name = 'form.html'
     fields = ['title', 'content', 'category']
 
     def form_valid(self, form):
@@ -328,11 +331,13 @@ class PostCreateView(CreateView):
 
 class PostUpdateView(UpdateView):
     model = Post
+    template_name = 'form.html'
     fields = ['title', 'content', 'category']
 
 
 class PostDelete(DeleteView):
     model = Post
+    template_name = 'blog/post_delete.html'
     success_url = reverse_lazy('blog:posts_list')
 
 

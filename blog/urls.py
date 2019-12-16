@@ -23,16 +23,16 @@ urlpatterns = [
     path('category-<slug:slug>/', views.CategoryDetailListView.as_view(), name='category_detail'),
     #path('category/<slug:slug>', CategoryDetailListView.as_view(), name='category_detail'),
 
-    path("create-category/", views.category_create, name="category_create"),
-    #path("create-category/", CategoryCreateView.as_view(), name="category_create"),
+    #path("create-category/", views.category_create, name="category_create"),
+    path("create-category/", views.CategoryCreateView.as_view(), name="category_create"),
     
-    path("category-<slug:slug>/delete/", views.category_delete, name="category_delete"),
-    #path("category-<slug:slug>/delete/", views.CategoryDelete.as_view(), name="category_delete"),
+    #path("category-<slug:slug>/delete/", views.category_delete, name="category_delete"),
+    path("category-<slug:slug>/delete/", views.CategoryDelete.as_view(), name="category_delete"),
 
-    path("category/<slug:slug>/update/", views.post_update, name="post_update"),
-    #path("category/<slug:slug>/update/", views.PostUpdateView.as_view(), name="post_update"),
+    #path("category/<slug:slug>/update/", views.post_update, name="post_update"),
+    path("category/<slug:slug>/update/", views.PostUpdateView.as_view(), name="post_update"),
 
-    path("category/<slug:slug>/delete/", views.post_delete, name="post_delete"),
-    #path("category/<slug:slug>/delete/", views.PostDelete.as_view(), name="post_delete"),
+    #path("category/<slug:slug>/delete/", views.post_delete, name="post_delete"),
+    path("category/<slug:slug>/delete/", views.PostDelete.as_view(), name="post_delete"),
 
 ]
