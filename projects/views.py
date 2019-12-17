@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
 from django.contrib import messages
+from django.urls import reverse_lazy
 from .models import Project
 from .forms import ProjectForm, ProjectModelForm
 
@@ -103,3 +104,47 @@ def project_delete(request, project_id):
         'form': form 
     }
     return render(request, template_name, context)
+
+
+
+
+
+
+class ProjectListView(ListView):
+    
+    model = Project
+    template_name = 'projects/projects_list.html'
+    context_object_name = 'projects'
+    paginate_by = 2
+    ordering = ['-created_at']
+
+
+class ProjectDetailView(DetailView):
+
+    model = Project
+    template_name = 'projects/project_detail.html'
+    context_object_name = 'project'
+
+
+class ProjectCreateView(CreateView):
+    model = Project
+    template_name = 'form.html'
+    fields = ['title', 'description', 'technology', 'goal', 'image', 'liveProject_url']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+class ProjectUpdateView(UpdateView):
+    model = Project
+    template_name = 'form.html'
+    fields = ['title', 'description', 'technology', 'goal', 'image', 'liveProject_url']
+
+
+class ProjectDelete(DeleteView):
+    model = Project
+    template_name = 'projects/project_delete.html'
+    success_url = reverse_lazy('projects:projects_list')
+
+
