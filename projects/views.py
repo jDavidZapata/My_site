@@ -3,6 +3,8 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
 from django.contrib import messages
 from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from .models import Project
 from .forms import ProjectForm, ProjectModelForm
 
