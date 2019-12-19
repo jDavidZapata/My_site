@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.utils.decorators import method_decorator
 from .models import Project
 from .forms import ProjectForm, ProjectModelForm
 
@@ -118,14 +119,19 @@ class ProjectListView(ListView):
     template_name = 'projects/projects_list.html'
     context_object_name = 'projects'
     #paginate_by = 2
-    ordering = ['-created_at']
+    ordering = ['created_at']
 
+    def get_context_data(self, **kwargs):
+        context = super(ProjectListView, self).get_context_data(**kwargs)
+        context['title'] = '* Projects *'     
+        return context
 
 class ProjectDetailView(DetailView):
 
     model = Project
     template_name = 'projects/project_detail.html'
     context_object_name = 'project'
+    
 
 
 class ProjectCreateView(CreateView):
@@ -139,12 +145,14 @@ class ProjectCreateView(CreateView):
         return super().form_valid(form)
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class ProjectUpdateView(UpdateView):
     model = Project
     template_name = 'form.html'
     fields = ['title', 'description', 'technology', 'goal', 'image', 'liveProject_url']
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class ProjectDelete(DeleteView):
     model = Project
     template_name = 'projects/project_delete.html'

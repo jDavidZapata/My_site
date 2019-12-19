@@ -16,6 +16,15 @@ class ProjectModelForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = ['title', 'description', 'technology', 'goal', 'liveProject_url', 'image']
+    
+    
+    def clean_image(self):
+            data = self.cleaned_data['image']
+            if data is None:
+                raise forms.ValidationError("You have forgotten about the Image!")
+
+            return data
+
 
     '''
     def clean_title(self, *args, **kwargs):
@@ -28,4 +37,6 @@ class ProjectModelForm(forms.ModelForm):
             raise forms.ValidationError("This title already exists.")
         return title
 
-    '''
+
+    '''  
+    

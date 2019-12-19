@@ -1,6 +1,7 @@
 from django.test import TestCase, Client
 from ..models import Project
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 # Create your tests here.
 
@@ -30,7 +31,8 @@ class ProjectsListPageTest(TestCase):
         
         c = Client()
         response = c.get("/projects/")
-        self.assertEqual(response.status_code, 404)
+        #self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 200)
         
 
 
@@ -54,6 +56,7 @@ class ProjectPageTest(TestCase):
         c = Client()
         response = c.get("/projects/1/")
         self.assertEqual(response.status_code, 404)
+        #self.assertEqual(response.status_code, 200)
             
             
     def test_project_page_with_project(self):
@@ -64,8 +67,25 @@ class ProjectPageTest(TestCase):
         c = Client()
         response = c.get("/projects/1/")
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context["title"], "Project # 1")
+        #self.assertEqual(response.context["title"], "Project # 1")
         self.assertEqual(response.context['project'], project)
         self.assertContains(response, project.title)
     
     
+'''
+class LoginRequiredViewTests(TestCase):
+
+    def test_redirection(self):
+
+        """ Test if only logged in users can edit the posts. """
+
+        setUp(self)
+
+        login_url = reverse('users:login')
+        url =  "/projects/1/update/"
+        #url = reverse('projects:project_update', kwargs={'pk': self.id})
+        response = self.client.get(url)
+        self.assertRedirects(response, '{login_url}?next={url}'.format(login_url=login_url, url=url))
+
+
+'''
