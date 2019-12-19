@@ -117,7 +117,7 @@ class ProjectListView(ListView):
     model = Project
     template_name = 'projects/projects_list.html'
     context_object_name = 'projects'
-    paginate_by = 2
+    #paginate_by = 2
     ordering = ['-created_at']
 
 
@@ -131,7 +131,8 @@ class ProjectDetailView(DetailView):
 class ProjectCreateView(CreateView):
     model = Project
     template_name = 'form.html'
-    fields = ['title', 'description', 'technology', 'goal', 'image', 'liveProject_url']
+    form_class = ProjectModelForm
+    #fields = ['title', 'description', 'technology', 'goal', 'image', 'liveProject_url']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
