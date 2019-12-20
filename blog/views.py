@@ -100,7 +100,8 @@ class PostDetailView(DetailView):
 class PostCreateView(CreateView):
     model = Post
     template_name = 'form.html'
-    fields = ['title', 'content', 'category']
+    #form_class = PostModelForm
+    fields = ['title', 'content', 'category', 'image']
 
     def form_valid(self, form):
         form.instance.author = self.request.user

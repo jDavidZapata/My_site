@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 from django.shortcuts import reverse
+from django.template.defaultfilters import slugify
+
 
 # Create your models here.
 
@@ -14,11 +16,18 @@ class Project(models.Model):
     goal = models.TextField()
     image = models.ImageField(upload_to='project_img/', blank=True, null=True)
     liveProject_url =  models.URLField(max_length=200)
+    slug = models.SlugField(null=False, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+            
+        return super().save(*args, **kwargs)
 
+    
     def __str__(self):
         return f"{self.title} -- Build with {self.technology}"
     
@@ -29,7 +38,8 @@ class Project(models.Model):
     
     def get_absolute_url(self):
         #return reverse('projects:project_detail', kwargs={'project_id': self.id})
-        return reverse('projects:project_detail', kwargs={'pk': self.id})
+        #return reverse('projects:project_detail', kwargs={'pk': self.id})
+        return reverse('projects:project_detail', kwargs={'slug': self.slug})
         #return f"/projects/{self.id}"
 
     

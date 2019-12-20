@@ -22,7 +22,7 @@ class PostModelForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ['title', 'content']
+        fields = ['title', 'content', 'image']
 
     
     def clean_title(self, *args, **kwargs):

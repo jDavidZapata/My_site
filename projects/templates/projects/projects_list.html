@@ -17,7 +17,7 @@
                 <small class="text-muted">Last updated {{ project.updated_at }}</small>
             </div>
             <div class="card-footer">
-                <a href="{% url 'projects:project_detail' project.id %}"
+                <a href="{% url 'projects:project_detail' project.slug %}"
                    class="btn btn-primary">
                     Read More
                 </a>                

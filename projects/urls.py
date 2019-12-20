@@ -11,8 +11,9 @@ urlpatterns = [
     #path("<int:project_id>/delete/", views.project_delete, name="project_delete"),
 
     path("", views.ProjectListView.as_view(), name="projects_list"),
-    path("<int:pk>/", views.ProjectDetailView.as_view(), name="project_detail"),
+    #path("<int:pk>/", views.ProjectDetailView.as_view(), name="project_detail"),
+    path("project-<slug:slug>/", views.ProjectDetailView.as_view(), name="project_detail"),
     path("create/", views.ProjectCreateView.as_view(), name="project_create"),
-    path("<int:pk>/update/", views.ProjectUpdateView.as_view(), name="project_update"),
-    path("<int:pk>/delete/", views.ProjectDelete.as_view(), name="project_delete"),
+    path("project-<slug:slug>/update/", views.ProjectUpdateView.as_view(), name="project_update"),
+    path("project-<slug:slug>/delete/", views.ProjectDelete.as_view(), name="project_delete"),
 ]
