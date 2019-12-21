@@ -54,7 +54,7 @@ class ProjectPageTest(TestCase):
         """ If no project, then a 404 error. """
 
         c = Client()
-        response = c.get("/projects/1/")
+        response = c.get("/projects/project-one/")
         self.assertEqual(response.status_code, 404)
         #self.assertEqual(response.status_code, 200)
             
@@ -63,9 +63,9 @@ class ProjectPageTest(TestCase):
         """ Make Sure project shows on the page. """
 
         setUp(self)
-        project = Project.objects.get(pk=1)
+        project = Project.objects.get(slug='one')
         c = Client()
-        response = c.get("/projects/1/")
+        response = c.get("/projects/project-one/")
         self.assertEqual(response.status_code, 200)
         #self.assertEqual(response.context["title"], "Project # 1")
         self.assertEqual(response.context['project'], project)

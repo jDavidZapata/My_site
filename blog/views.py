@@ -112,7 +112,7 @@ class PostCreateView(CreateView):
 class PostUpdateView(UpdateView):
     model = Post
     template_name = 'form.html'
-    fields = ['title', 'content', 'category']
+    fields = ['title', 'content', 'category', 'image']
 
 
 @method_decorator(login_required, name='dispatch')
