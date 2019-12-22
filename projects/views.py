@@ -12,6 +12,58 @@ from .forms import ProjectForm, ProjectModelForm
 # Create your views here.
 
 
+
+class ProjectListView(ListView):
+    
+    model = Project
+    template_name = 'projects/projects_list.html'
+    context_object_name = 'projects'
+    #paginate_by = 2
+    ordering = ['created_at']
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectListView, self).get_context_data(**kwargs)
+        context['title'] = '* Projects *'     
+        return context
+
+class ProjectDetailView(DetailView):
+
+    model = Project
+    template_name = 'projects/project_detail.html'
+    context_object_name = 'project'
+    
+
+
+class ProjectCreateView(CreateView):
+    model = Project
+    template_name = 'form.html'
+    form_class = ProjectModelForm
+    #fields = ['title', 'description', 'technology', 'goal', 'image', 'liveProject_url']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class ProjectUpdateView(UpdateView):
+    model = Project
+    template_name = 'form.html'
+    fields = ['title', 'description', 'technology', 'goal', 'image', 'liveProject_url']
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class ProjectDelete(DeleteView):
+    model = Project
+    template_name = 'projects/project_delete.html'
+    success_url = reverse_lazy('projects:projects_list')
+
+
+
+
+
+
+
 def projects_list(request):
 
     template_name = 'projects/projects_list.html'
@@ -111,51 +163,5 @@ def project_delete(request, project_id):
 
 
 
-
-
-class ProjectListView(ListView):
-    
-    model = Project
-    template_name = 'projects/projects_list.html'
-    context_object_name = 'projects'
-    #paginate_by = 2
-    ordering = ['created_at']
-
-    def get_context_data(self, **kwargs):
-        context = super(ProjectListView, self).get_context_data(**kwargs)
-        context['title'] = '* Projects *'     
-        return context
-
-class ProjectDetailView(DetailView):
-
-    model = Project
-    template_name = 'projects/project_detail.html'
-    context_object_name = 'project'
-    
-
-
-class ProjectCreateView(CreateView):
-    model = Project
-    template_name = 'form.html'
-    form_class = ProjectModelForm
-    #fields = ['title', 'description', 'technology', 'goal', 'image', 'liveProject_url']
-
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
-
-
-@method_decorator(staff_member_required, name='dispatch')
-class ProjectUpdateView(UpdateView):
-    model = Project
-    template_name = 'form.html'
-    fields = ['title', 'description', 'technology', 'goal', 'image', 'liveProject_url']
-
-
-@method_decorator(staff_member_required, name='dispatch')
-class ProjectDelete(DeleteView):
-    model = Project
-    template_name = 'projects/project_delete.html'
-    success_url = reverse_lazy('projects:projects_list')
 
 

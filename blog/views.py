@@ -5,6 +5,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.http import Http404
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
 from .models import Post, Category, Comment
 from .forms import PostForm, PostModelForm, CategoryModelForm
@@ -46,8 +47,8 @@ class CategoryDetailListView(ListView):
         return context
 
 
-@method_decorator(login_required, name='dispatch')
-class CategoryCreateView(CreateView):
+
+class CategoryCreateView(LoginRequiredMixin, CreateView):
     model = Category
     template_name = 'form.html'
     fields = ['name', 'summary']
@@ -57,8 +58,8 @@ class CategoryCreateView(CreateView):
         return super().form_valid(form)
 
 
-@method_decorator(login_required, name='dispatch')
-class CategoryDelete(DeleteView):
+
+class CategoryDelete(LoginRequiredMixin, DeleteView):
     model = Category
     template_name = 'blog/category_delete.html'
     success_url = reverse_lazy('blog:category_list')
@@ -96,8 +97,8 @@ class PostDetailView(DetailView):
         return context
     
     
-@method_decorator(login_required, name='dispatch')
-class PostCreateView(CreateView):
+
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     template_name = 'form.html'
     #form_class = PostModelForm
@@ -108,15 +109,15 @@ class PostCreateView(CreateView):
         return super().form_valid(form)
 
 
-@method_decorator(login_required, name='dispatch')
-class PostUpdateView(UpdateView):
+
+class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
     template_name = 'form.html'
-    fields = ['title', 'content', 'category', 'image']
+    fields = ['title', 'content', 'category', 'image', 'slug']
 
 
-@method_decorator(login_required, name='dispatch')
-class PostDelete(DeleteView):
+
+class PostDelete(LoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'blog/post_delete.html'
     success_url = reverse_lazy('blog:posts_list')
