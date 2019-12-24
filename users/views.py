@@ -4,6 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from .forms import CreateUserForm, UpdateUserForm, UpdateProfileForm
 from django.utils import http
 
@@ -108,3 +109,12 @@ def logout_(request):
         return redirect(redirect_to)
     else:    
         return redirect('personal:personal')
+
+
+
+
+
+class UserRegistration(CreateView):
+    model = User
+    template_name = 'form.html'
+    form_class = UserModelForm

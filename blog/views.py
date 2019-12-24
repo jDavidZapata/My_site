@@ -34,6 +34,7 @@ class CategoryDetailListView(ListView):
     context_object_name = 'posts'
     paginate_by = 2
     
+    
     def get_queryset(self):
         self.category = get_object_or_404(Category, slug=self.kwargs['slug'])
         return Post.objects.filter(category=self.category).order_by('-date_posted')
