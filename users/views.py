@@ -5,10 +5,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.conf import settings
 from .forms import CreateUserForm, UpdateUserForm, UpdateProfileForm
 from django.utils import http
 
 # Create your views here.
+
+User = settings.AUTH_USER_MODEL
+
+
 
 def register(request):
 
@@ -117,4 +122,19 @@ def logout_(request):
 class UserRegistration(CreateView):
     model = User
     template_name = 'form.html'
-    form_class = UserModelForm
+    form_class = CreateUserForm
+
+
+
+class UserProfile():
+    pass
+
+
+
+class UserLogin():
+    pass
+
+
+
+class UserLogout():
+    pass
