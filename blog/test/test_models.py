@@ -17,14 +17,17 @@ SUMMARY2 = 'Other Category'
 
 #Posts
 TITLE1 = 'Post 1'
-CONTENT1 = 'The first post'
+PCONTENT1 = 'The first post'
 CATEGORY1 = ''
 
 TITLE2 = 'Post 2'
-CONTENT2 = 'The second post'
+PCONTENT2 = 'The second post'
 IMAGE2 = 'default.jpeg'
 CATEGORY2 = ''
 
+#Comments
+CCONTENT1 = 'Comment 1'
+CCONTENT2 = 'Comment 2'
 
 def create_user(username=USER, password=PASSWORD, email=EMAIL): 
     return get_user_model().objects.create_user(
@@ -82,9 +85,9 @@ class PostModelTest(TestCase):
             author=user, name=NAME2, summary=SUMMARY2)
 
         Post.objects.create(
-            author=user, title=TITLE1, content=CONTENT1, category=CATEGORY1)
+            author=user, title=TITLE1, content=PCONTENT1, category=CATEGORY1)
         Post.objects.create(
-            author=user, title=TITLE2, content=CONTENT2, image=IMAGE2, category=CATEGORY2)
+            author=user, title=TITLE2, content=PCONTENT2, image=IMAGE2, category=CATEGORY2)
 
 
 
@@ -93,6 +96,7 @@ class PostModelTest(TestCase):
 
         Post_one = Post.objects.get(title=TITLE1)
         Post_two = Post.objects.get(title=TITLE2)
+
         self.assertEqual(
             Post_one.title, 'Post 1')
         self.assertEqual(
@@ -115,3 +119,46 @@ class PostModelTest(TestCase):
             Post_two.category.summary, "Other Category")
         self.assertEqual(
             Post_two.slug, "post-2")
+
+
+
+
+class CommentModelTest(TestCase):
+    """ Test module for Comment model. """
+
+    def setUp(self):
+        
+        user = create_user()
+
+        CATEGORY1 = Category.objects.create(
+            author=user, name=NAME1, summary=SUMMARY1)
+        CATEGORY2 = Category.objects.create(
+            author=user, name=NAME2, summary=SUMMARY2)
+
+        POST1 = Post.objects.create(
+            author=user, title=TITLE1, content=PCONTENT1, category=CATEGORY1)
+        POST2 = Post.objects.create(
+            author=user, title=TITLE2, content=PCONTENT2, image=IMAGE2, category=CATEGORY2)
+
+        COMMENT1 = Comment.objects.create(
+            author=user, post=POST1, content=CCONTENT1)
+        COMMENT2 = Comment.objects.create(
+            author=user, post=POST2, content=CCONTENT2)
+
+
+
+    def test_database(self):
+        """ Test module for Comment database. """
+
+        POST1 = Post.objects.get(title=TITLE1)
+        POST2 = Post.objects.get(title=TITLE2)
+
+        COMMENT1 = Comment.objects.get(post=POST1)
+        COMMENT2 = Comment.objects.get(post=POST2)
+
+        self.assertEqual(
+            COMMENT1.content, 'Comment 1')
+        self.assertEqual(
+            COMMENT2.content, 'Comment 2')
+
+        
