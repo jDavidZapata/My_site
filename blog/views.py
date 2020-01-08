@@ -17,7 +17,7 @@ class CategoryListView(ListView):
 
     personal = True
     model = Category
-    template_name = 'blog/category_list.html'
+    #template_name = 'blog/category_list.html'
     context_object_name = 'categories'
     #paginate_by = 3
     ordering = ['name']
@@ -33,7 +33,7 @@ class CategoryDetailListView(ListView):
     template_name = 'blog/category_detail.html'
     context_object_name = 'posts'
     paginate_by = 2
-    #slug_url_kwarg = 'slug'
+    slug_url_kwarg = 'slug'
     
     
     def get_queryset(self):
@@ -65,7 +65,7 @@ class CategoryUpdateView(LoginRequiredMixin, UpdateView):
     model = Category
     template_name = 'form.html'
     fields = ['name', 'sumarry', 'slug']
-    #slug_url_kwarg = 'slug'
+    slug_url_kwarg = 'slug'
 
 
 
@@ -100,7 +100,7 @@ class PostDetailView(DetailView):
     model = Post
     template_name = 'blog/post_detail.html'
     context_object_name = 'post'
-    #slug_url_kwarg = 'slug'
+    slug_url_kwarg = 'slug'
 
     def get_context_data(self, **kwargs):
         context = super(PostDetailView, self).get_context_data(**kwargs)
@@ -125,7 +125,7 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
     template_name = 'form.html'
     fields = ['title', 'content', 'category', 'image', 'slug']
-    #slug_url_kwarg = 'slug'
+    slug_url_kwarg = 'slug'
 
 
 
