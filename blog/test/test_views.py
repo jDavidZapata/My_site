@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 from ..models import Category, Post, Comment
 from django.contrib.auth import get_user_model
 from django.urls import reverse, resolve
-from ..views import CategoryListView, CategoryDetailListView
+from ..views import CategoryListView, CategoryDetailListView, CategoryUpdateView
 
 # Create your tests here.
 
@@ -63,8 +63,8 @@ class CategorysListPageTest(TestCase):
         self.assertEquals(view.func.view_class, CategoryListView)
 
         
-class CategoryPageTest(TestCase):
-    """ Test module for Category Page. """
+class CategoryDetailPageTest(TestCase):
+    """ Test module for Category Detail Page. """
 
     def test_category_detail_page_without_category(self):
         """ If no category, then a 404 error. """
@@ -93,3 +93,34 @@ class CategoryPageTest(TestCase):
     def test_category_page_url_resolves_category_detail_view(self):
         view = resolve('/personal/blog/category-main/')
         self.assertEquals(view.func.view_class, CategoryDetailListView)
+
+
+
+class CategoryUpdatePageTest(TestCase):
+    """ Test module for Category Update Page. """
+
+    def test_category_update_page_without_category(self):
+        """ If no category, then a 404 error. """
+
+        c = Client()
+        response = c.get("/personal/blog/category-m/update/")
+        self.assertEqual(response.status_code, 302)
+            
+            
+    def test_category_update_page_with_category(self):
+        """ Make Sure Category Can Be Updated. """
+
+        setUp(self)
+        category = Category.objects.get(slug='main')
+        c = Client()
+        response = c.get("/personal/blog/category-main/update/")
+        self.assertEqual(response.status_code, 302)
+        #self.assertEqual(response.context['category'], category)
+        #self.assertContains(response, category.name)
+        #self.assertContains(response.template_name, ['form.html'])
+        #self.assertIn('form.html', response.template_name)
+    
+
+    def test_category_update_page_url_resolves_category_update_view(self):
+        view = resolve('/personal/blog/category-main/update/')
+        self.assertEquals(view.func.view_class, CategoryUpdateView)

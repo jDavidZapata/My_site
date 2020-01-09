@@ -26,6 +26,9 @@ urlpatterns = [
     #path("create-category/", views.category_create, name="category_create"),
     path("create-category/", views.CategoryCreateView.as_view(), name="category_create"),
     
+    #path("category-<slug:slug>/update/", views.category_update, name="category_update"),
+    path("category-<slug:slug>/update/", views.CategoryUpdateView.as_view(), name="category_update"),
+
     #path("category-<slug:slug>/delete/", views.category_delete, name="category_delete"),
     path("category-<slug:slug>/delete/", views.CategoryDelete.as_view(), name="category_delete"),
 

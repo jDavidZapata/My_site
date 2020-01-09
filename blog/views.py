@@ -64,7 +64,7 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
 class CategoryUpdateView(LoginRequiredMixin, UpdateView):
     model = Category
     template_name = 'form.html'
-    fields = ['name', 'sumarry', 'slug']
+    fields = ['name', 'summary', 'slug']
     slug_url_kwarg = 'slug'
 
 
