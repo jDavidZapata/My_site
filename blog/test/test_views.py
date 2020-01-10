@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 from ..models import Category, Post, Comment
 from django.contrib.auth import get_user_model
 from django.urls import reverse, resolve
-from ..views import CategoryListView, CategoryDetailListView, CategoryUpdateView
+from ..views import CategoryListView, CategoryDetailListView, CategoryUpdateView, CategoryCreateView
 
 # Create your tests here.
 
@@ -124,3 +124,28 @@ class CategoryUpdatePageTest(TestCase):
     def test_category_update_page_url_resolves_category_update_view(self):
         view = resolve('/personal/blog/category-main/update/')
         self.assertEquals(view.func.view_class, CategoryUpdateView)
+
+
+
+class CategoryCreatePageTest(TestCase):
+    """ Test module for Category Create Page. """
+    
+    def test_category_create_page(self):
+        """ Make Sure Category Create Page Shows. """
+
+        c = Client()
+        response = c.get("/personal/blog/create-category/")
+        self.assertEqual(response.status_code, 302)
+        #self.assertIn('form.html', response.template_name)    
+            
+    
+
+    def test_category_create_page_url_resolves_category_create_view(self):
+        view = resolve('/personal/blog/create-category/')
+        self.assertEquals(view.func.view_class, CategoryCreateView)
+
+
+
+class CategoryDeletePageTest(TestCase):
+    """ Test module for Category Delete Page. """
+    pass
