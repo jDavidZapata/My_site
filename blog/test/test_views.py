@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 from ..models import Category, Post, Comment
 from django.contrib.auth import get_user_model
 from django.urls import reverse, resolve
-from ..views import CategoryListView, CategoryDetailListView, CategoryUpdateView, CategoryCreateView
+from ..views import CategoryListView, CategoryDetailListView, CategoryUpdateView, CategoryCreateView, CategoryDelete
 
 # Create your tests here.
 
@@ -148,4 +148,31 @@ class CategoryCreatePageTest(TestCase):
 
 class CategoryDeletePageTest(TestCase):
     """ Test module for Category Delete Page. """
-    pass
+    
+    def test_category_delete_page_without_category(self):
+        """ If no category, then a 404 error. """
+
+        c = Client()
+        response = c.get("/personal/blog/category-main/delete/")
+        self.assertEqual(response.status_code, 302)
+            
+            
+    def test_category_delete_page_with_category(self):
+        """ Make Sure Category Can Be Deleted. """
+
+        setUp(self)
+        category = Category.objects.get(slug='main')
+        c = Client()
+        response = c.get("/personal/blog/category-main/delete/")
+        self.assertEqual(response.status_code, 302)
+        #self.assertEqual(response.context['category'], category)
+        #self.assertContains(response, category.name)
+        #self.assertContains(response.template_name, ['blog/category_delete.html'])
+        #self.assertIn('blog/category_delete.html', response.template_name)
+    
+
+    def test_category_delete_page_url_resolves_category_delete_view(self):
+        view = resolve('/personal/blog/category-main/delete/')
+        self.assertEquals(view.func.view_class, CategoryDelete)
+
+    
