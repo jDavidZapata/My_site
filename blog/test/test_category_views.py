@@ -39,7 +39,6 @@ class CategorysListPageTest(TestCase):
         
         c = Client()
         response = c.get("/personal/blog/category/")
-        #self.assertEqual(response.status_code, 404)
         self.assertEqual(response.status_code, 200)
         
 
@@ -54,7 +53,6 @@ class CategorysListPageTest(TestCase):
         self.assertEqual(response.template_name, ['blog/category_list.html'])
         self.assertIn('blog/category_list.html', response.template_name)
         #self.assertEqual(response.context["categories"], "* categorys *")
-        #print(response.context)
     
 
     
@@ -72,7 +70,6 @@ class CategoryDetailPageTest(TestCase):
         c = Client()
         response = c.get("/personal/blog/category-main/")
         self.assertEqual(response.status_code, 404)
-        #self.assertEqual(response.status_code, 200)
             
             
     def test_category_detail_page_with_category(self):
@@ -83,7 +80,6 @@ class CategoryDetailPageTest(TestCase):
         c = Client()
         response = c.get("/personal/blog/category-main/")
         self.assertEqual(response.status_code, 200)
-        #self.assertEqual(response.context["title"], "category # 1")
         self.assertEqual(response.context['category'], category)
         #self.assertContains(response, category.name)
         #self.assertContains(response.template_name, ['blog/category_detail.html'])
@@ -115,8 +111,6 @@ class CategoryUpdatePageTest(TestCase):
         c = Client()
         response = c.get("/personal/blog/category-main/update/")
         self.assertEqual(response.status_code, 302)
-        #self.assertEqual(response.context['category'], category)
-        #self.assertContains(response, category.name)
         #self.assertContains(response.template_name, ['form.html'])
         #self.assertIn('form.html', response.template_name)
     
@@ -165,8 +159,6 @@ class CategoryDeletePageTest(TestCase):
         c = Client()
         response = c.get("/personal/blog/category-main/delete/")
         self.assertEqual(response.status_code, 302)
-        #self.assertEqual(response.context['category'], category)
-        #self.assertContains(response, category.name)
         #self.assertContains(response.template_name, ['blog/category_delete.html'])
         #self.assertIn('blog/category_delete.html', response.template_name)
     
