@@ -20,12 +20,12 @@ SUMMARY2 = 'Other Category'
 #Posts
 TITLE1 = 'Post 1'
 PCONTENT1 = 'The first post'
-CATEGORY1 = ''
+Cost1 = ''
 
 TITLE2 = 'Post 2'
 PCONTENT2 = 'The second post'
 IMAGE2 = 'default.jpeg'
-CATEGORY2 = ''
+Cost2 = ''
 
 
 def create_user(username=USER, password=PASSWORD, email='user@example.com'): 
@@ -37,15 +37,15 @@ def setUp(self):
 
         user = create_user()
 
-        CATEGORY1 = Category.objects.create(
+        Category1 = Category.objects.create(
             author=user, name=NAME1, summary=SUMMARY1)
-        CATEGORY2 = Category.objects.create(
+        Category2 = Category.objects.create(
             author=user, name=NAME2, summary=SUMMARY2)
 
         Post.objects.create(
-            author=user, title=TITLE1, content=PCONTENT1, category=CATEGORY1)
+            author=user, title=TITLE1, content=PCONTENT1, category=Category1)
         Post.objects.create(
-            author=user, title=TITLE2, content=PCONTENT2, image=IMAGE2, category=CATEGORY2)
+            author=user, title=TITLE2, content=PCONTENT2, image=IMAGE2, category=Category2)
 
 
 class PostsListPageTest(TestCase):
@@ -71,3 +71,33 @@ class PostsListPageTest(TestCase):
         self.assertIn('blog/posts_list.html', response.template_name)
         #self.assertEqual(response.context["posts"], "* Posts *")
     
+
+
+class PostDetailPageTest(TestCase):
+    """ Test module for post Detail Page. """
+
+    def test_post_detail_page_without_post(self):
+        """ If no post, then a 404 error. """
+
+        c = Client()
+        response = c.get("/personal/blog/category/post-1/")
+        self.assertEqual(response.status_code, 404)
+            
+            
+    def test_post_detail_page_with_post(self):
+        """ Make Sure post shows on the page. """
+
+        setUp(self)
+        post = Post.objects.get(slug='post-1')
+        c = Client()
+        response = c.get("/personal/blog/category/post-1/")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['post'], post)
+        #self.assertContains(response, post.title)
+        #self.assertContains(response.template_name, 'blog/post_detail.html')
+        self.assertIn('blog/post_detail.html', response.template_name)
+    
+
+    def test_post_page_url_resolves_post_detail_view(self):
+        view = resolve('/personal/blog/category/post-1/')
+        self.assertEquals(view.func.view_class, PostDetailView)
