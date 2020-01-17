@@ -101,3 +101,33 @@ class PostDetailPageTest(TestCase):
     def test_post_page_url_resolves_post_detail_view(self):
         view = resolve('/personal/blog/category/post-1/')
         self.assertEquals(view.func.view_class, PostDetailView)
+
+
+
+class PostUpdatePageTest(TestCase):
+    """ Test module for Post Update Page. """
+
+    def test_post_update_page_without_post(self):
+        """ If no post, then a 404 error. """
+
+        c = Client()
+        response = c.get("/personal/blog/category/post-1/update/")
+        self.assertEqual(response.status_code, 302)
+            
+            
+    def test_post_update_page_with_post(self):
+        """ Make Sure Post Can Be Updated. """
+
+        setUp(self)
+        post = Post.objects.get(slug='post-1')
+        c = Client()
+        response = c.get("/personal/blog/category/post-1/update/")
+        self.assertEqual(response.status_code, 302)
+        #self.assertContains(response.template_name, ['form.html'])
+        #self.assertIn('form.html', response.template_name)
+    
+
+    def test_post_update_page_url_resolves_post_update_view(self):
+        view = resolve('/personal/blog/category/post-1/update/')
+        self.assertEquals(view.func.view_class, PostUpdateView)
+
