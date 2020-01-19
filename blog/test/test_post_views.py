@@ -131,3 +131,21 @@ class PostUpdatePageTest(TestCase):
         view = resolve('/personal/blog/category/post-1/update/')
         self.assertEquals(view.func.view_class, PostUpdateView)
 
+
+class PostCreatePageTest(TestCase):
+    """ Test module for Post Create Page. """
+    
+    def test_post_create_page(self):
+        """ Make Sure Post Create Page Shows. """
+
+        c = Client()
+        response = c.get("/personal/blog-post/")
+        self.assertEqual(response.status_code, 302)
+        #self.assertIn('form.html', response.template_name)    
+            
+    
+
+    def test_post_create_page_url_resolves_post_create_view(self):
+        view = resolve('/personal/blog-post/')
+        self.assertEquals(view.func.view_class, PostCreateView)
+
