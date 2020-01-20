@@ -149,3 +149,31 @@ class PostCreatePageTest(TestCase):
         view = resolve('/personal/blog-post/')
         self.assertEquals(view.func.view_class, PostCreateView)
 
+
+
+class PostDeletePageTest(TestCase):
+    """ Test module for Post Delete Page. """
+    
+    def test_post_delete_page_without_post(self):
+        """ If no post, then a 404 error. """
+
+        c = Client()
+        response = c.get("/personal/blog/category/post-1/delete/")
+        self.assertEqual(response.status_code, 302)
+            
+            
+    def test_post_delete_page_with_post(self):
+        """ Make Sure Post Can Be Deleted. """
+
+        setUp(self)
+        post = Post.objects.get(slug='post-1')
+        c = Client()
+        response = c.get("/personal/blog/category/post-1/delete/")
+        self.assertEqual(response.status_code, 302)
+        #self.assertContains(response.template_name, ['blog/category_delete.html'])
+        #self.assertIn('blog/category_delete.html', response.template_name)
+    
+
+    def test_post_delete_page_url_resolves_post_delete_view(self):
+        view = resolve('/personal/blog/category/post-1/delete/')
+        self.assertEquals(view.func.view_class, PostDelete)
