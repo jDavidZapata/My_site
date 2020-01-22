@@ -170,8 +170,8 @@ class PostDeletePageTest(TestCase):
         c = Client()
         response = c.get("/personal/blog/category/post-1/delete/")
         self.assertEqual(response.status_code, 302)
-        #self.assertContains(response.template_name, ['blog/category_delete.html'])
-        #self.assertIn('blog/category_delete.html', response.template_name)
+        #self.assertContains(response.template_name, ['blog/post_delete.html'])
+        #self.assertIn('blog/post_delete.html', response.template_name)
     
 
     def test_post_delete_page_url_resolves_post_delete_view(self):
