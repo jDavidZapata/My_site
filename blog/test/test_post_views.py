@@ -20,12 +20,12 @@ SUMMARY2 = 'Other Category'
 #Posts
 TITLE1 = 'Post 1'
 PCONTENT1 = 'The first post'
-Cost1 = ''
+Post1 = ''
 
 TITLE2 = 'Post 2'
 PCONTENT2 = 'The second post'
 IMAGE2 = 'default.jpeg'
-Cost2 = ''
+Post2 = ''
 
 
 def create_user(username=USER, password=PASSWORD, email='user@example.com'): 
