@@ -47,3 +47,21 @@ def setUp(self):
         Post.objects.create(
             author=user, title=TITLE2, content=PCONTENT2, image=IMAGE2, category=Category2)
 
+
+
+class CommentCreatePageTest(TestCase):
+    """ Test module for Comment Create Page. """
+    
+    def test_comment_create_page(self):
+        """ Make Sure Comment Create Page Shows. """
+
+        c = Client()
+        response = c.get("/personal/blog-comment/")
+        self.assertEqual(response.status_code, 302)
+        #self.assertIn('form.html', response.template_name)    
+            
+    
+
+    def test_comment_create_page_url_resolves_comment_create_view(self):
+        view = resolve('/personal/blog-comment/')
+        self.assertEquals(view.func.view_class, CommentCreateView)
