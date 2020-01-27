@@ -65,3 +65,30 @@ class CommentCreatePageTest(TestCase):
     def test_comment_create_page_url_resolves_comment_create_view(self):
         view = resolve('/personal/blog-comment/')
         self.assertEquals(view.func.view_class, CommentCreateView)
+
+
+
+
+class CommentsListPageTest(TestCase):
+    """ Test module for Comment List Page. """
+
+    def test_comment_list_page_without_comment(self):
+        """ If no comment exist, an appropriate message is displayed. """
+        
+        c = Client()
+        response = c.get("/personal/blog-comments/")
+        self.assertEqual(response.status_code, 200)
+        
+
+
+    def test_comment_list_page_with_comment(self):
+        """ Make Sure comment show on the page. """
+
+        setUp(self)
+        c = Client()
+        response = c.get("/personal/blog-comments/")
+        self.assertEqual(response.status_code, 200)
+        #self.assertEqual(response.template_name, ['blog/comments_list.html'])
+        self.assertIn('blog/comments_list.html', response.template_name)
+        #self.assertEqual(response.context["comments"], "* Comments *")
+    
