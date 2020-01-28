@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 from ..models import Category, Post, Comment
 from django.contrib.auth import get_user_model
 from django.urls import reverse, resolve
-from ..views import CommentListView, CommentDetailView, CommentUpdateView, CommentCreateView, CommentDelete
+from ..views import CommentsListView, CommentDetailView, CommentUpdateView, CommentCreateView, CommentDelete
 
 # Create your tests here.
 
@@ -56,14 +56,14 @@ class CommentCreatePageTest(TestCase):
         """ Make Sure Comment Create Page Shows. """
 
         c = Client()
-        response = c.get("/personal/blog-comment/")
+        response = c.get("/personal/blog-create-comment/")
         self.assertEqual(response.status_code, 302)
         #self.assertIn('form.html', response.template_name)    
             
     
 
     def test_comment_create_page_url_resolves_comment_create_view(self):
-        view = resolve('/personal/blog-comment/')
+        view = resolve('/personal/blog-create-comment/')
         self.assertEquals(view.func.view_class, CommentCreateView)
 
 
@@ -92,3 +92,32 @@ class CommentsListPageTest(TestCase):
         self.assertIn('blog/comments_list.html', response.template_name)
         #self.assertEqual(response.context["comments"], "* Comments *")
     
+
+
+class CommentDetailPageTest(TestCase):
+    """ Test module for comment Detail Page. """
+
+    def test_comment_detail_page_without_comment(self):
+        """ If no comment, then a 404 error. """
+
+        c = Client()
+        response = c.get("/personal/blog-comment/")
+        self.assertEqual(response.status_code, 404)
+            
+            
+    def test_comment_detail_page_with_comment(self):
+        """ Make Sure comment shows on the page. """
+
+        setUp(self)
+        comment = Comment.objects.get(comment=comment)
+        c = Client()
+        response = c.get("/personal/blog-comment/")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['comment'], comment)
+        #self.assertContains(response.template_name, 'blog/comment_detail.html')
+        self.assertIn('blog/comment_detail.html', response.template_name)
+    
+
+    def test_comment_page_url_resolves_comment_detail_view(self):
+        view = resolve('/personal/blog-comment/')
+        self.assertEquals(view.func.view_class, CommentDetailView)
