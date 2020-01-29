@@ -101,7 +101,7 @@ class CommentDetailPageTest(TestCase):
         """ If no comment, then a 404 error. """
 
         c = Client()
-        response = c.get("/personal/blog-comment/1")
+        response = c.get("/personal/blog-comment/1/")
         self.assertEqual(response.status_code, 404)
             
             
@@ -111,7 +111,7 @@ class CommentDetailPageTest(TestCase):
         setUp(self)
         comment = Comment.objects.get(slug='1')
         c = Client()
-        response = c.get("/personal/blog-comment/1")
+        response = c.get("/personal/blog-comment/1/")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['comment'], comment)
         #self.assertContains(response.template_name, 'blog/comment_detail.html')
@@ -119,7 +119,7 @@ class CommentDetailPageTest(TestCase):
     
 
     def test_comment_page_url_resolves_comment_detail_view(self):
-        view = resolve('/personal/blog-comment/1')
+        view = resolve('/personal/blog-comment/1/')
         self.assertEquals(view.func.view_class, CommentDetailView)
 
 
@@ -131,7 +131,7 @@ class CommentUpdatePageTest(TestCase):
         """ If no comment, then a 404 error. """
 
         c = Client()
-        response = c.get("/personal/blog-comment-update/1")
+        response = c.get("/personal/blog-comment-update/1/")
         self.assertEqual(response.status_code, 302)
             
             
@@ -141,12 +141,42 @@ class CommentUpdatePageTest(TestCase):
         setUp(self)
         comment = Comment.objects.get(slug='1')
         c = Client()
-        response = c.get("/personal/blog-comment-update/1")
+        response = c.get("/personal/blog-comment-update/1/")
         self.assertEqual(response.status_code, 302)
         #self.assertContains(response.template_name, ['form.html'])
         #self.assertIn('form.html', response.template_name)
     
 
     def test_comment_update_page_url_resolves_comment_update_view(self):
-        view = resolve('/personal/blog-comment-update/1')
+        view = resolve('/personal/blog-comment-update/1/')
         self.assertEquals(view.func.view_class, CommentUpdateView)
+
+
+
+
+class CommentDeletePageTest(TestCase):
+    """ Test module for Comment Delete Page. """
+    
+    def test_comment_delete_page_without_comment(self):
+        """ If no comment, then a 404 error. """
+
+        c = Client()
+        response = c.get("/personal/blog-comment-delete/1/")
+        self.assertEqual(response.status_code, 302)
+            
+            
+    def test_comment_delete_page_with_comment(self):
+        """ Make Sure Comment Can Be Deleted. """
+
+        setUp(self)
+        comment = Comment.objects.get(slug='1')
+        c = Client()
+        response = c.get("/personal/blog-comment-delete/1/")
+        self.assertEqual(response.status_code, 302)
+        #self.assertContains(response.template_name, ['blog/comment_delete.html'])
+        #self.assertIn('blog/comment_delete.html', response.template_name)
+    
+
+    def test_comment_delete_page_url_resolves_comment_delete_view(self):
+        view = resolve('/personal/blog-comment-delete/1/')
+        self.assertEquals(view.func.view_class, CommentDelete)
