@@ -101,7 +101,7 @@ class CommentDetailPageTest(TestCase):
         """ If no comment, then a 404 error. """
 
         c = Client()
-        response = c.get("/personal/blog-comment/")
+        response = c.get("/personal/blog-comment/1")
         self.assertEqual(response.status_code, 404)
             
             
@@ -109,9 +109,9 @@ class CommentDetailPageTest(TestCase):
         """ Make Sure comment shows on the page. """
 
         setUp(self)
-        comment = Comment.objects.get(comment=comment)
+        comment = Comment.objects.get(slug='1')
         c = Client()
-        response = c.get("/personal/blog-comment/")
+        response = c.get("/personal/blog-comment/1")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['comment'], comment)
         #self.assertContains(response.template_name, 'blog/comment_detail.html')
@@ -119,5 +119,34 @@ class CommentDetailPageTest(TestCase):
     
 
     def test_comment_page_url_resolves_comment_detail_view(self):
-        view = resolve('/personal/blog-comment/')
+        view = resolve('/personal/blog-comment/1')
         self.assertEquals(view.func.view_class, CommentDetailView)
+
+
+
+class CommentUpdatePageTest(TestCase):
+    """ Test module for Comment Update Page. """
+
+    def test_comment_update_page_without_comment(self):
+        """ If no comment, then a 404 error. """
+
+        c = Client()
+        response = c.get("/personal/blog-comment-update/1")
+        self.assertEqual(response.status_code, 302)
+            
+            
+    def test_comment_update_page_with_comment(self):
+        """ Make Sure Comment Can Be Updated. """
+
+        setUp(self)
+        comment = Comment.objects.get(slug='1')
+        c = Client()
+        response = c.get("/personal/blog-comment-update/1")
+        self.assertEqual(response.status_code, 302)
+        #self.assertContains(response.template_name, ['form.html'])
+        #self.assertIn('form.html', response.template_name)
+    
+
+    def test_comment_update_page_url_resolves_comment_update_view(self):
+        view = resolve('/personal/blog-comment-update/1')
+        self.assertEquals(view.func.view_class, CommentUpdateView)
