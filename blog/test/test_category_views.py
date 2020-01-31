@@ -95,24 +95,37 @@ class CategoryDetailPageTest(TestCase):
 class CategoryUpdatePageTest(TestCase):
     """ Test module for Category Update Page. """
 
-    def test_category_update_page_without_category(self):
-        """ If no category, then a 404 error. """
+    def test_category_update_page_without_user(self):
+        """ If no User, then redirect. """
 
         c = Client()
         response = c.get("/personal/blog/category-m/update/")
         self.assertEqual(response.status_code, 302)
             
-            
+
+    def test_category_update_page_without_category(self):
+        """ If no category, then a 404 error. """
+
+        setUp(self)
+        c = Client()
+        # Log the user in
+        c.login(username=USER, password=PASSWORD)
+        response = c.get("/personal/blog/category-m/update/")
+        self.assertEqual(response.status_code, 404)
+
+
     def test_category_update_page_with_category(self):
         """ Make Sure Category Can Be Updated. """
 
         setUp(self)
         category = Category.objects.get(slug='main')
         c = Client()
+        # Log the user in
+        c.login(username=USER, password=PASSWORD)
         response = c.get("/personal/blog/category-main/update/")
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
         #self.assertContains(response.template_name, ['form.html'])
-        #self.assertIn('form.html', response.template_name)
+        self.assertIn('form.html', response.template_name)
     
 
     def test_category_update_page_url_resolves_category_update_view(self):
@@ -124,43 +137,63 @@ class CategoryUpdatePageTest(TestCase):
 class CategoryCreatePageTest(TestCase):
     """ Test module for Category Create Page. """
     
-    def test_category_create_page(self):
-        """ Make Sure Category Create Page Shows. """
-
+    def test_category_create_page_without_user(self):
+        """ If no user, then redirect. """
         c = Client()
         response = c.get("/personal/blog/create-category/")
         self.assertEqual(response.status_code, 302)
-        #self.assertIn('form.html', response.template_name)    
-            
+
+    def test_category_create_page(self):
+        """ Make Sure Category Create Page Shows. """
+        setUp(self)
+        c = Client()
+        # Log the user in
+        c.login(username=USER, password=PASSWORD)
+        response = c.get("/personal/blog/create-category/")
+        self.assertIn('form.html', response.template_name)  
+        self.assertEqual(response.status_code, 200)              
     
 
     def test_category_create_page_url_resolves_category_create_view(self):
         view = resolve('/personal/blog/create-category/')
         self.assertEquals(view.func.view_class, CategoryCreateView)
+        
 
 
 
 class CategoryDeletePageTest(TestCase):
     """ Test module for Category Delete Page. """
     
-    def test_category_delete_page_without_category(self):
-        """ If no category, then a 404 error. """
+    def test_category_delete_page_without_user(self):
+        """ If no user, then redirect. """
 
         c = Client()
         response = c.get("/personal/blog/category-main/delete/")
         self.assertEqual(response.status_code, 302)
             
-            
+
+    def test_category_delete_page_without_category(self):
+        """ If no category, then a 404 error. """
+
+        user = create_user()
+        c = Client()
+        # Log the user in
+        c.login(username=USER, password=PASSWORD)
+        response = c.get("/personal/blog/category-main/delete/")
+        self.assertEqual(response.status_code, 404)
+
+
     def test_category_delete_page_with_category(self):
-        """ Make Sure Category Can Be Deleted. """
+        """ Make Sure Category Can Be Deleted When User Is Logged In. """
 
         setUp(self)
         category = Category.objects.get(slug='main')
         c = Client()
+        # Log the user in
+        c.login(username=USER, password=PASSWORD)
         response = c.get("/personal/blog/category-main/delete/")
-        self.assertEqual(response.status_code, 302)
-        #self.assertContains(response.template_name, ['blog/category_delete.html'])
-        #self.assertIn('blog/category_delete.html', response.template_name)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('blog/category_delete.html', response.template_name)
     
 
     def test_category_delete_page_url_resolves_category_delete_view(self):
