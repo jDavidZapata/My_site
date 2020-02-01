@@ -51,26 +51,24 @@ def setUp(self):
 class PostsListPageTest(TestCase):
     """ Test module for Post List Page. """
 
-    def test_post_list_page_without_Post(self):
+    def test_post_list_page_without_post(self):
         """ If no Posts exist, an appropriate message is displayed. """
         
         c = Client()
         response = c.get("/personal/blog/")
-        self.assertEqual(response.status_code, 200)
-        
+        self.assertEqual(response.status_code, 200)        
 
 
     def test_post_list_page_with_post(self):
         """ Make Sure Posts show on the page. """
 
         setUp(self)
+        post = Post.objects.get(slug='post-1')
         c = Client()
         response = c.get("/personal/blog/")
         self.assertEqual(response.status_code, 200)
-        #self.assertEqual(response.template_name, ['blog/posts_list.html'])
         self.assertIn('blog/posts_list.html', response.template_name)
-        #self.assertEqual(response.context["posts"], "* Posts *")
-    
+        self.assertIn(post, response.context["posts"])    
 
 
 class PostDetailPageTest(TestCase):
@@ -93,8 +91,7 @@ class PostDetailPageTest(TestCase):
         response = c.get("/personal/blog/category/post-1/")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['post'], post)
-        #self.assertContains(response, post.title)
-        #self.assertContains(response.template_name, 'blog/post_detail.html')
+        self.assertIn(post.title, response.context['post'].title)
         self.assertIn('blog/post_detail.html', response.template_name)
     
 
@@ -103,16 +100,26 @@ class PostDetailPageTest(TestCase):
         self.assertEquals(view.func.view_class, PostDetailView)
 
 
-
 class PostUpdatePageTest(TestCase):
     """ Test module for Post Update Page. """
 
-    def test_post_update_page_without_post(self):
-        """ If no post, then a 404 error. """
+    def test_post_update_page_without_user(self):
+        """ If no user, then redirect. """
 
         c = Client()
         response = c.get("/personal/blog/category/post-1/update/")
         self.assertEqual(response.status_code, 302)
+
+
+    def test_post_update_page_without_post(self):
+        """ If no post, then a 404 error. """
+
+        user = create_user()
+        c = Client()
+        # Log the user in
+        c.login(username=USER, password=PASSWORD)
+        response = c.get("/personal/blog/category/post-1/update/")
+        self.assertEqual(response.status_code, 404)
             
             
     def test_post_update_page_with_post(self):
@@ -121,10 +128,11 @@ class PostUpdatePageTest(TestCase):
         setUp(self)
         post = Post.objects.get(slug='post-1')
         c = Client()
+        # Log the user in
+        c.login(username=USER, password=PASSWORD)
         response = c.get("/personal/blog/category/post-1/update/")
-        self.assertEqual(response.status_code, 302)
-        #self.assertContains(response.template_name, ['form.html'])
-        #self.assertIn('form.html', response.template_name)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('form.html', response.template_name)
     
 
     def test_post_update_page_url_resolves_post_update_view(self):
@@ -134,32 +142,52 @@ class PostUpdatePageTest(TestCase):
 
 class PostCreatePageTest(TestCase):
     """ Test module for Post Create Page. """
-    
-    def test_post_create_page(self):
-        """ Make Sure Post Create Page Shows. """
+
+    def test_post_create_page_without_user(self):
+        """ If no user, then redirect. """
 
         c = Client()
         response = c.get("/personal/blog-post/")
         self.assertEqual(response.status_code, 302)
-        #self.assertIn('form.html', response.template_name)    
-            
     
+    
+    def test_post_create_page(self):
+        """ Make Sure Post Create Page Shows. """
+
+        setUp(self)
+        c = Client()
+        # Log the user in
+        c.login(username=USER, password=PASSWORD)
+        response = c.get("/personal/blog-post/")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('form.html', response.template_name)    
+                
 
     def test_post_create_page_url_resolves_post_create_view(self):
         view = resolve('/personal/blog-post/')
         self.assertEquals(view.func.view_class, PostCreateView)
 
 
-
 class PostDeletePageTest(TestCase):
     """ Test module for Post Delete Page. """
     
-    def test_post_delete_page_without_post(self):
-        """ If no post, then a 404 error. """
+    def test_post_delete_page_without_user(self):
+        """ If no user, then redirect. """
 
         c = Client()
         response = c.get("/personal/blog/category/post-1/delete/")
         self.assertEqual(response.status_code, 302)
+
+    
+    def test_post_delete_page_without_post(self):
+        """ If no post, then a 404 error. """
+
+        user = create_user()
+        c = Client()
+        # Log the user in
+        c.login(username=USER, password=PASSWORD)
+        response = c.get("/personal/blog/category/post-1/delete/")
+        self.assertEqual(response.status_code, 404)
             
             
     def test_post_delete_page_with_post(self):
@@ -168,10 +196,11 @@ class PostDeletePageTest(TestCase):
         setUp(self)
         post = Post.objects.get(slug='post-1')
         c = Client()
+         # Log the user in
+        c.login(username=USER, password=PASSWORD)
         response = c.get("/personal/blog/category/post-1/delete/")
-        self.assertEqual(response.status_code, 302)
-        #self.assertContains(response.template_name, ['blog/post_delete.html'])
-        #self.assertIn('blog/post_delete.html', response.template_name)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('blog/post_delete.html', response.template_name)
     
 
     def test_post_delete_page_url_resolves_post_delete_view(self):
