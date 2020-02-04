@@ -33,7 +33,7 @@ class ProjectDetailView(DetailView):
     context_object_name = 'project'
     
 
-
+@method_decorator(staff_member_required, name='dispatch')
 class ProjectCreateView(CreateView):
     model = Project
     template_name = 'form.html'

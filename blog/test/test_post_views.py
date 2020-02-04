@@ -68,7 +68,15 @@ class PostsListPageTest(TestCase):
         response = c.get("/personal/blog/")
         self.assertEqual(response.status_code, 200)
         self.assertIn('blog/posts_list.html', response.template_name)
-        self.assertIn(post, response.context["posts"])    
+        self.assertIn(post, response.context["posts"])   
+        self.assertTrue('is_paginated' in response.context)
+        self.assertTrue(response.context['is_paginated'] == False)
+        self.assertTrue(len(response.context['posts']) == 2) 
+
+    
+    def test_post_page_url_resolves_post_list_view(self):
+        view = resolve('/personal/blog/')
+        self.assertEquals(view.func.view_class, PostListView)
 
 
 class PostDetailPageTest(TestCase):
@@ -201,6 +209,7 @@ class PostDeletePageTest(TestCase):
         response = c.get("/personal/blog/category/post-1/delete/")
         self.assertEqual(response.status_code, 200)
         self.assertIn('blog/post_delete.html', response.template_name)
+        self.assertTemplateUsed(response, 'blog/post_delete.html')
     
 
     def test_post_delete_page_url_resolves_post_delete_view(self):

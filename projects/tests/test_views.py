@@ -1,7 +1,7 @@
 from django.test import TestCase, Client
 from ..models import Project
 from django.contrib.auth import get_user_model
-from django.urls import reverse
+from django.urls import reverse, resolve
 
 # Create your tests here.
 
@@ -71,6 +71,37 @@ class ProjectPageTest(TestCase):
         self.assertEqual(response.context['project'], project)
         self.assertContains(response, project.title)
     
+
+
+class ProjectCreatePageTest(TestCase):
+    """ Test module for Project Create Page. """
+
+    def test_project_create_page_without_user(self):
+        """ If no user, then redirect. """
+
+        c = Client()
+        response = c.get("/create/")
+        self.assertEqual(response.status_code, 302)
+    
+    
+    def test_project_create_page(self):
+        """ Make Sure Project Create Page Shows. """
+
+        setUp(self)
+        c = Client()
+        # Log the user in
+        c.login(username=USER, password=PASSWORD)
+        response = c.get("/create/")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('form.html', response.template_name)    
+                
+
+    def test_project_create_page_url_resolves_project_create_view(self):
+        view = resolve('/create/')
+        self.assertEquals(view.func.view_class, ProjectCreateView)
+
+
+
     
 '''
 class LoginRequiredViewTests(TestCase):
