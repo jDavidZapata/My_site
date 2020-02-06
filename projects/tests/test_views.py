@@ -142,6 +142,51 @@ class ProjectUpdatePageTest(TestCase):
         view = resolve('/projects/project-one/update/')
         self.assertEquals(view.func.view_class, ProjectUpdateView)
 
+
+
+
+class ProjectDeletePageTest(TestCase):
+    """ Test module for Project Delete Page. """
+    
+    def test_project_delete_page_without_user(self):
+        """ If no user, then redirect. """
+
+        c = Client()
+        response = c.get("/projects/project-one/delete/")
+        self.assertEqual(response.status_code, 302)
+
+    
+    def test_project_delete_page_without_project(self):
+        """ If no project, then a 404 error. """
+
+        user = create_user()
+        c = Client()
+        # Log the user in
+        c.login(username=USER, password=PASSWORD)
+        response = c.get("/projects/project-one/delete/")
+        self.assertEqual(response.status_code, 404)
+            
+            
+    def test_project_delete_page_with_project(self):
+        """ Make Sure Project Can Be Deleted. """
+
+        setUp(self)
+        project = Project.objects.get(slug='post-1')
+        c = Client()
+         # Log the user in
+        c.login(username=USER, password=PASSWORD)
+        response = c.get("/projects/project-one/delete/")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('projects/project_delete.html', response.template_name)
+        self.assertTemplateUsed(response, 'projects/project_delete.html')
+    
+
+    def test_project_delete_page_url_resolves_project_delete_view(self):
+        view = resolve('/projects/project-one/delete/')
+        self.assertEquals(view.func.view_class, ProjectDelete)
+
+
+
     
 '''
 class LoginRequiredViewTests(TestCase):
