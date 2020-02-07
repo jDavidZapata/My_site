@@ -2,6 +2,7 @@ from django.test import TestCase, Client
 from ..models import Project
 from django.contrib.auth import get_user_model
 from django.urls import reverse, resolve
+from ..views import ProjectListView, ProjectDetailView, ProjectUpdateView, ProjectCreateView, ProjectDelete
 
 # Create your tests here.
 
@@ -35,7 +36,6 @@ class ProjectsListPageTest(TestCase):
         self.assertEqual(response.status_code, 200)
         
 
-
     def test_projects_page_with_projects(self):
         """ Make Sure projects show on the page. """
 
@@ -45,6 +45,11 @@ class ProjectsListPageTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context["title"], "* Projects *")
         
+
+    def test_projects_list_url_resolves_projects_list_view(self):
+        view = resolve('/projects/')
+        self.assertEquals(view.func.view_class, ProjectListView)
+
 
         
 class ProjectPageTest(TestCase):
@@ -71,6 +76,10 @@ class ProjectPageTest(TestCase):
         self.assertEqual(response.context['project'], project)
         self.assertContains(response, project.title)
     
+
+    def test_project_page_url_resolves_project_detail_view(self):
+        view = resolve('/projects/project-one/')
+        self.assertEquals(view.func.view_class, ProjectDetailView)
 
 
 class ProjectCreatePageTest(TestCase):
