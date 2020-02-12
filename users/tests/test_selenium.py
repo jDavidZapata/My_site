@@ -14,7 +14,7 @@ def create_user(username=USER, password=PASSWORD, email=EMAIL):
         username=username, password=password, email=email)
         
 
-class MySeleniumTests(StaticLiveServerTestCase):
+class UsersSeleniumTests(StaticLiveServerTestCase):
     #fixtures = ['user-data.json']
 
     @classmethod

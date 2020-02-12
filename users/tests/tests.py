@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
 from ..models import Profile
 from django.urls import reverse, resolve
-from ..views import UserRegistration
+from ..views import UserRegistration, register, login_
 
 # Create your tests here.
 
@@ -47,7 +47,7 @@ class AuthenticationTest(TestCase):
 
     def test_user_sign_up_page_url_resolves_user_signup_view(self):
         view = resolve('/register/')
-        self.assertEquals(view.func.view_class, register)
+        self.assertEqual(view.func, register)
 
     def test_user_can_log_in(self): 
         """ Test users are able to login. """
@@ -67,9 +67,11 @@ class AuthenticationTest(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(data['username'], user.username)
 
-    def test_user_sign_up_page_url_resolves_user_signup_view(self):
-        view = resolve('/register/')
-        self.assertEquals(view.func.view_class, UserRegistration)
+   
+    def test_user_login_page_url_resolves_user_login_view(self):
+        view = resolve('/login/')
+        self.assertEqual(view.func, login_)
+
 
     def test_user_can_log_out(self): 
         """ Test users are able to logout. """
