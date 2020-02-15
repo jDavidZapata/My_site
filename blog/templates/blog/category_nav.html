@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark" >
     <div class="collapse navbar-collapse " >
         <ul class="navbar-nav mx-auto ">
-        <li class="nav-item {% if request.path == '/personal/blog/category/' %}active{% endif %}">
+        <li id='categories' class="nav-item {% if request.path == '/personal/blog/category/' %}active{% endif %}">
             <a class="nav-link" href="{% url 'blog:category_list' %}"><span class="material-icons" style="font-size:20px;color:red;">storage</span> Categories </a>        
         </li>
         </ul>
