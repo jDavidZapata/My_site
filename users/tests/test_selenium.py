@@ -83,6 +83,7 @@ class UsersSeleniumTests(StaticLiveServerTestCase):
         password_input = self.selenium.find_element_by_name("password")
         password_input.send_keys(PASSWORD)
         self.selenium.find_element_by_id("login").click()
-        self.selenium.implicitly_wait(10)
-        self.selenium.find_element_by_name("logout").click()
+        self.selenium.implicitly_wait(5)
+        self.selenium.find_element_by_class_name('glyphicon-log-out').click()
+        self.selenium.implicitly_wait(5)
     

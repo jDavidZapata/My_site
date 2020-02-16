@@ -7,6 +7,8 @@ USER = 'user@example.com'
 USER2 = 'oteruser@example.com'
 PASSWORD = 'pAs$w0rd!!'
 EMAIL = 'user@example.com'
+NAME = 'main'
+SUMMARY = 'main category'
 
 ### Set up Data base with fixtures
 def create_user(username=USER, password=PASSWORD, email=EMAIL): 
@@ -51,3 +53,23 @@ class BlogSeleniumTests(StaticLiveServerTestCase):
         self.selenium.implicitly_wait(10)
         self.selenium.find_element_by_id("categories").click()
     
+
+
+    def test_category_create(self):
+        self.selenium.get('%s%s' % (self.live_server_url, '/register/'))
+        username_input = self.selenium.find_element_by_name("username")
+        username_input.send_keys(USER)
+        password_input = self.selenium.find_element_by_name("password1")
+        password_input.send_keys(PASSWORD)
+        password_input = self.selenium.find_element_by_name("password2")
+        password_input.send_keys(PASSWORD)
+        password_input = self.selenium.find_element_by_name("email")
+        password_input.send_keys(EMAIL)
+        self.selenium.find_element_by_id("signup").click()
+        self.selenium.get('%s%s' % (self.live_server_url, '/personal/blog/create-category/'))
+        username_input = self.selenium.find_element_by_name("name")
+        username_input.send_keys(NAME)
+        password_input = self.selenium.find_element_by_name("summary")
+        password_input.send_keys(SUMMARY)
+        self.selenium.find_element_by_class_name("btn").click()
+        
