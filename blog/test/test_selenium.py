@@ -73,3 +73,26 @@ class BlogSeleniumTests(StaticLiveServerTestCase):
         password_input.send_keys(SUMMARY)
         self.selenium.find_element_by_class_name("btn").click()
         
+
+
+    
+    def test_post(self):
+        self.selenium.get('%s%s' % (self.live_server_url, '/register/'))
+        username_input = self.selenium.find_element_by_name("username")
+        username_input.send_keys(USER)
+        password_input = self.selenium.find_element_by_name("password1")
+        password_input.send_keys(PASSWORD)
+        password_input = self.selenium.find_element_by_name("password2")
+        password_input.send_keys(PASSWORD)
+        password_input = self.selenium.find_element_by_name("email")
+        password_input.send_keys(EMAIL)
+        self.selenium.find_element_by_id("signup").click()
+        self.selenium.get('%s%s' % (self.live_server_url, '/login/'))
+        username_input = self.selenium.find_element_by_name("username")
+        username_input.send_keys(USER)
+        password_input = self.selenium.find_element_by_name("password")
+        password_input.send_keys(PASSWORD)
+        self.selenium.find_element_by_id("login").click()
+        self.selenium.implicitly_wait(10)
+        #self.selenium.get('%s%s' % (self.live_server_url, '/personal/blog/'))
+        #self.selenium.find_element_by_id("blog").click()
