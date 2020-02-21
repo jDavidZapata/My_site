@@ -55,7 +55,7 @@ class BlogSeleniumTests(StaticLiveServerTestCase):
         self.selenium.find_element_by_id("login").click()
         self.selenium.implicitly_wait(10)
         self.selenium.find_element_by_id("categories").click()
-    
+        self.selenium.implicitly_wait(10)
 
 
     def test_category_create(self):
@@ -75,7 +75,7 @@ class BlogSeleniumTests(StaticLiveServerTestCase):
         summary_input = self.selenium.find_element_by_name("summary")
         summary_input.send_keys(SUMMARY)
         self.selenium.find_element_by_class_name("btn").click()
-        
+        self.selenium.implicitly_wait(10)
 
 
     
@@ -102,6 +102,33 @@ class BlogSeleniumTests(StaticLiveServerTestCase):
 
 
 
+    def test_post_1(self):
+        self.selenium.get('%s%s' % (self.live_server_url, '/register/'))
+        username_input = self.selenium.find_element_by_name("username")
+        username_input.send_keys(USER)
+        password1_input = self.selenium.find_element_by_name("password1")
+        password1_input.send_keys(PASSWORD)
+        password2_input = self.selenium.find_element_by_name("password2")
+        password2_input.send_keys(PASSWORD)
+        email_input = self.selenium.find_element_by_name("email")
+        email_input.send_keys(EMAIL)
+        self.selenium.find_element_by_id("signup").click()
+        self.selenium.get('%s%s' % (self.live_server_url, '/personal/blog/create-category/'))
+        name_input = self.selenium.find_element_by_name("name")
+        name_input.send_keys(NAME)
+        summary_input = self.selenium.find_element_by_name("summary")
+        summary_input.send_keys(SUMMARY)
+        self.selenium.find_element_by_class_name("btn").click()
+        self.selenium.get('%s%s' % (self.live_server_url, '/personal/blog-post/'))
+        title_input = self.selenium.find_element_by_name("title")
+        title_input.send_keys(TITLE)
+        content_input = self.selenium.find_element_by_name("content")
+        content_input.send_keys(CONTENT)
+        self.selenium.find_element_by_class_name("btn").click()
+        self.selenium.get('%s%s' % (self.live_server_url, '/personal/category/first-post'))
+        self.selenium.implicitly_wait(10)
+
+
     def test_post_create(self):
         self.selenium.get('%s%s' % (self.live_server_url, '/register/'))
         username_input = self.selenium.find_element_by_name("username")
@@ -125,6 +152,36 @@ class BlogSeleniumTests(StaticLiveServerTestCase):
         content_input = self.selenium.find_element_by_name("content")
         content_input.send_keys(CONTENT)
         self.selenium.find_element_by_class_name("btn").click()
+        self.selenium.implicitly_wait(10)
+
+
+
+    def test_post_edit(self):
+        self.selenium.get('%s%s' % (self.live_server_url, '/register/'))
+        username_input = self.selenium.find_element_by_name("username")
+        username_input.send_keys(USER)
+        password1_input = self.selenium.find_element_by_name("password1")
+        password1_input.send_keys(PASSWORD)
+        password2_input = self.selenium.find_element_by_name("password2")
+        password2_input.send_keys(PASSWORD)
+        email_input = self.selenium.find_element_by_name("email")
+        email_input.send_keys(EMAIL)
+        self.selenium.find_element_by_id("signup").click()
+        self.selenium.get('%s%s' % (self.live_server_url, '/personal/blog/create-category/'))
+        name_input = self.selenium.find_element_by_name("name")
+        name_input.send_keys(NAME)
+        summary_input = self.selenium.find_element_by_name("summary")
+        summary_input.send_keys(SUMMARY)
+        self.selenium.find_element_by_class_name("btn").click()
+        self.selenium.get('%s%s' % (self.live_server_url, '/personal/blog-post/'))
+        title_input = self.selenium.find_element_by_name("title")
+        title_input.send_keys(TITLE)
+        content_input = self.selenium.find_element_by_name("content")
+        content_input.send_keys(CONTENT)
+        self.selenium.find_element_by_class_name("btn").click()
+        self.selenium.get('%s%s' % (self.live_server_url, '/personal/category/first-post/update'))
+        self.selenium.implicitly_wait(10)
+
 
 
 
@@ -153,4 +210,4 @@ class BlogSeleniumTests(StaticLiveServerTestCase):
         content_input.send_keys(CONTENT)
         self.selenium.find_element_by_class_name("btn").click()
         self.selenium.get('%s%s' % (self.live_server_url, '/personal/blog/category/first-post'))
-        
+        self.selenium.implicitly_wait(10)
